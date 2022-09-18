@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoTamApp", "CoTamApp\CoTamApp.csproj", "{B9002624-6B94-4361-837A-04FB70A01F84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{822C4C44-64AB-462F-82CB-5D0A8B21D4C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{03467456-B5A8-4957-9A1D-BA24F26F85FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9002624-6B94-4361-837A-04FB70A01F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9002624-6B94-4361-837A-04FB70A01F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9002624-6B94-4361-837A-04FB70A01F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9002624-6B94-4361-837A-04FB70A01F84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{822C4C44-64AB-462F-82CB-5D0A8B21D4C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822C4C44-64AB-462F-82CB-5D0A8B21D4C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822C4C44-64AB-462F-82CB-5D0A8B21D4C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822C4C44-64AB-462F-82CB-5D0A8B21D4C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03467456-B5A8-4957-9A1D-BA24F26F85FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03467456-B5A8-4957-9A1D-BA24F26F85FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03467456-B5A8-4957-9A1D-BA24F26F85FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03467456-B5A8-4957-9A1D-BA24F26F85FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3315114D-C6E3-464F-B5C7-DE403BC564F2}
+	EndGlobalSection
+EndGlobal
