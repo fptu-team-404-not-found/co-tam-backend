@@ -11,6 +11,11 @@ on:
     branches:
       - main
 
+env:
+  PROJECT_PATH: 'CoTamApp/CoTamApp.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+
 jobs:
   build:
     runs-on: windows-latest
@@ -25,8 +30,17 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
+      - name: 'Restore packages'
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
+
+      - name: 'Pack project'
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+      - name: 'Push package'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9F6F99D67AD643D69F2041E2CC75F4EC }} -s ${{ env.NUGET_SOURCE_URL }}
 
       - name: Dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
