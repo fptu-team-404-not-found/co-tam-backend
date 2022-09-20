@@ -27,18 +27,6 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
           
-      - name: swagger ui
-        # You may pin to the exact commit or the version.
-        # uses: pjoc-team/swagger-ui-action@7e646ed552cf7e47c4cf92ca39db364826623dad
-        uses: pjoc-team/swagger-ui-action@v0.0.2
-        # with:
-          # Dir to find swagger json
-          # dir: # default is ./
-          # Pattern to find json, for example: *.swagger.json
-          # pattern: # default is *.json
-          # Debug output
-          # debug: # optional, default is 
-          
       - name: 'Pack project'
         run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
