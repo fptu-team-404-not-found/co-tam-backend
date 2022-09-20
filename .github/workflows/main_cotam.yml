@@ -8,11 +8,6 @@ on:
     branches:
       - main
   workflow_dispatch:
-  
-env:
-  PROJECT_PATH: 'CoTamApp/CoTamApp.csproj'
-  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
-  NUGET_SOURCE_URL: 'https://ap i.nuget.org/v3/index.json'
 
 jobs:
   build:
@@ -26,15 +21,9 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-          
-      - name: 'Pack project'
-        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
-
-      - name: 'Push package'
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
 
       - name: Build with dotnet
-        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+        run: dotnet build --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
