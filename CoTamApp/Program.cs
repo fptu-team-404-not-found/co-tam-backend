@@ -47,8 +47,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 }).AddGoogle(options =>
         {
-            options.ClientId = builder.Configuration["Google:ClientId"];
-            options.ClientSecret = builder.Configuration["Google:ClientSecret"];
+            options.ClientId = "544071594305-u1hf14eq178ifnq3ldd92bu7oifdjij1.apps.googleusercontent.com";
+            options.ClientSecret = "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";
         });
 
 
