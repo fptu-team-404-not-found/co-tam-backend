@@ -11,8 +11,14 @@ namespace Services
 {
     public class AuthService : IAuthService
     {
-        public Task<ServiceResponse<AdminManager>> GetAdminManager(int id) => AuthRepository.Instance.GetAdminManager(id);
+        private readonly IAuthRepository _authRepository;
 
-        public Task<ServiceResponse<string>> LoginWithAdminManager(string email, string name) => AuthRepository.Instance.LoginWithAdminManager(email, name);
+        public AuthService(IAuthRepository authRepository)
+        {
+            _authRepository = authRepository;
+        }
+        public Task<ServiceResponse<AdminManager>> GetAdminManager(int id) => _authRepository.GetAdminManager(id);
+
+        public Task<ServiceResponse<string>> LoginWithAdminManager(string email, string name) => _authRepository.LoginWithAdminManager(email, name);
     }
 }
