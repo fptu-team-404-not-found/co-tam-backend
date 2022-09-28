@@ -1,4 +1,4 @@
-﻿namespace CoTamApp
+﻿namespace ServiceResponse
 {
     public class ServiceResponse<T>
     {
