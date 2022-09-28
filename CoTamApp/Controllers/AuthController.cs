@@ -36,7 +36,7 @@ namespace CoTamApp.Controllers
             return Ok(res);
         }
         
-        [HttpGet("admin/{id}"), Authorize]
+        [HttpGet("admin/{id}"), AllowAnonymous]
 
         public async Task<ActionResult<ServiceResponse<AdminManager>>> GetAdmin(int id)
         {
