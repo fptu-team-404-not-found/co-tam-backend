@@ -1,4 +1,4 @@
-﻿using CoTamApp.Models;
+﻿using BusinessObject.Models;
 using ServiceResponse;
 
 namespace Services
@@ -7,5 +7,6 @@ namespace Services
     {
         Task<ServiceResponse<string>> LoginWithAdminManager(string email, string name);
         Task<ServiceResponse<AdminManager>> GetAdminManager(int id);
+        
     }
 }

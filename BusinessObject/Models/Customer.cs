@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace CoTamApp.Models
+namespace BusinessObject.Models
 {
     public partial class Customer
     {

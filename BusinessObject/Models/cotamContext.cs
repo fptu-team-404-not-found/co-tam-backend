@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace CoTamApp.Models
+namespace BusinessObject.Models
 {
     public partial class cotamContext : DbContext
     {
@@ -20,20 +19,18 @@ namespace CoTamApp.Models
         public virtual DbSet<AdminManager> AdminManagers { get; set; } = null!;
         public virtual DbSet<Area> Areas { get; set; } = null!;
         public virtual DbSet<Building> Buildings { get; set; } = null!;
-        public virtual DbSet<City> Cities { get; set; } = null!;
         public virtual DbSet<Customer> Customers { get; set; } = null!;
         public virtual DbSet<CustomerPromotion> CustomerPromotions { get; set; } = null!;
-        public virtual DbSet<District> Districts { get; set; } = null!;
         public virtual DbSet<ExtraService> ExtraServices { get; set; } = null!;
         public virtual DbSet<House> Houses { get; set; } = null!;
         public virtual DbSet<HouseWorker> HouseWorkers { get; set; } = null!;
         public virtual DbSet<Information> Information { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderDetail> OrderDetails { get; set; } = null!;
-        public virtual DbSet<OrderState> OrderStates { get; set; } = null!;
         public virtual DbSet<Package> Packages { get; set; } = null!;
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
         public virtual DbSet<Promotion> Promotions { get; set; } = null!;
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Service> Services { get; set; } = null!;
         public virtual DbSet<WorkerInOrder> WorkerInOrders { get; set; } = null!;
@@ -44,7 +41,7 @@ namespace CoTamApp.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server =fptu-team-404notfound.database.windows.net; database = cotam;uid=admin404;pwd=1234567890@Bb;");
+                optionsBuilder.UseSqlServer("server=fptu-team-404notfound.database.windows.net; database =cotam;uid=admin404;pwd=1234567890@Bb;");
             }
         }
 
@@ -88,13 +85,11 @@ namespace CoTamApp.Models
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.City).HasMaxLength(100);
 
-                entity.HasOne(d => d.District)
-                    .WithMany(p => p.Areas)
-                    .HasForeignKey(d => d.DistrictId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Area_District");
+                entity.Property(e => e.District).HasMaxLength(100);
+
+                entity.Property(e => e.Name).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Building>(entity =>
@@ -112,13 +107,6 @@ namespace CoTamApp.Models
                     .HasForeignKey(d => d.AreaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Building_Area");
-            });
-
-            modelBuilder.Entity<City>(entity =>
-            {
-                entity.ToTable("City");
-
-                entity.Property(e => e.Name).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -166,19 +154,6 @@ namespace CoTamApp.Models
                     .HasForeignKey(d => d.PromotionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CustomerPromotion_Promotion");
-            });
-
-            modelBuilder.Entity<District>(entity =>
-            {
-                entity.ToTable("District");
-
-                entity.Property(e => e.Name).HasMaxLength(100);
-
-                entity.HasOne(d => d.City)
-                    .WithMany(p => p.Districts)
-                    .HasForeignKey(d => d.CityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_District_City");
             });
 
             modelBuilder.Entity<ExtraService>(entity =>
@@ -283,12 +258,6 @@ namespace CoTamApp.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_House");
 
-                entity.HasOne(d => d.OrderState)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.OrderStateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Order_OrderState");
-
                 entity.HasOne(d => d.Package)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.PackageId)
@@ -316,13 +285,6 @@ namespace CoTamApp.Models
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Order");
-            });
-
-            modelBuilder.Entity<OrderState>(entity =>
-            {
-                entity.ToTable("OrderState");
-
-                entity.Property(e => e.Name).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Package>(entity =>
@@ -368,6 +330,23 @@ namespace CoTamApp.Models
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Value).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("RefreshToken");
+
+                entity.Property(e => e.ExpiredAt).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.IssuedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.JwtId).HasColumnType("ntext");
+
+                entity.Property(e => e.Token).HasColumnType("ntext");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -428,6 +407,4 @@ namespace CoTamApp.Models
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
-
-
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoTamApp.Models
+namespace BusinessObject.Models
 {
     public partial class Area
     {
@@ -13,9 +13,9 @@ namespace CoTamApp.Models
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public bool? Active { get; set; }
-        public int DistrictId { get; set; }
+        public string? District { get; set; }
+        public string? City { get; set; }
 
-        public virtual District District { get; set; } = null!;
         public virtual ICollection<Building> Buildings { get; set; }
     }
 }

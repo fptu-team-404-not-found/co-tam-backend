@@ -1,4 +1,3 @@
-using CoTamApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -12,6 +11,8 @@ using Repositories;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using CoTamApp.Controllers;
+using BusinessObject.Models;
+using Repositories.ValidationHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +68,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //for DI
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthCustomerService, AuthCustomerService>();
+builder.Services.AddScoped<IAuthCustomerRepository, AuthCustomerRepository>();
+builder.Services.AddScoped<IAuthHouseworkerService, AuthHouseworkerService>();
+builder.Services.AddScoped<IAuthHouseworkerRepository, AuthHouseworkerRepository>();
+builder.Services.AddScoped<ValidationAdminManager>();
 builder.Services.AddScoped<AuthController>();
 
 
