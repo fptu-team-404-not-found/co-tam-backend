@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories
+namespace Services.IServices
 {
-    public interface IAuthCustomerRepository
+    public interface IAuthCustomerService
     {
         Task<ServiceResponse<string>> LoginWithCustomer(string email, string name);
     }

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories
+namespace Services.IServices
 {
-    public interface IAuthHouseworkerRepository
+    public interface IAuthHouseworkerService
     {
         Task<ServiceResponse<string>> LoginWithHouseworker(string email, string name);
     }

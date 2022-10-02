@@ -1,5 +1,6 @@
-﻿using Repositories;
+﻿using Repositories.IRepositories;
 using ServiceResponse;
+using Services.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
