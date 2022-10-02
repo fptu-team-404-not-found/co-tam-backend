@@ -68,10 +68,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //for DI
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+
 builder.Services.AddScoped<IAuthCustomerService, AuthCustomerService>();
 builder.Services.AddScoped<IAuthCustomerRepository, AuthCustomerRepository>();
+
 builder.Services.AddScoped<IAuthHouseworkerService, AuthHouseworkerService>();
 builder.Services.AddScoped<IAuthHouseworkerRepository, AuthHouseworkerRepository>();
+
+builder.Services.AddScoped<IHouseRepository, HouseRepository>();
+builder.Services.AddScoped<IHouseService, HouseService>();
+
 builder.Services.AddScoped<ValidationAdminManager>();
 builder.Services.AddScoped<AuthController>();
 
