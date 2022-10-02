@@ -1,10 +1,9 @@
 ﻿using BusinessObject.Models;
-using CoTamApp;
-using CoTamApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Repositories.ValidationHandling;
 using ServiceResponse;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,18 +16,23 @@ namespace Repositories
     {
         private readonly IConfiguration _configuration;
         private readonly cotamContext _dbContext;
+        private readonly ValidationAdminManager _validationAdminManager;
 
-        public AuthRepository(IConfiguration configuration, cotamContext cotamContext)
+        public AuthRepository(IConfiguration configuration, cotamContext cotamContext, ValidationAdminManager validationAdminManager)
         {
             _configuration = configuration;
             _dbContext = cotamContext;
+            _validationAdminManager = validationAdminManager;
         }
+        
 
-        private TokenModel CreateToken(AdminManager adminManager)
+        private TokenModel CreateTokenWithAdmin(AdminManager adminManager)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, adminManager.Email),
+                new Claim(ClaimTypes.NameIdentifier, adminManager.Id.ToString()),
+                new Claim(ClaimTypes.Email, adminManager.Email),
+                new Claim(ClaimTypes.Name, adminManager.Name),
                 new Claim(ClaimTypes.Role, adminManager.RoleId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
@@ -99,7 +103,7 @@ namespace Repositories
             {
                 return new ServiceResponse<string>
                 {
-                    Data = CreateToken(accountAdminManager),
+                    Data = CreateTokenWithAdmin(accountAdminManager),
                     Success = true,
                     Message = "Login successfully with admin account"
                 };
@@ -108,7 +112,7 @@ namespace Repositories
             {
                 return new ServiceResponse<string>
                 {
-                    Data = CreateToken(accountAdminManager),
+                    Data = CreateTokenWithAdmin(accountAdminManager),
                     Success = true,
                     Message = "Login successfully with manager account"
                 };
@@ -121,6 +125,7 @@ namespace Repositories
         }
         public async Task<ServiceResponse<AdminManager>> GetAdminManager(int id)
         {
+
             var ad = await _dbContext.AdminManagers.FirstOrDefaultAsync(x => x.Id == id);
             return new ServiceResponse<AdminManager>
             {
@@ -130,5 +135,7 @@ namespace Repositories
                 
             };
         }
+
+        
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoTamApp.Models
+namespace BusinessObject.Models
 {
     public partial class Order
     {
@@ -19,10 +19,9 @@ namespace CoTamApp.Models
         public int PackageId { get; set; }
         public int? PromotionId { get; set; }
         public int PaymentMethodId { get; set; }
-        public int OrderStateId { get; set; }
+        public int OrderState { get; set; }
 
         public virtual House House { get; set; } = null!;
-        public virtual OrderState OrderState { get; set; } = null!;
         public virtual Package Package { get; set; } = null!;
         public virtual PaymentMethod PaymentMethod { get; set; } = null!;
         public virtual Promotion? Promotion { get; set; }

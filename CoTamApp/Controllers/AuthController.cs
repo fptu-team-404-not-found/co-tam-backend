@@ -1,5 +1,4 @@
 ﻿using BusinessObject.Models;
-using CoTamApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -25,7 +24,7 @@ namespace CoTamApp.Controllers
             _authService = authService;
         }
         [Authorize]
-        [HttpGet("LoginWithAdminOrManager")]
+        [HttpGet("login-with-admin-or-manager")]
         public async Task<ActionResult<ServiceResponse<string>>> LoginWithAdminOrManager()
         {
             string email = this.User.FindFirstValue(ClaimTypes.Email);
@@ -35,8 +34,9 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
-        
-        [HttpGet("admin/{id}"), AllowAnonymous]
+
+
+        [HttpGet("admin/{id}"), Authorize(Roles = "1")]
 
         public async Task<ActionResult<ServiceResponse<AdminManager>>> GetAdmin(int id)
         {
