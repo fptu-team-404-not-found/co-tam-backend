@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceResponse;
-using Services;
+using Services.IServices;
 using System.Security.Claims;
 
 namespace CoTamApp.Controllers

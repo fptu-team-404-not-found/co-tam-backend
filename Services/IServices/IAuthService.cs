@@ -1,7 +1,7 @@
 ﻿using BusinessObject.Models;
 using ServiceResponse;
 
-namespace Services
+namespace Services.IServices
 {
     public interface IAuthService
     {

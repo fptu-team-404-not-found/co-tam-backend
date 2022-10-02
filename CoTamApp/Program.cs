@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Services;
 using Repositories;
@@ -13,6 +10,9 @@ using Swashbuckle.AspNetCore.Filters;
 using CoTamApp.Controllers;
 using BusinessObject.Models;
 using Repositories.ValidationHandling;
+using Repositories.IRepositories;
+using Services.IServices;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,26 +21,44 @@ builder.Services.AddDbContext<cotamContext>(options =>
     options.UseSqlServer(builder
     .Configuration
     .GetConnectionString("DefaultConnection")));
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoTamApp", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "Cô Tấm API", 
+        Version = "v1",
+        Description = "API for Cô Tấm Project",
+        Contact = new OpenApiContact
+        {
+            Name = "Contact Developers",
+            Url = new Uri("https://github.com/fptu-team-404-not-found")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "License GNU General Public License v3.0",
+            Url = new Uri("https://github.com/fptu-team-404-not-found/co-tam-backend/blob/main/LICENSE")
+        }
+    });
     c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
-        Description = "Standard Authorization header using the Bearer schame. Example: \"bearer {token}\"",
+        Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
         In = ParameterLocation.Header,
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey
     });
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<cotamContext>()
             .AddDefaultTokenProviders();
-
 
 builder.Services.AddAuthentication(options =>
 {
@@ -65,6 +83,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         ValidateAudience = false,
                     };
                 });
+
 //for DI
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
@@ -78,10 +97,11 @@ builder.Services.AddScoped<IAuthHouseworkerRepository, AuthHouseworkerRepository
 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
 builder.Services.AddScoped<IHouseService, HouseService>();
 
+builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
+builder.Services.AddScoped<IPromotionService, PromotionService>();
+
 builder.Services.AddScoped<ValidationAdminManager>();
 builder.Services.AddScoped<AuthController>();
-
-
 
 var app = builder.Build();
 
@@ -89,17 +109,16 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-
-
 }
 
 app.UseSwagger();
+
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("v1/swagger.json", "CoTam V1 Api");
+    c.SwaggerEndpoint("v1/swagger.json", "Cô Tấm API V1");
 });
-app.UseHttpsRedirection();
 
+app.UseHttpsRedirection();
 
 app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 

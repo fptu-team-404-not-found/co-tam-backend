@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace Repositories.IRepositories
 {
-    public interface IHouseService
+    public interface IHouseRepository
     {
-        Task<Response<House>> GetHouseById(int id);
+        House GetHouseById(int id);
+
     }
 }
