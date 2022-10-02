@@ -11,7 +11,6 @@ using System.Security.Claims;
 
 namespace CoTamApp.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -24,7 +23,7 @@ namespace CoTamApp.Controllers
             _authService = authService;
         }
         [Authorize]
-        [HttpGet("login-with-admin-or-manager")]
+        [HttpGet("admin-manager/login")]
         public async Task<ActionResult<ServiceResponse<string>>> LoginWithAdminOrManager()
         {
             string email = this.User.FindFirstValue(ClaimTypes.Email);
@@ -35,14 +34,38 @@ namespace CoTamApp.Controllers
             return Ok(res);
         }
 
-
-        [HttpGet("admin/{id}"), Authorize(Roles = "1")]
-
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+        [HttpGet("admins/{id}")]
         public async Task<ActionResult<ServiceResponse<AdminManager>>> GetAdmin(int id)
         {
-           
+
             return Ok(await _authService.GetAdminManager(id));
+
         }
-        
+        /*[Authorize]
+        [HttpPost("Renew")]
+        public async Task<ActionResult<ServiceResponse<string>>> RenewToken(TokenModel model)
+        {
+            var response = await _authService.RenewToken(model);
+            if (!response.Success)
+                return BadRequest(response);
+            return Ok(response);
+        }*/
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpDelete("Logout")]
+        public async Task<ActionResult<ServiceResponse<string>>> Logout()
+        {
+            string rawUserId = this.User.FindFirstValue((ClaimTypes.NameIdentifier));
+
+            if (Convert.ToInt32(rawUserId) == 0)
+            {
+                return Unauthorized();
+            }
+
+
+            var result = await _authService.Logout(Convert.ToInt32(rawUserId));
+
+            return Ok(result);
+        }
     }
 }

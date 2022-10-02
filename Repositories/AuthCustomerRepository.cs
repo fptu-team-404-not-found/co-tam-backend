@@ -28,6 +28,7 @@ namespace Repositories
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
+                new Claim("_id", customer.Id.ToString()),
                 new Claim(ClaimTypes.Email, customer.Email),
                 new Claim(ClaimTypes.Name, customer.Name.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
