@@ -13,5 +13,6 @@ namespace BusinessObject.Models
         public bool? IsRevoked { get; set; }
         public DateTime? IssuedAt { get; set; }
         public DateTime? ExpiredAt { get; set; }
+        public string? RtokenId { get; set; }
     }
 }

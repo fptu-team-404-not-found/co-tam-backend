@@ -18,7 +18,7 @@ namespace CoTamApp.Controllers
             _authCustomerService = authCustomerService;
         }
         [Authorize]
-        [HttpGet("login-with-customer")]
+        [HttpGet("customers/login")]
         public async Task<ActionResult<ServiceResponse<string>>> LoginWithCustomer()
         {
             string email = this.User.FindFirstValue(ClaimTypes.Email);

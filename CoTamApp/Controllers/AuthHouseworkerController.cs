@@ -18,7 +18,7 @@ namespace CoTamApp.Controllers
             _authHouseworkerService = authHouseworkerService;
         }
         [Authorize]
-        [HttpGet("login-with-houseworker")]
+        [HttpGet("houseworkers/login")]
         public async Task<ActionResult<ServiceResponse<string>>> LoginWithHouseworker()
         {
             string email = this.User.FindFirstValue(ClaimTypes.Email);
