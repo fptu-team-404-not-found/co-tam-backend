@@ -76,7 +76,7 @@ namespace Repositories
                 return new ServiceResponse<string>
                 {
                     Data = CreateTokenWithCustomer(newCus),
-                    Message = "Create Account Successfully And Now Login Successfully",
+                    Message = "Create acount successfully and now login successfully",
                     Success = true
                 };
 
