@@ -10,6 +10,11 @@ namespace Services.IServices
 {
     public interface IHouseService
     {
-        Task<Response<House>> GetHouseById(int id);
+        Task<Response<House>> GetHouseById(string id);
+        Task<Response<List<House>>> GetHouseListByCustomerId(string customerId);
+        Task<Response<House>> AddHouseForCustomer(House house);
+        Task<Response<House>> UpdateHouseForCustomer(House house);
+        Task<Response<House>> DeleteHouseForCustomer(House house);
+        Task<Response<int>> CountHousesByCustomerId(int customerId);
     }
 }

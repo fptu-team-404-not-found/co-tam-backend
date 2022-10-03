@@ -7,7 +7,7 @@ using Services.IServices;
 
 namespace CoTamApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/customers")]
     [ApiController]
     public class HouseController : ControllerBase
     {
@@ -18,18 +18,137 @@ namespace CoTamApp.Controllers
             _houseService = houseService;
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
-        [HttpGet("house/{id}")]
-        public async Task<ActionResult<Response<House>>> GetHouseById(int id)
+        /// <summary>
+        /// Get a specific House.
+        /// </summary>
+        /// 
+        /// <param name="id"></param>
+        /// <param name="customerId"></param>
+        /// 
+        /// <returns>A specific House by Id.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return a single house by Id.
+        /// - Sample request: GET /api/customers/1/houses/1
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="400">If Invalid ID supplied</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(House), 200)]
+        [Produces("application/json")]
+        [HttpGet("{customerId}/houses/{id}")]
+        public async Task<ActionResult<Response<House>>> GetHouseById(string id, string customerId)
         {
-            var res = await _houseService.GetHouseById(id);
-            if (!res.Success)
+            try
             {
-                return BadRequest(res);
-            }
+                var res = await _houseService.GetHouseById(id);
+                if (!res.Success)
+                {
+                    return BadRequest(res);
+                }
 
-            return Ok(res);
+                return Ok(res);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
+        /// <summary>
+        /// Get a House List by customerId.
+        /// </summary>
+        /// 
+        /// <param name="customerId"></param>
+        /// 
+        /// <returns>A House List by Customer Id.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return a house list by customer id.
+        /// - Sample request: GET /api/customers/1/houses
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="400">If Invalid ID supplied</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(House), 200)]
+        [Produces("application/json")]
+        [HttpGet("{customerId}/houses")]
+        public async Task<ActionResult<Response<List<House>>>> GetHouseListByCustomerId(string customerId)
+        {
+            try
+            {
+                var res = await _houseService.GetHouseListByCustomerId(customerId);
+                if (!res.Success)
+                {
+                    return BadRequest(res);
+                }
+
+                return Ok(res);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        /// <summary>
+        /// Add a House List for a customer.
+        /// </summary>
+        /// 
+        /// <param name="house"></param>
+        /// 
+        /// <returns>The added house</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Add a House List for a customer.
+        /// - Sample request: POST /api/customers/1/houses
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="400">If Invalid ID supplied</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(House), 200)]
+        [Produces("application/json")]
+        [HttpPost("{house.customerId}/houses")]
+        public async Task<ActionResult<Response<House>>> AddHouseForCustomer(House house)
+        {
+            try
+            {
+                var res = await _houseService.AddHouseForCustomer(house);
+                if (!res.Success)
+                {
+                    return BadRequest(res);
+                }
+
+                return Ok(res);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("{house.customerId}/houses/{house.Id}")]
+        public async Task<ActionResult<Response<House>>> UpdateHouseForCustomer(House house)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{house.customerId}/houses/{house.Id}")]
+        public async Task<ActionResult<Response<House>>> DeleteHouseForCustomer(House house)
+        {
+            return Ok();
+        }
+
+        [HttpGet("{house.customerId}/houses/count")]
+        public async Task<ActionResult<Response<House>>> CountHouseForCustomer(House house)
+        {
+            return Ok();
+        }
     }
 }
