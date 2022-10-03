@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +33,7 @@ namespace Repositories
                 new Claim("_id", houseWorker.Id.ToString()),
                 new Claim(ClaimTypes.Email, houseWorker.Email),
                 new Claim(ClaimTypes.Name, houseWorker.Name.ToString()),
+                new Claim(ClaimTypes.Role, "Houseworker"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -50,13 +52,36 @@ namespace Repositories
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             var accessToken = tokenHandler.WriteToken(token);
-
+            var refreshToken = GenerateRefreshToken();
+            var refreshTokenEntity = new RefreshToken
+            {
+                RtokenId = Guid.NewGuid().ToString(),
+                JwtId = token.Id,
+                UserId = houseWorker.Id,
+                Token = refreshToken,
+                IsUsed = false,
+                IsRevoked = false,
+                IssuedAt = DateTime.Now,
+                ExpiredAt = DateTime.Now
+            };
+            _dbContext.RefreshTokens.Add(refreshTokenEntity);
+            _dbContext.SaveChanges();
             return new TokenModel
             {
                 AccessToken = accessToken,
+                RefreshToken = refreshToken
             };
         }
 
+        private string GenerateRefreshToken()
+        {
+            var random = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(random);
+                return Convert.ToBase64String(random);
+            }
+        }
 
         public async Task<ServiceResponse<string>> LoginWithHouseworker(string email, string name)
         {
@@ -79,6 +104,26 @@ namespace Repositories
                 };
 
             }
+        }
+        public async Task<ServiceResponse<string>> Logout(int userId)
+        {
+            var refresh = await _dbContext.RefreshTokens.FirstOrDefaultAsync(p => p.UserId == userId);
+            if (refresh != null)
+            {
+
+                _dbContext.RefreshTokens.Remove(refresh);
+                await _dbContext.SaveChangesAsync();
+                return new ServiceResponse<string>
+                {
+                    Success = true,
+                    Message = "Success"
+                };
+            }
+            return new ServiceResponse<string>
+            {
+                Success = false,
+                Message = "Failed"
+            };
         }
     }
 }

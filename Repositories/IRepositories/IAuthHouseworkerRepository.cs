@@ -10,5 +10,6 @@ namespace Repositories.IRepositories
     public interface IAuthHouseworkerRepository
     {
         Task<ServiceResponse<string>> LoginWithHouseworker(string email, string name);
+        Task<ServiceResponse<string>> Logout(int userId);
     }
 }
