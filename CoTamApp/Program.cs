@@ -13,6 +13,7 @@ using Repositories.ValidationHandling;
 using Repositories.IRepositories;
 using Services.IServices;
 using System.Reflection;
+using Services.ValidationHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,6 +97,9 @@ builder.Services.AddScoped<IAuthHouseworkerRepository, AuthHouseworkerRepository
 
 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
 builder.Services.AddScoped<IHouseService, HouseService>();
+builder.Services.AddScoped<HouseValidation>();
+
+builder.Services.AddScoped<CustomerValidation>();
 
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
