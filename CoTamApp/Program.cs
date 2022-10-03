@@ -104,8 +104,10 @@ builder.Services.AddScoped<CustomerValidation>();
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
 
-builder.Services.AddScoped<ValidationAdminManager>();
 builder.Services.AddScoped<AuthController>();
+
+builder.Services.AddScoped<ValidationAdminManager>();
+builder.Services.AddScoped<PromotionValidation>();
 
 var app = builder.Build();
 
