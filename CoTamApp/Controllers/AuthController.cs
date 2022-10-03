@@ -15,7 +15,6 @@ namespace CoTamApp.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-       
         private readonly IAuthService _authService;
 
         public AuthController(IAuthService authService)
@@ -61,7 +60,6 @@ namespace CoTamApp.Controllers
             {
                 return Unauthorized();
             }
-
 
             var result = await _authService.Logout(Convert.ToInt32(rawUserId));
 

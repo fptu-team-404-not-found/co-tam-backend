@@ -10,5 +10,6 @@ namespace Services.IServices
     public interface IAuthHouseworkerService
     {
         Task<ServiceResponse<string>> LoginWithHouseworker(string email, string name);
+        Task<ServiceResponse<string>> Logout(int userId);
     }
 }

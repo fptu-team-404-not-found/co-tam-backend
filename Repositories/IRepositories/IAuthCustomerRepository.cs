@@ -10,5 +10,6 @@ namespace Repositories.IRepositories
     public interface IAuthCustomerRepository
     {
         Task<ServiceResponse<string>> LoginWithCustomer(string email, string name);
+        Task<ServiceResponse<string>> Logout(int userId);
     }
 }
