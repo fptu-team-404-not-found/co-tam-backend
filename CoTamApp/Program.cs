@@ -13,6 +13,7 @@ using Repositories.ValidationHandling;
 using Repositories.IRepositories;
 using Services.IServices;
 using System.Reflection;
+using Services.ValidationHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -100,8 +101,10 @@ builder.Services.AddScoped<IHouseService, HouseService>();
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
 
-builder.Services.AddScoped<ValidationAdminManager>();
 builder.Services.AddScoped<AuthController>();
+
+builder.Services.AddScoped<ValidationAdminManager>();
+builder.Services.AddScoped<PromotionValidation>();
 
 var app = builder.Build();
 

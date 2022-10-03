@@ -10,5 +10,6 @@ namespace Repositories.IRepositories
     public interface IPromotionRepository
     {
         Promotion GetPromotionById(int id);
+        void UpdatePromotion(Promotion promotion);
     }
 }

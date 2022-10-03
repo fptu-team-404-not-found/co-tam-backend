@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using Repositories.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,19 @@ namespace Repositories
             }
 
             return promotion;
+        }
+
+        public void UpdatePromotion(Promotion promotion)
+        {
+            try
+            {
+                _cotamContext.Entry<Promotion>(promotion).State = EntityState.Modified;
+                _cotamContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
