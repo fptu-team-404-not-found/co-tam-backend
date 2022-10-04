@@ -104,6 +104,12 @@ builder.Services.AddScoped<CustomerValidation>();
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
 
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+
+builder.Services.AddScoped<IManagerRepository, ManagerReposiotory>();
+builder.Services.AddScoped<IManagerService, ManagerService>();
+
 builder.Services.AddScoped<AuthController>();
 
 builder.Services.AddScoped<ValidationAdminManager>();

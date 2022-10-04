@@ -218,18 +218,7 @@ namespace Repositories
                 Message = "Login failed"
             };
         }
-        public async Task<ServiceResponse<AdminManager>> GetAdminManager(int id)
-        {
-
-            var ad = await _dbContext.AdminManagers.FirstOrDefaultAsync(x => x.Id == id);
-            return new ServiceResponse<AdminManager>
-            {
-                Data = ad,
-                Message = "Successfully",
-                Success = true
-                
-            };
-        }
+        
         public async Task<ServiceResponse<string>> Logout(int userId)
         {
             var refresh = await _dbContext.RefreshTokens.FirstOrDefaultAsync(p => p.UserId == userId);
