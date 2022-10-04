@@ -33,14 +33,6 @@ namespace CoTamApp.Controllers
             return Ok(res);
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
-        [HttpGet("admins/{id}")]
-        public async Task<ActionResult<ServiceResponse<AdminManager>>> GetAdmin(int id)
-        {
-
-            return Ok(await _authService.GetAdminManager(id));
-
-        }
         /*[Authorize]
         [HttpPost("Renew")]
         public async Task<ActionResult<ServiceResponse<string>>> RenewToken(TokenModel model)
