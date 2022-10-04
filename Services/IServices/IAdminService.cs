@@ -10,5 +10,6 @@ namespace Services.IServices
     public interface IAdminService
     {
         Task<Response<AdminManager>> GetAdmin_ManagerById(int id);
+        Task<Response<List<AdminManager>>> GetAllAdminWithPagination(int page);
     }
 }

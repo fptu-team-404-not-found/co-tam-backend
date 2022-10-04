@@ -10,5 +10,6 @@ namespace Repositories.IRepositories
     public interface IAdminRepository
     {
         AdminManager GetAdmin_ManagerById(int id);
+        List<AdminManager> GetAllAdminWithPagination(int page);
     }
 }

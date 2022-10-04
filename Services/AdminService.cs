@@ -45,5 +45,28 @@ namespace Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Response<List<AdminManager>>> GetAllAdminWithPagination(int page)
+        {
+            try
+            {
+                if (page <= 1)
+                {
+                    page = 1;
+                }
+                var lst = _adminRepository.GetAllAdminWithPagination(page);
+                return new Response<List<AdminManager>>
+                {
+                    Data = lst,
+                    Message = "Thành Công",
+                    Success = true
+                };
+               
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
