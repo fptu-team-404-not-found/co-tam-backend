@@ -16,6 +16,28 @@ namespace Repositories
         {
             _dbContext = cotamContext;
         }
+
+        public bool DisableOrEnableAdmin(int adminId)
+        {
+            var ad = _dbContext.AdminManagers.FirstOrDefault(x => x.Id == adminId && x.RoleId == 1);
+            if (ad != null)
+            {
+                if (ad.Active == true)
+                {
+                    ad.Active = false;
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                else 
+                {
+                    ad.Active = true;
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public AdminManager GetAdmin_ManagerById(int id)
         {
             var ad = _dbContext.AdminManagers.FirstOrDefault(x => x.Id == id);
