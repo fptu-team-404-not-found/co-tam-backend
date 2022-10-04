@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Models;
 using Repositories.IRepositories;
 using Services.IServices;
+using Services.ValidationHandling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,35 @@ namespace Services
     public class ManagerService : IManagerService
     {
         private readonly IManagerRepository _managerRepository;
+        private readonly ManagerValidation _managerValidation;
 
-        public ManagerService(IManagerRepository managerRepository)
+        public ManagerService(IManagerRepository managerRepository, ManagerValidation managerValidation)
         {
             _managerRepository = managerRepository;
+            _managerValidation = managerValidation;
+        }
+
+        public async Task<Response<string>> CreateNewManager(AdminManager manager)
+        {
+            var validate = _managerValidation.CheckCreateNewManager(manager);
+            if (validate != "ok")
+            {
+                return new Response<string>
+                {
+                    Message = validate,
+                    Success = false,
+                    StatusCode = 400
+                };
+            }
+            manager.RoleId = 2;
+            _managerRepository.CreateNewManager(manager);
+            return new Response<string>
+            {
+                Data = manager.Id.ToString(),
+                Message = "Tạo Mới Manager Thành Công",
+                Success = true,
+                StatusCode = 201
+            };
         }
 
         public async Task<Response<string>> DisableOrEnableManager(int managerId)
@@ -64,6 +90,38 @@ namespace Services
                     Success = true,
                     StatusCode = 200
                 };
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<AdminManager>> GetManager(int managerId)
+        {
+            try
+            {
+                var manager = _managerRepository.GetManager(managerId);
+                if (manager != null)
+                {
+                    return new Response<AdminManager>
+                    {
+                        Data = manager,
+                        Message = "Thành Công",
+                        Success = true,
+                        StatusCode = 200
+                    };
+                }
+                else 
+                {
+                    return new Response<AdminManager>
+                    {
+                        Message = "Không tìm thấy Manager",
+                        Success = false,
+                        StatusCode = 404
+                    };
+                }
 
             }
             catch (Exception ex)

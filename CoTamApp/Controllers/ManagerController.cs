@@ -35,5 +35,22 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<AdminManager>>> GetManagerById(int id)
+        {
+            var res = await _managerService.GetManager(id);
+            if (!res.Success)
+                return NotFound(res);
+            return Ok(res);
+        }
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+        [HttpPost]
+        public async Task<ActionResult<Response<string>>> CreateNewManager(AdminManager manager)
+        {
+            var res = await _managerService.CreateNewManager(manager);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }
