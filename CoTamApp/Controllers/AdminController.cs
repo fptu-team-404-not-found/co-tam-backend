@@ -8,7 +8,7 @@ using Services.IServices;
 namespace CoTamApp.Controllers
 {
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
-    [Route("api/[controller]")]
+    [Route("api/admins")]
     [ApiController]
     public class AdminController : ControllerBase
     {
@@ -18,10 +18,22 @@ namespace CoTamApp.Controllers
         {
             _adminService = adminService;
         }
-        [HttpGet("admins/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Response<AdminManager>>> GetAdmin_ManagerById(int id)
         {
-            return Ok(await _adminService.GetAdmin_ManagerById(id));
+            var res = await _adminService.GetAdmin_ManagerById(id);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
         }
+        [HttpGet("page/{page}")]
+        public async Task<ActionResult<Response<List<AdminManager>>>> GetListAdminWithPagination(int page)
+        {
+            var res = await _adminService.GetAllAdminWithPagination(page);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
+
     }
 }
