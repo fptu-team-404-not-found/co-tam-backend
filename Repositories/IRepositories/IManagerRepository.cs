@@ -11,5 +11,7 @@ namespace Repositories.IRepositories
     {
         List<AdminManager> GetAllManagerWithPagination(int page);
         bool DisableOrEnableManager(int managerId);
+        AdminManager GetManager(int managerId);
+        void CreateNewManager(AdminManager manager);
     }
 }

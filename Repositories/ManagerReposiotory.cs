@@ -17,6 +17,12 @@ namespace Repositories
             _dbContext = context;
         }
 
+        public void CreateNewManager(AdminManager manager)
+        {
+            _dbContext.AdminManagers.Add(manager);
+            _dbContext.SaveChanges();
+        }
+
         public bool DisableOrEnableManager(int managerId)
         {
             var manager = _dbContext.AdminManagers.FirstOrDefault(x => x.Id == managerId && x.RoleId == 2);
@@ -46,6 +52,12 @@ namespace Repositories
                         .Where(x => x.RoleId == 2).Skip((page - 1) * (int)pageResults)
                         .Take((int)pageResults).ToList();
             return list;
+        }
+
+        public AdminManager GetManager(int managerId)
+        {
+            var manager = _dbContext.AdminManagers.FirstOrDefault(x => x.Id == managerId && x.RoleId == 2);
+            return manager;
         }
     }
 }
