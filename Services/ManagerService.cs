@@ -17,6 +17,37 @@ namespace Services
         {
             _managerRepository = managerRepository;
         }
+
+        public async Task<Response<string>> DisableOrEnableManager(int managerId)
+        {
+            try
+            {
+                var result = _managerRepository.DisableOrEnableManager(managerId);
+                if (result)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Đã Thực Hiện Thành Công Thao Tác Disable/Enable ManagerAccount",
+                        Success = true,
+                        StatusCode = 200
+                    };
+                }
+                else
+                {
+                    return new Response<string>
+                    {
+                        Message = "Disable/Enable ManagerAccount Thất Bại",
+                        Success = false,
+                        StatusCode = 405
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<List<AdminManager>>> GetAllManagerWithPagination(int page)
         {
             try
@@ -30,7 +61,8 @@ namespace Services
                 {
                     Data = lst,
                     Message = "Thành Công",
-                    Success = true
+                    Success = true,
+                    StatusCode = 200
                 };
 
             }

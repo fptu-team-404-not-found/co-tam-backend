@@ -10,5 +10,6 @@ namespace Repositories.IRepositories
     public interface IManagerRepository
     {
         List<AdminManager> GetAllManagerWithPagination(int page);
+        bool DisableOrEnableManager(int managerId);
     }
 }

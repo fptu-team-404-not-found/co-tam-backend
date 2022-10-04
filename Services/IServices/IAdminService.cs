@@ -11,5 +11,6 @@ namespace Services.IServices
     {
         Task<Response<AdminManager>> GetAdmin_ManagerById(int id);
         Task<Response<List<AdminManager>>> GetAllAdminWithPagination(int page);
+        Task<Response<string>> DisableOrEnableAdmin(int adminId);
     }
 }

@@ -16,6 +16,28 @@ namespace Repositories
         {
             _dbContext = context;
         }
+
+        public bool DisableOrEnableManager(int managerId)
+        {
+            var manager = _dbContext.AdminManagers.FirstOrDefault(x => x.Id == managerId && x.RoleId == 2);
+            if (manager != null)
+            {
+                if (manager.Active == true)
+                {
+                    manager.Active = false;
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    manager.Active = true;
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public List<AdminManager> GetAllManagerWithPagination(int page)
         {
             var pageResults = 2f;

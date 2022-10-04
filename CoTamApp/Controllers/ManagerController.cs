@@ -26,5 +26,14 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response<string>>> DisableOrEnableManagerAccount(int id)
+        {
+            var res = await _managerService.DisableOrEnableManager(id);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }

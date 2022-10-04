@@ -10,5 +10,6 @@ namespace Services.IServices
     public interface IManagerService
     {
         Task<Response<List<AdminManager>>> GetAllManagerWithPagination(int page);
+        Task<Response<string>> DisableOrEnableManager(int managerId);
     }
 }

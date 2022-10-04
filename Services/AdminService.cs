@@ -17,6 +17,36 @@ namespace Services
         {
             _adminRepository = adminRepository;
         }
+
+        public async Task<Response<string>> DisableOrEnableAdmin(int adminId)
+        {
+            try
+            {
+                var result = _adminRepository.DisableOrEnableAdmin(adminId);
+                if (result)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Đã Thực Hiện Thành Công Thao Tác Disable/Enable AdminAccount",
+                        Success = true,
+                        StatusCode = 200
+                    };
+                }
+                else {
+                    return new Response<string>
+                    {
+                        Message = "Disable/Enable AdminAccount Thất Bại",
+                        Success = false,
+                        StatusCode = 405
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<AdminManager>> GetAdmin_ManagerById(int id)
         {
             try
@@ -59,7 +89,8 @@ namespace Services
                 {
                     Data = lst,
                     Message = "Thành Công",
-                    Success = true
+                    Success = true,
+                    StatusCode = 200
                 };
                
             }

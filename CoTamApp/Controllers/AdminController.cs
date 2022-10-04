@@ -34,6 +34,13 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
-
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response<string>>> DisableOrEnableAdminAccount(int id)
+        {
+            var res = await _adminService.DisableOrEnableAdmin(id);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }
