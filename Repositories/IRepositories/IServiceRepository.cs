@@ -10,5 +10,7 @@ namespace Repositories.IRepositories
     public interface IServiceRepository
     {
         Service GetServiceById(int id);
+        List<Service> GetAll();
+        void CreatAService(Service service);
     }
 }

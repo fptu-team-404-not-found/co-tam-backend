@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 using Services.IServices;
 using System.ComponentModel.DataAnnotations;
 
@@ -39,7 +40,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Promotion), 200)]
         [Produces("application/json")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPromotionById(string id)
+        public async Task<ActionResult<Response<Promotion>>> GetPromotionById(string id)
         {
             try
             {
@@ -66,6 +67,18 @@ namespace CoTamApp.Controllers
         /// Description: 
         /// - Return an update existing promotion.
         /// - Sample request: PUT /api/promotions
+        ///     
+        ///         {
+        ///             "id": 0,
+        ///             "code": "string",
+        ///             "description": "string",
+        ///             "value": 0,
+        ///             "discount": 0,
+        ///             "amount": 0,
+        ///             "startDate": "2022-10-05 10:00:30",
+        ///             "endDate": "2022-10-05 10:00:30",
+        ///         }
+        ///     
         /// </remarks>
         /// 
         /// <response code="200">Successfully</response>
@@ -76,7 +89,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Promotion), 200)]
         [Produces("application/json")]
         [HttpPut]
-        public async Task<IActionResult> UpdatePromotion([Required]Promotion promotion)
+        public async Task<ActionResult<Response<Promotion>>> UpdatePromotion([Required]Promotion promotion)
         {
             try
             {

@@ -1,12 +1,17 @@
 ﻿using BusinessObject.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 using Services.IServices;
+using System.ComponentModel.DataAnnotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CoTamApp.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Everything about services <3
+    /// </summary>
+    [Route("api/services")]
     [ApiController]
     public class ServiceController : ControllerBase
     {
@@ -17,11 +22,35 @@ namespace CoTamApp.Controllers
             _serviceService = serviceService;
         }
 
-        // GET: api/<ServiceController>
+        /// <summary>
+        /// Get a list of all services.
+        /// </summary>
+        /// 
+        /// <returns>A list of all services.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return a list of all services.
+        /// - Sample request: GET /api/services
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="404">List of services not found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(List<Service>), 200)]
+        [Produces("application/json")]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<Response<List<Service>>>> GetListServices()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var response = await _serviceService.GetReponseServices();
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -47,7 +76,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Service), 200)]
         [Produces("application/json")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetServiceById(string id)
+        public async Task<ActionResult<Response<Service>>> GetServiceById(string id)
         {
             try
             {
@@ -60,22 +89,103 @@ namespace CoTamApp.Controllers
             }
         }
 
-        // POST api/<ServiceController>
+        /// <summary>
+        /// Create a new service.
+        /// </summary>
+        /// 
+        /// <param name="service">
+        /// Service object that needs to be created.
+        /// </param>
+        /// 
+        /// <returns>A new service.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return a new service.
+        /// - Sample request: POST /api/services
+        ///     
+        ///         {
+        ///             "name": "string",
+        ///             "description": "string",
+        ///             "price": 0
+        ///         }
+        ///     
+        /// </remarks>
+        /// 
+        /// <response code="201">Successfully</response>
+        /// <response code="422">Validation exception</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(Service), 201)]
+        [Produces("application/json")]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<Response<Service>>> CreateAService([Required] Service service)
         {
+            try
+            {
+                var response = await _serviceService.GetResponseCreateAService(service);
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
 
-        // PUT api/<ServiceController>/5
+        /// <summary>
+        /// Update an existing service.
+        /// </summary>
+        /// 
+        /// <param name="service">
+        /// Service object that needs to be updated.
+        /// </param>
+        /// 
+        /// <returns>An update existing service.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return an update existing service.
+        /// - Sample request: PUT /api/services
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="400">If Invalid ID supplied</response>
+        /// <response code="404">Service not found</response>
+        /// <response code="422">Validation exception</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(Service), 200)]
+        [Produces("application/json")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<Response<Service>>> UpdateService([Required] Service service)
         {
+            return Ok();
         }
 
-        // DELETE api/<ServiceController>/5
+        /// <summary>
+        /// Delete a specific service.
+        /// </summary>
+        /// 
+        /// <param name="id">
+        /// Service Id which is needed for deleting a service.
+        /// </param>
+        /// 
+        /// <returns>Delete action status.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return delete action status.
+        /// - Sample request: DELETE /api/services/1
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="400">If Invalid Id supplied</response>
+        /// <response code="404">Service not found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(Service), 200)]
+        [Produces("application/json")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<Response<Service>>> DeleteService(int id)
         {
+            return Ok();
         }
     }
 }
