@@ -117,6 +117,10 @@ builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<ServiceValidation>();
 
+builder.Services.AddScoped<IExtraServiceRepository, ExtraServiceRepository>();
+builder.Services.AddScoped<IExtraServiceService, ExtraServiceService>();
+builder.Services.AddScoped<ExtraServiceValidation>();
+
 builder.Services.AddScoped<AuthController>();
 
 var app = builder.Build();
