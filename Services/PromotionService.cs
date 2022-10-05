@@ -26,7 +26,8 @@ namespace Services
                     return new Response<Promotion>
                     {
                         Message = "Id không khả dụng",
-                        Success = false
+                        Success = false,
+                        StatusCode = 400
                     };
                 } 
 
@@ -37,7 +38,8 @@ namespace Services
                     return new Response<Promotion>
                     {
                         Message = "Ưu đãi không tồn tại!",
-                        Success = false
+                        Success = false,
+                        StatusCode = 404
                     };
                 }
 
@@ -45,7 +47,8 @@ namespace Services
                 {
                     Data = promotion,
                     Message = "Thành công",
-                    Success = true
+                    Success = true,
+                    StatusCode = 200
                 };
             }
             catch (Exception ex)
@@ -58,6 +61,17 @@ namespace Services
         {
             try
             {
+                int _id = _promotionValidation.ValidateId(promotion.Id);
+                if (_id < 0)
+                {
+                    return new Response<Promotion>
+                    {
+                        Message = "Id không khả dụng",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+
                 Promotion _promotion = _promotionRepository.GetPromotionById(promotion.Id);
                 if (_promotion == null)
                 {
@@ -69,7 +83,7 @@ namespace Services
                     };
                 }
                 
-                // TODO: Validation Promotion Input
+                // TODO: Validation Promotion Input - Status code = 422
 
                 _promotionRepository.UpdatePromotion(promotion);
 
