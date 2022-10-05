@@ -113,6 +113,7 @@ namespace CoTamApp.Controllers
         /// <response code="201">Successfully</response>
         /// <response code="400">Bad request</response>
         /// <response code="500">Internal server error</response>
+        [Consumes("application/json")]
         [ProducesResponseType(typeof(Response<Service>), 201)]
         [Produces("application/json")]
         [HttpPost]
@@ -161,6 +162,7 @@ namespace CoTamApp.Controllers
         /// <response code="400">If Invalid ID supplied</response>
         /// <response code="404">Service not found</response>
         /// <response code="500">Internal server error</response>
+        [Consumes("application/json")]
         [ProducesResponseType(typeof(Response<Service>), 200)]
         [Produces("application/json")]
         [HttpPut("{id}")]
@@ -197,7 +199,6 @@ namespace CoTamApp.Controllers
         /// <response code="400">If Invalid Id supplied</response>
         /// <response code="404">Service not found</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(Response<Service>), 200)]
         [Produces("application/json")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<Service>>> DeleteService(string id)

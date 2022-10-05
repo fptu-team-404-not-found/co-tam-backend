@@ -49,7 +49,7 @@ namespace Repositories
             List<Service> services = new List<Service>();
             try
             {
-                services = _cotamContext.Services.ToList();
+                services = _cotamContext.Services.Where(x => x.Active == 1).ToList();
                 return services;
             }
             catch (Exception ex)

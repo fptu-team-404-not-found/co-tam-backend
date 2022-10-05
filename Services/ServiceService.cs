@@ -53,7 +53,6 @@ namespace Services
                 
                 return new Response<Service>
                 {
-                    Data = service,
                     Message = "Thành công",
                     Success = true,
                     StatusCode = 200
