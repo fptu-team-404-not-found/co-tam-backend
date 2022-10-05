@@ -20,10 +20,5 @@ namespace Services.ValidationHandling
                 return -1;
             }
         }
-
-        internal int ValidateId(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

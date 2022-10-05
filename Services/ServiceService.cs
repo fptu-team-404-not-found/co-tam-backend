@@ -22,6 +22,49 @@ namespace Services
             _serviceValidation = serviceValidation;
         }
 
+        public async Task<Response<Service>> GetReponseDeleteService(string id)
+        {
+            try
+            {
+                int _id = _serviceValidation.ValidateId(id);
+                if (_id < 0)
+                {
+                    return new Response<Service>
+                    {
+                        Message = "Id không khả dụng",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+
+                Service service = _serviceRepository.GetServiceById(_id);
+                if (service == null)
+                {
+                    return new Response<Service>
+                    {
+                        Message = "Dịch vụ không tồn tại!",
+                        Success = false,
+                        StatusCode = 404
+                    };
+                }
+
+                service.Active = 0;
+                _serviceRepository.DeleteAService(service);
+                
+                return new Response<Service>
+                {
+                    Data = service,
+                    Message = "Thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<Service>> GetReponseServiceById(string id)
         {
             try
@@ -93,13 +136,64 @@ namespace Services
             }
         }
 
+        public async Task<Response<Service>> GetReponseUpdateService(string id, Service service)
+        {
+            try
+            {
+                int _id = _serviceValidation.ValidateId(id);
+                if (_id < 0)
+                {
+                    return new Response<Service>
+                    {
+                        Message = "Id không khả dụng",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+
+                Service _service = _serviceRepository.GetServiceById(int.Parse(id));
+                if (_service == null)
+                {
+                    return new Response<Service>
+                    {
+                        Message = "Dịch vụ không tồn tại!",
+                        Success = false,
+                        StatusCode = 404,
+                    };
+                }
+
+                service.Id = int.Parse(id);
+                _serviceRepository.UpdateAService(service);
+
+                return new Response<Service>
+                {
+                    Data = service,
+                    Message = "Thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<Service>> GetResponseCreateAService(Service service)
         {
             try
             {
-                /// <response code="422">Validation exception</response>
+                if (service.Id != 0)
+                {
+                    return new Response<Service>
+                    {
+                        Message = "Không cần thêm Id khi tạo 1 dịch vụ mới",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
                 
-                _serviceRepository.CreatAService(service);
+                _serviceRepository.CreateAService(service);
                 return new Response<Service>
                 {
                     Data = service,
