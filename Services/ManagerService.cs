@@ -82,21 +82,23 @@ namespace Services
             }
         }
 
-        public async Task<Response<List<AdminManager>>> GetAllManagerWithPagination(int page)
+        public async Task<Response<List<AdminManager>>> GetAllManagerWithPagination(int pageIndex, int pageSize)
         {
             try
             {
-                if (page <= 1)
+                if (pageIndex <= 1)
                 {
-                    page = 1;
+                    pageIndex = 1;
                 }
-                var lst = _managerRepository.GetAllManagerWithPagination(page);
+                var lst = _managerRepository.GetAllManagerWithPagination(pageIndex, pageSize);
+                var totalItem = _managerRepository.GetAllManager().Count();
                 return new Response<List<AdminManager>>
                 {
                     Data = lst,
                     Message = "Thành Công",
                     Success = true,
-                    StatusCode = 200
+                    StatusCode = 200,
+                    TotalItem = totalItem
                 };
 
             }

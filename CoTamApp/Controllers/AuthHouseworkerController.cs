@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace CoTamApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth-houseworker")]
     [ApiController]
     public class AuthHouseworkerController : ControllerBase
     {
@@ -30,7 +30,7 @@ namespace CoTamApp.Controllers
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpDelete("Logout")]
+        [HttpDelete("logout")]
         public async Task<ActionResult<ServiceResponse<string>>> Logout()
         {
             string rawUserId = this.User.FindFirstValue((ClaimTypes.NameIdentifier));

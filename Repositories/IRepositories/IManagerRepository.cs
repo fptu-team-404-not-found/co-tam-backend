@@ -9,9 +9,10 @@ namespace Repositories.IRepositories
 {
     public interface IManagerRepository
     {
-        List<AdminManager> GetAllManagerWithPagination(int page);
+        List<AdminManager> GetAllManagerWithPagination(int pageIndex, int pageSize);
         bool DisableOrEnableManager(int managerId);
         AdminManager GetManager(int managerId);
         void CreateNewManager(AdminManager manager);
+        List<AdminManager> GetAllManager();
     }
 }

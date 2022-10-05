@@ -10,7 +10,8 @@ namespace Repositories.IRepositories
     public interface IAdminRepository
     {
         AdminManager GetAdmin_ManagerById(int id);
-        List<AdminManager> GetAllAdminWithPagination(int page);
+        List<AdminManager> GetAllAdminWithPagination(int page, int pageSize);
         bool DisableOrEnableAdmin(int adminId);
+        List<AdminManager> GetAllAdmin();
     }
 }
