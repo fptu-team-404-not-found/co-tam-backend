@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.ValidationHandling
 {
-    public class PromotionValidation
+    public class ServiceValidation
     {
         public int ValidateId(string id)
         {
@@ -19,11 +19,6 @@ namespace Services.ValidationHandling
             {
                 return -1;
             }
-        }
-
-        internal int ValidateId(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
