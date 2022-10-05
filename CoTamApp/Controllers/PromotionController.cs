@@ -40,7 +40,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Promotion), 200)]
         [Produces("application/json")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<Promotion>>> GetPromotionById([FromQuery] string id)
+        public async Task<ActionResult<Response<Promotion>>> GetPromotionById(string id)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Promotion), 200)]
         [Produces("application/json")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Response<Promotion>>> UpdatePromotion([FromQuery] string id, [Required][FromBody] Promotion promotion)
+        public async Task<ActionResult<Response<Promotion>>> UpdatePromotion(string id, [Required][FromBody] Promotion promotion)
         {
             try
             {
