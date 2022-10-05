@@ -74,7 +74,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Response<Service>), 200)]
         [Produces("application/json")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<Service>>> GetServiceById(string id)
+        public async Task<ActionResult<Response<Service>>> GetServiceById([FromQuery] string id)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Response<Service>), 201)]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<ActionResult<Response<Service>>> CreateAService([Required] Service service)
+        public async Task<ActionResult<Response<Service>>> CreateAService([Required][FromBody] Service service)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Response<Service>), 200)]
         [Produces("application/json")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Response<Service>>> UpdateService(string id, [Required] Service service)
+        public async Task<ActionResult<Response<Service>>> UpdateService([FromQuery] string id, [Required][FromBody] Service service)
         {
             try
             {
@@ -201,7 +201,7 @@ namespace CoTamApp.Controllers
         /// <response code="500">Internal server error</response>
         [Produces("application/json")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<Service>>> DeleteService(string id)
+        public async Task<ActionResult<Response<Service>>> DeleteService([FromQuery] string id)
         {
             try
             {

@@ -40,7 +40,7 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Promotion), 200)]
         [Produces("application/json")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<Promotion>>> GetPromotionById(string id)
+        public async Task<ActionResult<Response<Promotion>>> GetPromotionById([FromQuery] string id)
         {
             try
             {
@@ -90,10 +90,11 @@ namespace CoTamApp.Controllers
         /// <response code="404">Promotion not found</response>
         /// <response code="422">Validation exception</response>
         /// <response code="500">Internal server error</response>
+        [Consumes("application/json")]
         [ProducesResponseType(typeof(Promotion), 200)]
         [Produces("application/json")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Response<Promotion>>> UpdatePromotion(string id, [Required] Promotion promotion)
+        public async Task<ActionResult<Response<Promotion>>> UpdatePromotion([FromQuery] string id, [Required][FromBody] Promotion promotion)
         {
             try
             {
