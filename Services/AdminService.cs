@@ -76,7 +76,7 @@ namespace Services
             }
         }
 
-        public async Task<Response<List<AdminManager>>> GetAllAdminWithPagination(int page)
+        public async Task<Response<List<AdminManager>>> GetAllAdminWithPagination(int page, int pageSize)
         {
             try
             {
@@ -84,13 +84,15 @@ namespace Services
                 {
                     page = 1;
                 }
-                var lst = _adminRepository.GetAllAdminWithPagination(page);
+                var lst = _adminRepository.GetAllAdminWithPagination(page, pageSize);
+                var totalItem = _adminRepository.GetAllAdmin().Count();
                 return new Response<List<AdminManager>>
                 {
                     Data = lst,
                     Message = "Thành Công",
                     Success = true,
-                    StatusCode = 200
+                    StatusCode = 200,
+                    TotalItem = totalItem
                 };
                
             }

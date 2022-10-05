@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace CoTamApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -43,7 +43,7 @@ namespace CoTamApp.Controllers
             return Ok(response);
         }*/
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpDelete("Logout")]
+        [HttpDelete("logout")]
         public async Task<ActionResult<ServiceResponse<string>>> Logout()
         {
             string rawUserId = this.User.FindFirstValue((ClaimTypes.NameIdentifier));

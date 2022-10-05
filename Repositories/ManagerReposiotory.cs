@@ -44,13 +44,18 @@ namespace Repositories
             return false;
         }
 
-        public List<AdminManager> GetAllManagerWithPagination(int page)
+        public List<AdminManager> GetAllManager()
         {
-            var pageResults = 2f;
+            var list = _dbContext.AdminManagers.Where(x => x.RoleId == 2).ToList();
+            return list;
+        }
+
+        public List<AdminManager> GetAllManagerWithPagination(int pageIndex, int pageSize)
+        {
             /*var pageCount = Math.Ceiling(_dbContext.AdminManagers.Count() / pageResults);*/
             var list = _dbContext.AdminManagers
-                        .Where(x => x.RoleId == 2).Skip((page - 1) * (int)pageResults)
-                        .Take((int)pageResults).ToList();
+                        .Where(x => x.RoleId == 2).Skip((pageIndex - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
             return list;
         }
 
