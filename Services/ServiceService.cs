@@ -62,5 +62,56 @@ namespace Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Response<List<Service>>> GetReponseServices()
+        {
+            try
+            {
+                List<Service> services = _serviceRepository.GetAll();
+
+                if (services == null)
+                {
+                    return new Response<List<Service>>
+                    {
+                        Message = "Danh sách dịch vụ không tồn tại!",
+                        Success = false,
+                        StatusCode = 404
+                    };
+                }
+
+                return new Response<List<Service>>
+                {
+                    Data = services,
+                    Message = "Thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<Service>> GetResponseCreateAService(Service service)
+        {
+            try
+            {
+                /// <response code="422">Validation exception</response>
+                
+                _serviceRepository.CreatAService(service);
+                return new Response<Service>
+                {
+                    Data = service,
+                    Message = "Thành công",
+                    Success = true,
+                    StatusCode = 201
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

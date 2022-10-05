@@ -17,6 +17,33 @@ namespace Repositories
             _cotamContext = cotamContext;
         }
 
+        public void CreatAService(Service service)
+        {
+            try
+            {
+                _cotamContext.Services.Add(service);
+                _cotamContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public List<Service> GetAll()
+        {
+            List<Service> services = new List<Service>();
+            try
+            {
+                services = _cotamContext.Services.ToList();
+                return services;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public Service GetServiceById(int id)
         {
             Service service = null;
