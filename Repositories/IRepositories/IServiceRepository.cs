@@ -11,6 +11,8 @@ namespace Repositories.IRepositories
     {
         Service GetServiceById(int id);
         List<Service> GetAll();
-        void CreatAService(Service service);
+        void CreateAService(Service service);
+        void UpdateAService(Service service);
+        void DeleteAService(Service service);
     }
 }

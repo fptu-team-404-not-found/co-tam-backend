@@ -57,6 +57,10 @@ namespace CoTamApp.Controllers
         /// Update an existing promotion.
         /// </summary>
         /// 
+        /// <param name="id">
+        /// Promotion Id which is needed for updating a promotion.
+        /// </param>
+        /// 
         /// <param name="promotion">
         /// Pomotion object that needs to be updated.
         /// </param>
@@ -66,18 +70,18 @@ namespace CoTamApp.Controllers
         /// <remarks>
         /// Description: 
         /// - Return an update existing promotion.
-        /// - Sample request: PUT /api/promotions
+        /// - Sample request: PUT /api/promotions/{id}
+        /// - Sample request body: 
         ///     
-        ///         {
-        ///             "id": 0,
-        ///             "code": "string",
-        ///             "description": "string",
-        ///             "value": 0,
-        ///             "discount": 0,
-        ///             "amount": 0,
-        ///             "startDate": "2022-10-05 10:00:30",
-        ///             "endDate": "2022-10-05 10:00:30",
-        ///         }
+        ///       {
+        ///           "code": "string",
+        ///           "description": "string",
+        ///           "value": 0,
+        ///           "discount": 0,
+        ///           "amount": 0,
+        ///           "startDate": "2022-10-05 10:00:30",
+        ///           "endDate": "2022-10-05 10:00:30",
+        ///       }
         ///     
         /// </remarks>
         /// 
@@ -88,12 +92,12 @@ namespace CoTamApp.Controllers
         /// <response code="500">Internal server error</response>
         [ProducesResponseType(typeof(Promotion), 200)]
         [Produces("application/json")]
-        [HttpPut]
-        public async Task<ActionResult<Response<Promotion>>> UpdatePromotion([Required]Promotion promotion)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Response<Promotion>>> UpdatePromotion(string id, [Required] Promotion promotion)
         {
             try
             {
-                var response = await _promotionService.GetReponseUpdatedPromotion(promotion);
+                var response = await _promotionService.GetReponseUpdatedPromotion(id, promotion);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)

@@ -57,11 +57,11 @@ namespace Services
             }
         }
 
-        public async Task<Response<Promotion>> GetReponseUpdatedPromotion(Promotion promotion)
+        public async Task<Response<Promotion>> GetReponseUpdatedPromotion(string id, Promotion promotion)
         {
             try
             {
-                int _id = _promotionValidation.ValidateId(promotion.Id);
+                int _id = _promotionValidation.ValidateId(id);
                 if (_id < 0)
                 {
                     return new Response<Promotion>
@@ -72,7 +72,7 @@ namespace Services
                     };
                 }
 
-                Promotion _promotion = _promotionRepository.GetPromotionById(promotion.Id);
+                Promotion _promotion = _promotionRepository.GetPromotionById(int.Parse(id));
                 if (_promotion == null)
                 {
                     return new Response<Promotion>
@@ -82,9 +82,10 @@ namespace Services
                         StatusCode = 404,
                     };
                 }
-                
+
                 // TODO: Validation Promotion Input - Status code = 422
 
+                promotion.Id = int.Parse(id);
                 _promotionRepository.UpdatePromotion(promotion);
 
                 return new Response<Promotion>

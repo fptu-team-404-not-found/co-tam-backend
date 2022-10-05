@@ -12,5 +12,7 @@ namespace Services.IServices
         Task<Response<Service>> GetReponseServiceById(string id);
         Task<Response<List<Service>>> GetReponseServices();
         Task<Response<Service>> GetResponseCreateAService(Service service);
+        Task<Response<Service>> GetReponseUpdateService(string id, Service service);
+        Task<Response<Service>> GetReponseDeleteService(string id);
     }
 }

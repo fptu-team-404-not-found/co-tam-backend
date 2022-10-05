@@ -4,12 +4,10 @@ using Services;
 using Services.IServices;
 using System.ComponentModel.DataAnnotations;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace CoTamApp.Controllers
 {
     /// <summary>
-    /// Everything about services <3
+    /// Everything about services.
     /// </summary>
     [Route("api/services")]
     [ApiController]
@@ -37,7 +35,7 @@ namespace CoTamApp.Controllers
         /// <response code="200">Successfully</response>
         /// <response code="404">List of services not found</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(List<Service>), 200)]
+        [ProducesResponseType(typeof(Response<List<Service>>), 200)]
         [Produces("application/json")]
         [HttpGet]
         public async Task<ActionResult<Response<List<Service>>>> GetListServices()
@@ -73,7 +71,7 @@ namespace CoTamApp.Controllers
         /// <response code="400">If Invalid Id supplied</response>
         /// <response code="404">Service not found</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(Service), 200)]
+        [ProducesResponseType(typeof(Response<Service>), 200)]
         [Produces("application/json")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Response<Service>>> GetServiceById(string id)
@@ -104,18 +102,18 @@ namespace CoTamApp.Controllers
         /// - Return a new service.
         /// - Sample request: POST /api/services
         ///     
-        ///         {
-        ///             "name": "string",
-        ///             "description": "string",
-        ///             "price": 0
-        ///         }
+        ///       {
+        ///           "name": "string",
+        ///           "description": "string",
+        ///           "price": 0
+        ///       }
         ///     
         /// </remarks>
         /// 
         /// <response code="201">Successfully</response>
-        /// <response code="422">Validation exception</response>
+        /// <response code="400">Bad request</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(Service), 201)]
+        [ProducesResponseType(typeof(Response<Service>), 201)]
         [Produces("application/json")]
         [HttpPost]
         public async Task<ActionResult<Response<Service>>> CreateAService([Required] Service service)
@@ -135,6 +133,10 @@ namespace CoTamApp.Controllers
         /// Update an existing service.
         /// </summary>
         /// 
+        /// <param name="id">
+        /// Service Id which is needed for updating a service.
+        /// </param>
+        /// 
         /// <param name="service">
         /// Service object that needs to be updated.
         /// </param>
@@ -144,20 +146,35 @@ namespace CoTamApp.Controllers
         /// <remarks>
         /// Description: 
         /// - Return an update existing service.
-        /// - Sample request: PUT /api/services
+        /// - Sample request: PUT /api/services/{id}
+        /// - Sample request body: 
+        ///     
+        ///       {
+        ///           "name": "string",
+        ///           "description": "string",
+        ///           "price": 0
+        ///       }
+        ///     
         /// </remarks>
         /// 
         /// <response code="200">Successfully</response>
         /// <response code="400">If Invalid ID supplied</response>
         /// <response code="404">Service not found</response>
-        /// <response code="422">Validation exception</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(Service), 200)]
+        [ProducesResponseType(typeof(Response<Service>), 200)]
         [Produces("application/json")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Response<Service>>> UpdateService([Required] Service service)
+        public async Task<ActionResult<Response<Service>>> UpdateService(string id, [Required] Service service)
         {
-            return Ok();
+            try
+            {
+                var response = await _serviceService.GetReponseUpdateService(id, service);
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -180,12 +197,20 @@ namespace CoTamApp.Controllers
         /// <response code="400">If Invalid Id supplied</response>
         /// <response code="404">Service not found</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(Service), 200)]
+        [ProducesResponseType(typeof(Response<Service>), 200)]
         [Produces("application/json")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<Service>>> DeleteService(int id)
+        public async Task<ActionResult<Response<Service>>> DeleteService(string id)
         {
-            return Ok();
+            try
+            {
+                var response = await _serviceService.GetReponseDeleteService(id);
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
     }
 }
