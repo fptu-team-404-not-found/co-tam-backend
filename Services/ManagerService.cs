@@ -33,8 +33,16 @@ namespace Services
                     StatusCode = 400
                 };
             }
-            manager.RoleId = 2;
-            _managerRepository.CreateNewManager(manager);
+            AdminManager addManager = new AdminManager();
+            addManager.Name = manager.Name;
+            addManager.Phone = manager.Phone;
+            addManager.DateOfBirth = manager.DateOfBirth;
+            addManager.Email = manager.Email;
+            addManager.LinkFacebook = manager.LinkFacebook;
+            addManager.Avatar = manager.Avatar;
+            addManager.Active = manager.Active;
+            addManager.RoleId = 2;
+            _managerRepository.CreateNewManager(addManager);
             return new Response<string>
             {
                 Data = manager.Id.ToString(),

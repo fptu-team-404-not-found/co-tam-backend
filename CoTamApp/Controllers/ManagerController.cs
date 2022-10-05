@@ -43,7 +43,7 @@ namespace CoTamApp.Controllers
                 return NotFound(res);
             return Ok(res);
         }
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<Response<string>>> CreateNewManager(AdminManager manager)
         {
