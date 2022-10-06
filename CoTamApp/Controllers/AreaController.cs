@@ -8,42 +8,42 @@ using System.ComponentModel.DataAnnotations;
 namespace CoTamApp.Controllers
 {
     /// <summary>
-    /// Everything about customers.
+    /// Everything about areas.
     /// </summary>
-    [Route("api/customers")]
+    [Route("api/areas")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class AreaController : ControllerBase
     {
-        private readonly ICustomerService _customerService;
+        private readonly IAreaService _areaService;
 
-        public CustomerController(ICustomerService customerService)
+        public AreaController(IAreaService areaService)
         {
-            _customerService = customerService;
+            _areaService = areaService;
         }
 
         /// <summary>
-        /// Get a list of customers.
+        /// Get a list of areas.
         /// </summary>
         /// 
-        /// <returns>A list of customers.</returns>
+        /// <returns>A list of areas.</returns>
         /// 
         /// <remarks>
         /// Description: 
-        /// - Return a list of customers.
-        /// - Sample request: GET /api/customers
+        /// - Return a list of areas.
+        /// - Sample request: GET /api/areas
         /// </remarks>
         /// 
         /// <response code="200">Successfully</response>
-        /// <response code="404">List of customers not found</response>
+        /// <response code="404">List of areas not found</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(Response<List<Customer>>), 200)]
+        [ProducesResponseType(typeof(Response<List<Area>>), 200)]
         [Produces("application/json")]
         [HttpGet]
-        public async Task<ActionResult<Response<List<Customer>>>> GetListCustomers([FromBody] Pagination pagination)
+        public async Task<ActionResult<Response<List<Area>>>> GetListAreas([FromBody] Pagination pagination)
         {
             try
             {
-                var response = await _customerService.GetReponseCustomers(pagination.PageIndex, pagination.PageSize);
+                var response = await _areaService.GetReponseAreas(pagination.PageIndex, pagination.PageSize);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)
@@ -53,33 +53,33 @@ namespace CoTamApp.Controllers
         }
 
         /// <summary>
-        /// Get a specific customer.
+        /// Get a specific area.
         /// </summary>
         /// 
         /// <param name="id">
-        /// Customer Id which is needed for finding a customer.
+        /// Area Id which is needed for finding a area.
         /// </param>
         /// 
-        /// <returns>A specific customer by Id.</returns>
+        /// <returns>A specific area by Id.</returns>
         /// 
         /// <remarks>
         /// Description: 
-        /// - Return a specific customer by Id.
-        /// - Sample request: GET /api/customers/1
+        /// - Return a specific area by Id.
+        /// - Sample request: GET /api/areas/1
         /// </remarks>
         /// 
         /// <response code="200">Successfully</response>
         /// <response code="400">If Invalid Id supplied</response>
-        /// <response code="404">Customer not found</response>
+        /// <response code="404">Area not found</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(Response<Customer>), 200)]
+        [ProducesResponseType(typeof(Response<Area>), 200)]
         [Produces("application/json")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<Customer>>> GetCustomerById(string id)
+        public async Task<ActionResult<Response<Area>>> GetAreaById(string id)
         {
             try
             {
-                var response = await _customerService.GetReponseCustomereById(id);
+                var response = await _areaService.GetReponseAreaById(id);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)
@@ -89,19 +89,19 @@ namespace CoTamApp.Controllers
         }
 
         /// <summary>
-        /// Create a new customer.
+        /// Create a new area.
         /// </summary>
         /// 
-        /// <param name="customer">
-        /// Customer object that needs to be created.
+        /// <param name="area">
+        /// Area object that needs to be created.
         /// </param>
         /// 
-        /// <returns>A new customer.</returns>
+        /// <returns>A new area.</returns>
         /// 
         /// <remarks>
         /// Description: 
-        /// - Return a new customer.
-        /// - Sample request: POST /api/customers
+        /// - Return a new area.
+        /// - Sample request: POST /api/areas
         ///     
         ///       {
         ///           "name": "string",
@@ -115,14 +115,14 @@ namespace CoTamApp.Controllers
         /// <response code="400">Bad request</response>
         /// <response code="500">Internal server error</response>
         [Consumes("application/json")]
-        [ProducesResponseType(typeof(Response<Customer>), 201)]
+        [ProducesResponseType(typeof(Response<Area>), 201)]
         [Produces("application/json")]
         [HttpPost]
-        public async Task<ActionResult<Response<Customer>>> CreateACustomer([Required][FromBody] Customer customer)
+        public async Task<ActionResult<Response<Area>>> CreateAnArea([Required][FromBody] Area area)
         {
             try
             {
-                var response = await _customerService.GetResponseCreateACustomer(customer);
+                var response = await _areaService.GetResponseCreateAnArea(area);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)
@@ -132,23 +132,23 @@ namespace CoTamApp.Controllers
         }
 
         /// <summary>
-        /// Update an existing customer.
+        /// Update an existing area.
         /// </summary>
         /// 
         /// <param name="id">
-        /// Customer Id which is needed for updating a customer.
+        /// Area Id which is needed for updating a area.
         /// </param>
         /// 
-        /// <param name="customer">
-        /// Customer object that needs to be updated.
+        /// <param name="area">
+        /// Area object that needs to be updated.
         /// </param>
         /// 
-        /// <returns>An update existing customer.</returns>
+        /// <returns>An update existing area.</returns>
         /// 
         /// <remarks>
         /// Description: 
-        /// - Return an update existing customer.
-        /// - Sample request: PUT /api/customers/{id}
+        /// - Return an update existing area.
+        /// - Sample request: PUT /api/areas/{id}
         /// - Sample request body: 
         ///     
         ///       {
@@ -161,17 +161,17 @@ namespace CoTamApp.Controllers
         /// 
         /// <response code="200">Successfully</response>
         /// <response code="400">If Invalid ID supplied</response>
-        /// <response code="404">Customer not found</response>
+        /// <response code="404">Area not found</response>
         /// <response code="500">Internal server error</response>
         [Consumes("application/json")]
-        [ProducesResponseType(typeof(Response<Customer>), 200)]
+        [ProducesResponseType(typeof(Response<Area>), 200)]
         [Produces("application/json")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Response<Customer>>> UpdateCustomer(string id, [Required][FromBody] Customer customer)
+        public async Task<ActionResult<Response<Area>>> UpdateArea(string id, [Required][FromBody] Area area)
         {
             try
             {
-                var response = await _customerService.GetReponseUpdateCustomer(id, customer);
+                var response = await _areaService.GetReponseUpdateArea(id, area);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)
@@ -181,11 +181,11 @@ namespace CoTamApp.Controllers
         }
 
         /// <summary>
-        /// Change status of a specific customer.
+        /// Change status of a specific area.
         /// </summary>
         /// 
         /// <param name="id">
-        /// Customer Id which is needed for deleting a customer.
+        /// Area Id which is needed for deleting a area.
         /// </param>
         /// 
         /// <returns>Status change action status.</returns>
@@ -193,20 +193,20 @@ namespace CoTamApp.Controllers
         /// <remarks>
         /// Description: 
         /// - Return change Status action status.
-        /// - Sample request: DELETE /api/customers/1
+        /// - Sample request: DELETE /api/areas/1
         /// </remarks>
         /// 
         /// <response code="200">Successfully</response>
         /// <response code="400">If Invalid Id supplied</response>
-        /// <response code="404">Customer not found</response>
+        /// <response code="404">Area not found</response>
         /// <response code="500">Internal server error</response>
         [Produces("application/json")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<Customer>>> ChangeStatusCustomer(string id)
+        public async Task<ActionResult<Response<Area>>> ChangeStatusArea(string id)
         {
             try
             {
-                var response = await _customerService.GetReponseChangeStatusCustomer(id);
+                var response = await _areaService.GetReponseChangeStatusArea(id);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)
@@ -216,28 +216,28 @@ namespace CoTamApp.Controllers
         }
 
         /// <summary>
-        /// Get the amount of customers.
+        /// Get the amount of areas.
         /// </summary>
         /// 
-        /// <returns>A number of customers.</returns>
+        /// <returns>A number of areas.</returns>
         /// 
         /// <remarks>
         /// Description: 
-        /// - Return a number of customers.
-        /// - Sample request: GET /api/customers/count
+        /// - Return a number of areas.
+        /// - Sample request: GET /api/areas/count
         /// </remarks>
         /// 
         /// <response code="200">Successfully</response>
-        /// <response code="404">List of customers not found</response>
+        /// <response code="404">List of areas not found</response>
         /// <response code="500">Internal server error</response>
         [ProducesResponseType(typeof(Response<int>), 200)]
         [Produces("application/json")]
         [HttpGet("count")]
-        public async Task<ActionResult<Response<int>>> CountCustomers()
+        public async Task<ActionResult<Response<int>>> CountArea()
         {
             try
             {
-                var response = await _customerService.GetResponseCustomerNumber();
+                var response = await _areaService.GetResponseAreaNumber();
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)
