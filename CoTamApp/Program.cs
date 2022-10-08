@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -119,6 +119,12 @@ builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<ServiceValidation>();
 
+
+builder.Services.AddScoped<ValidationAdminManager>();
+builder.Services.AddScoped<PromotionValidation>();
+builder.Services.AddScoped<ManagerValidation>();
+builder.Services.AddScoped<AdminValidation>();
+
 builder.Services.AddScoped<IExtraServiceRepository, ExtraServiceRepository>();
 builder.Services.AddScoped<IExtraServiceService, ExtraServiceService>();
 builder.Services.AddScoped<ExtraServiceValidation>();
@@ -128,6 +134,7 @@ builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<AreaValidation>();
 
 builder.Services.AddScoped<AuthController>();
+
 
 var app = builder.Build();
 

@@ -18,7 +18,6 @@ namespace CoTamApp.Controllers
         {
             _managerService = managerService;
         }
-        
         [HttpGet]
         public async Task<ActionResult<Response<List<AdminManager>>>> GetAllManagerWithPagination([FromBody]Pagination pagination)
         {
@@ -48,6 +47,14 @@ namespace CoTamApp.Controllers
         public async Task<ActionResult<Response<string>>> CreateNewManager(AdminManager manager)
         {
             var res = await _managerService.CreateNewManager(manager);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
+        [HttpGet("count")]
+        public async Task<ActionResult<Response<string>>> CountManager()
+        {
+            var res = await _managerService.CountManager();
             if (!res.Success)
                 return BadRequest(res);
             return Ok(res);

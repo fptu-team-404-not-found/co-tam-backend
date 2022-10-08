@@ -13,6 +13,6 @@ namespace Repositories.IRepositories
         bool DisableOrEnableManager(int managerId);
         AdminManager GetManager(int managerId);
         void CreateNewManager(AdminManager manager);
-        List<AdminManager> GetAllManager();
+        int CountManager();
     }
 }

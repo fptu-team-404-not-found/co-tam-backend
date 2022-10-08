@@ -1,6 +1,7 @@
 ﻿using BusinessObject.Models;
 using Repositories.IRepositories;
 using Services.IServices;
+using Services.ValidationHandling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,73 @@ namespace Services
     public class AdminService : IAdminService
     {
         private readonly IAdminRepository _adminRepository;
+        private readonly AdminValidation _adminValidation;
 
-        public AdminService(IAdminRepository adminRepository)
+        public AdminService(IAdminRepository adminRepository, AdminValidation adminValidation)
         {
             _adminRepository = adminRepository;
+            _adminValidation = adminValidation;
+        }
+
+        public async Task<Response<string>> CountAdmin()
+        {
+            try
+            {
+                var count = _adminRepository.CountAdmin();
+                if (count == 0)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Số lượng admin không tồn tại",
+                        Success = false
+                    };
+                }
+                return new Response<string>
+                {
+                    Data = count.ToString(),
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex) {
+                throw new Exception(ex.Message);
+            }
+            
+        }
+
+        public async Task<Response<string>> CreateNewAdmin(AdminManager admin)
+        {
+            var validate = _adminValidation.CheckCreateNewAdmin(admin);
+            if (validate != "ok")
+            {
+                return new Response<string>
+                {
+                    Message = validate,
+                    Success = false,
+                    StatusCode = 400
+                };
+            }
+            AdminManager addAdmin = new AdminManager();
+            addAdmin.Name = admin.Name;
+            addAdmin.Phone = admin.Phone;
+            addAdmin.DateOfBirth = admin.DateOfBirth;
+            addAdmin.Email = admin.Email;
+            addAdmin.LinkFacebook = admin.LinkFacebook;
+            addAdmin.Avatar = admin.Avatar;
+            addAdmin.Active = admin.Active;
+            addAdmin.RoleId = admin.Role.Id;
+
+
+
+            _adminRepository.CreateNewAdmin(addAdmin);
+            return new Response<string>
+            {
+                Data = admin.Id.ToString(),
+                Message = "Tạo Mới Admin Thành Công",
+                Success = true,
+                StatusCode = 201
+            };
         }
 
         public async Task<Response<string>> DisableOrEnableAdmin(int adminId)
@@ -85,14 +149,12 @@ namespace Services
                     page = 1;
                 }
                 var lst = _adminRepository.GetAllAdminWithPagination(page, pageSize);
-                var totalItem = _adminRepository.GetAllAdmin().Count();
                 return new Response<List<AdminManager>>
                 {
                     Data = lst,
                     Message = "Thành Công",
                     Success = true,
-                    StatusCode = 200,
-                    TotalItem = totalItem
+                    StatusCode = 200
                 };
                
             }

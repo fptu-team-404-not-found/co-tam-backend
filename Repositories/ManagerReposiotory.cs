@@ -44,10 +44,10 @@ namespace Repositories
             return false;
         }
 
-        public List<AdminManager> GetAllManager()
+        public int CountManager()
         {
-            var list = _dbContext.AdminManagers.Where(x => x.RoleId == 2).ToList();
-            return list;
+            var count = _dbContext.AdminManagers.Where(x => x.RoleId == 2).Count();
+            return count;
         }
 
         public List<AdminManager> GetAllManagerWithPagination(int pageIndex, int pageSize)
