@@ -37,6 +37,7 @@ namespace Repositories
         {
             try
             {
+                _cotamContext.ChangeTracker.Clear();
                 _cotamContext.Entry<Promotion>(promotion).State = EntityState.Modified;
                 _cotamContext.SaveChanges();
             }

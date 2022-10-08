@@ -10,6 +10,6 @@ namespace Services.IServices
     public interface IPromotionService
     {
         Task<Response<Promotion>> GetReponsePromotionById(string id);
-        Task<Response<Promotion>> GetReponseUpdatedPromotion(Promotion promotion);
+        Task<Response<Promotion>> GetReponseUpdatedPromotion(string id, Promotion promotion);
     }
 }

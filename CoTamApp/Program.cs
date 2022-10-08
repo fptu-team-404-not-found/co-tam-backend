@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -99,23 +99,42 @@ builder.Services.AddScoped<IHouseRepository, HouseRepository>();
 builder.Services.AddScoped<IHouseService, HouseService>();
 builder.Services.AddScoped<HouseValidation>();
 
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<CustomerValidation>();
 
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
+builder.Services.AddScoped<PromotionValidation>();
 
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<ValidationAdminManager>();
 
 builder.Services.AddScoped<IManagerRepository, ManagerReposiotory>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
+builder.Services.AddScoped<ManagerValidation>();
 
-builder.Services.AddScoped<AuthController>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<ServiceValidation>();
+
 
 builder.Services.AddScoped<ValidationAdminManager>();
 builder.Services.AddScoped<PromotionValidation>();
 builder.Services.AddScoped<ManagerValidation>();
 builder.Services.AddScoped<AdminValidation>();
+
+builder.Services.AddScoped<IExtraServiceRepository, ExtraServiceRepository>();
+builder.Services.AddScoped<IExtraServiceService, ExtraServiceService>();
+builder.Services.AddScoped<ExtraServiceValidation>();
+
+builder.Services.AddScoped<IAreaRepository, AreaRepository>();
+builder.Services.AddScoped<IAreaService, AreaService>();
+builder.Services.AddScoped<AreaValidation>();
+
+builder.Services.AddScoped<AuthController>();
+
 
 var app = builder.Build();
 
