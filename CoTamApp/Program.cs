@@ -115,6 +115,7 @@ builder.Services.AddScoped<AuthController>();
 builder.Services.AddScoped<ValidationAdminManager>();
 builder.Services.AddScoped<PromotionValidation>();
 builder.Services.AddScoped<ManagerValidation>();
+builder.Services.AddScoped<AdminValidation>();
 
 var app = builder.Build();
 

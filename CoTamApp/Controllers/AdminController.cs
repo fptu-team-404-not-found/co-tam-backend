@@ -26,7 +26,6 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
-        
         [HttpGet]
         public async Task<ActionResult<Response<List<AdminManager>>>> GetListAdminWithPagination([FromBody]Pagination pagination)
         {
@@ -39,6 +38,23 @@ namespace CoTamApp.Controllers
         public async Task<ActionResult<Response<string>>> DisableOrEnableAdminAccount(int id)
         {
             var res = await _adminService.DisableOrEnableAdmin(id);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult<Response<string>>> CreateNewAdmin(AdminManager admin)
+        {
+            var res = await _adminService.CreateNewAdmin(admin);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
+        [HttpGet("count")]
+        public async Task<ActionResult<Response<string>>> CountAdmin()
+        {
+            var res = await _adminService.CountAdmin();
             if (!res.Success)
                 return BadRequest(res);
             return Ok(res);

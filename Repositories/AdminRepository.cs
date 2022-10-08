@@ -17,6 +17,12 @@ namespace Repositories
             _dbContext = cotamContext;
         }
 
+        public void CreateNewAdmin(AdminManager admin)
+        {
+            _dbContext.AdminManagers.Add(admin);
+            _dbContext.SaveChanges();
+        }
+
         public bool DisableOrEnableAdmin(int adminId)
         {
             var ad = _dbContext.AdminManagers.FirstOrDefault(x => x.Id == adminId && x.RoleId == 1);
@@ -44,10 +50,10 @@ namespace Repositories
             return ad;
         }
 
-        public List<AdminManager> GetAllAdmin()
+        public int CountAdmin()
         {
-            var list = _dbContext.AdminManagers.Where(x => x.RoleId == 1).ToList();
-            return list;
+            int count = _dbContext.AdminManagers.Where(x => x.RoleId == 1).Count();
+            return count;
         }
 
         public List<AdminManager> GetAllAdminWithPagination(int page, int pageSize)

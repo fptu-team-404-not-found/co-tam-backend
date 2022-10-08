@@ -21,6 +21,32 @@ namespace Services
             _managerValidation = managerValidation;
         }
 
+        public async Task<Response<string>> CountManager()
+        {
+            try
+            {
+                var count = _managerRepository.CountManager();
+                if (count == 0)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Số lượng manager không tồn tại",
+                        Success = false
+                    };
+                }
+                return new Response<string>
+                {
+                    Data = count.ToString(),
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex) {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<string>> CreateNewManager(AdminManager manager)
         {
             var validate = _managerValidation.CheckCreateNewManager(manager);
@@ -91,14 +117,12 @@ namespace Services
                     pageIndex = 1;
                 }
                 var lst = _managerRepository.GetAllManagerWithPagination(pageIndex, pageSize);
-                var totalItem = _managerRepository.GetAllManager().Count();
                 return new Response<List<AdminManager>>
                 {
                     Data = lst,
                     Message = "Thành Công",
                     Success = true,
-                    StatusCode = 200,
-                    TotalItem = totalItem
+                    StatusCode = 200
                 };
 
             }
