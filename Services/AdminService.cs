@@ -60,19 +60,19 @@ namespace Services
                     StatusCode = 400
                 };
             }
-            AdminManager addAdmin = new AdminManager();
-            addAdmin.Name = admin.Name;
-            addAdmin.Phone = admin.Phone;
-            addAdmin.DateOfBirth = admin.DateOfBirth;
-            addAdmin.Email = admin.Email;
-            addAdmin.LinkFacebook = admin.LinkFacebook;
-            addAdmin.Avatar = admin.Avatar;
-            addAdmin.Active = admin.Active;
-            addAdmin.RoleId = admin.Role.Id;
+            /* AdminManager addAdmin = new AdminManager();
+             addAdmin.Name = admin.Name;
+             addAdmin.Phone = admin.Phone;
+             addAdmin.DateOfBirth = admin.DateOfBirth;
+             addAdmin.Email = admin.Email;
+             addAdmin.LinkFacebook = admin.LinkFacebook;
+             addAdmin.Avatar = admin.Avatar;
+             addAdmin.Active = admin.Active;
+             addAdmin.RoleId = 1;*/
+            admin.RoleId = 1;
 
 
-
-            _adminRepository.CreateNewAdmin(addAdmin);
+            _adminRepository.CreateNewAdmin(admin);
             return new Response<string>
             {
                 Data = admin.Id.ToString(),

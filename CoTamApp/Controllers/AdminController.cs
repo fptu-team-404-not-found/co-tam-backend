@@ -42,7 +42,6 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<Response<string>>> CreateNewAdmin(AdminManager admin)
         {
