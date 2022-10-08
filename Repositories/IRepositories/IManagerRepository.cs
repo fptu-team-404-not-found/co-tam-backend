@@ -14,5 +14,6 @@ namespace Repositories.IRepositories
         AdminManager GetManager(int managerId);
         void CreateNewManager(AdminManager manager);
         int CountManager();
+        void UpdateManager(AdminManager manager);
     }
 }

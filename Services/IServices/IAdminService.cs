@@ -14,5 +14,6 @@ namespace Services.IServices
         Task<Response<string>> DisableOrEnableAdmin(int adminId);
         Task<Response<string>> CreateNewAdmin(AdminManager admin);
         Task<Response<string>> CountAdmin();
+        Task<Response<string>> UpdateAdmin(AdminManager admin);
     }
 }

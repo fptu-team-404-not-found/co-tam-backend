@@ -14,5 +14,6 @@ namespace Services.IServices
         Task<Response<AdminManager>> GetManager(int managerId);
         Task<Response<string>> CreateNewManager(AdminManager manager);
         Task<Response<string>> CountManager();
+        Task<Response<string>> UpdateManager(AdminManager manager);
     }
 }

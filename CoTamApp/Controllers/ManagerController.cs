@@ -59,5 +59,22 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
+        /// <summary>
+        /// Update Manger Account with information include Name, Phone, DateOfBirth, Email, LinkFacebook, Avatar
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Id, Name, Email of Manager are required when update
+        /// </remarks>
+        [AllowAnonymous]
+        [HttpPut]
+        public async Task<ActionResult<Response<string>>> UpdateManager(AdminManager manager)
+        {
+            var res = await _managerService.UpdateManager(manager);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }
