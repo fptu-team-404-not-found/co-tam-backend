@@ -26,7 +26,8 @@ namespace Services
                     return new Response<Promotion>
                     {
                         Message = "Id không khả dụng",
-                        Success = false
+                        Success = false,
+                        StatusCode = 400
                     };
                 } 
 
@@ -37,7 +38,8 @@ namespace Services
                     return new Response<Promotion>
                     {
                         Message = "Ưu đãi không tồn tại!",
-                        Success = false
+                        Success = false,
+                        StatusCode = 404
                     };
                 }
 
@@ -45,7 +47,8 @@ namespace Services
                 {
                     Data = promotion,
                     Message = "Thành công",
-                    Success = true
+                    Success = true,
+                    StatusCode = 200
                 };
             }
             catch (Exception ex)
@@ -54,11 +57,22 @@ namespace Services
             }
         }
 
-        public async Task<Response<Promotion>> GetReponseUpdatedPromotion(Promotion promotion)
+        public async Task<Response<Promotion>> GetReponseUpdatedPromotion(string id, Promotion promotion)
         {
             try
             {
-                Promotion _promotion = _promotionRepository.GetPromotionById(promotion.Id);
+                int _id = _promotionValidation.ValidateId(id);
+                if (_id < 0)
+                {
+                    return new Response<Promotion>
+                    {
+                        Message = "Id không khả dụng",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+
+                Promotion _promotion = _promotionRepository.GetPromotionById(int.Parse(id));
                 if (_promotion == null)
                 {
                     return new Response<Promotion>
@@ -68,9 +82,10 @@ namespace Services
                         StatusCode = 404,
                     };
                 }
-                
-                // TODO: Validation Promotion Input
 
+                // TODO: Validation Promotion Input - Status code = 422
+
+                promotion.Id = int.Parse(id);
                 _promotionRepository.UpdatePromotion(promotion);
 
                 return new Response<Promotion>
