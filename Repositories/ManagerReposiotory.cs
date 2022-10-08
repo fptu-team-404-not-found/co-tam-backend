@@ -64,5 +64,10 @@ namespace Repositories
             var manager = _dbContext.AdminManagers.FirstOrDefault(x => x.Id == managerId && x.RoleId == 2);
             return manager;
         }
+
+        public void UpdateManager(AdminManager manager)
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }

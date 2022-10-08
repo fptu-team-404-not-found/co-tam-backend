@@ -14,5 +14,6 @@ namespace Repositories.IRepositories
         bool DisableOrEnableAdmin(int adminId);
         int CountAdmin();
         void CreateNewAdmin(AdminManager admin);
+        void UpdateAdmin(AdminManager admin);
     }
 }

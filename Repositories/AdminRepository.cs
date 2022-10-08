@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using Repositories.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,12 @@ namespace Repositories
                         .Where(x => x.RoleId == 1).Skip((page - 1) * (int)pageSize)
                         .Take((int)pageSize).ToList();
             return list;
+        }
+
+        public void UpdateAdmin(AdminManager admin)
+        {
+            _dbContext.SaveChanges();
+            
         }
     }
 }

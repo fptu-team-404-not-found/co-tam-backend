@@ -163,5 +163,43 @@ namespace Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Response<string>> UpdateAdmin(AdminManager admin)
+        {
+            var validate = _adminValidation.CheckCreateNewAdmin(admin);
+            if (validate != "ok")
+            {
+                return new Response<string>
+                {
+                    Message = validate,
+                    Success = false,
+                    StatusCode = 400
+                };
+            }
+            var updateAdd = _adminRepository.GetAdmin_ManagerById(admin.Id);
+            if (updateAdd == null)
+            {
+                return new Response<string>
+                {
+                    Message = "Tài khoản không tồn tại",
+                    Success = false,
+                    StatusCode = 400
+                };
+            }
+            updateAdd.Name = admin.Name;
+            updateAdd.Phone = admin.Phone;
+            updateAdd.DateOfBirth = admin.DateOfBirth;
+            updateAdd.Email = admin.Email;
+            updateAdd.LinkFacebook = admin.LinkFacebook;
+            updateAdd.Avatar = admin.Avatar;
+            _adminRepository.UpdateAdmin(updateAdd);
+            return new Response<string>
+            {
+                Data = admin.Id.ToString(),
+                Message = "Update Admin Thành Công",
+                Success = true,
+                StatusCode = 201
+            };
+        }
     }
 }
