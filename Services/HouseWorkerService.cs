@@ -167,5 +167,43 @@ namespace Services
                 StatusCode = 200
             };
         }
+
+        public async Task<Response<string>> UpdateHouseWorker(HouseWorker houseWorker)
+        {
+            var validate = _houseWorkerValidation.CheckCreateNewHouseWorker(houseWorker);
+            if (validate != "ok")
+            {
+                return new Response<string>
+                {
+                    Message = validate,
+                    Success = false,
+                    StatusCode = 400
+                };
+            }
+            var updateAdd = _houseWorkerRepository.GetHouseWorkerById(houseWorker.Id);
+            if (updateAdd == null)
+            {
+                return new Response<string>
+                {
+                    Message = "Tài khoản không tồn tại",
+                    Success = false,
+                    StatusCode = 400
+                };
+            }
+            updateAdd.Name = houseWorker.Name;
+            updateAdd.Phone = houseWorker.Phone;
+            updateAdd.DateOfBirth = houseWorker.DateOfBirth;
+            updateAdd.Email = houseWorker.Email;
+            updateAdd.LinkFacebook = houseWorker.LinkFacebook;
+            updateAdd.Avatar = houseWorker.Avatar;
+            _houseWorkerRepository.UpdateHouseWorker(updateAdd);
+            return new Response<string>
+            {
+                Data = houseWorker.Id.ToString(),
+                Message = "Update Housworker Thành Công",
+                Success = true,
+                StatusCode = 201
+            };
+        }
     }
 }

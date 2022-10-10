@@ -61,6 +61,23 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return StatusCode((int)res.StatusCode, res);
 
+            
+        }
+        /// <summary>
+        /// Update Housworker Account with information include Name, Phone, DateOfBirth, Email, LinkFacebook, Avatar
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Id, Name, Email of Admin are required when update
+        /// </remarks>
+        [HttpPut]
+        public async Task<ActionResult<Response<string>>> UpdateHouseWorker(HouseWorker houseWorker)
+        {
+            var res = await _houseWorkerService.UpdateHouseWorker(houseWorker);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
         }
     }
 }
