@@ -110,5 +110,17 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public void UpdateHouseWorker(HouseWorker houseWorker)
+        {
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

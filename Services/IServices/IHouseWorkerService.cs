@@ -14,5 +14,6 @@ namespace Services.IServices
         Task<Response<HouseWorker>> GetHouseWorkerById(int id);
         Task<Response<string>> DisableOrEnableHouseWorkerAccount(int id);
         Task<Response<string>> CreateNewHouseWorker(HouseWorker houseWorker, int managerId);
+        Task<Response<string>> UpdateHouseWorker(HouseWorker houseWorker);
     }
 }

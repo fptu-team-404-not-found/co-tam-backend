@@ -14,5 +14,6 @@ namespace Repositories.IRepositories
         HouseWorker GetHouseWorkerById(int id);
         bool DisableOrEnableHouseWorkerAccount(int id);
         void CreateNewHouseWorker(HouseWorker houseWorker, int managerId);
+        void UpdateHouseWorker(HouseWorker houseWorker);
     }
 }
