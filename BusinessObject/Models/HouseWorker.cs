@@ -22,7 +22,7 @@ namespace BusinessObject.Models
         public int AreaId { get; set; }
         public int ManagerId { get; set; }
 
-        public virtual AdminManager Manager { get; set; } = null!;
+        public virtual AdminManager? Manager { get; set; } = null!;
         public virtual ICollection<WorkerInOrder> WorkerInOrders { get; set; }
         public virtual ICollection<WorkerTag> WorkerTags { get; set; }
     }

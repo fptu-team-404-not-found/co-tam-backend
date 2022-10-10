@@ -133,6 +133,10 @@ builder.Services.AddScoped<IAreaRepository, AreaRepository>();
 builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<AreaValidation>();
 
+builder.Services.AddScoped<IHouseWorkerRepository, HouseWorkerRepository>();
+builder.Services.AddScoped<IHouseWorkerService, HouseWorkerService>();
+builder.Services.AddScoped<HouseWorkerValidation>();
+
 builder.Services.AddScoped<AuthController>();
 
 
