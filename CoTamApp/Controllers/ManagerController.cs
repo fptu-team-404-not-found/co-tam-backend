@@ -67,7 +67,6 @@ namespace CoTamApp.Controllers
         /// Description: 
         /// - Id, Name, Email of Manager are required when update
         /// </remarks>
-        [AllowAnonymous]
         [HttpPut]
         public async Task<ActionResult<Response<string>>> UpdateManager(AdminManager manager)
         {
