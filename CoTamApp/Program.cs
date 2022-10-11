@@ -137,6 +137,10 @@ builder.Services.AddScoped<IHouseWorkerRepository, HouseWorkerRepository>();
 builder.Services.AddScoped<IHouseWorkerService, HouseWorkerService>();
 builder.Services.AddScoped<HouseWorkerValidation>();
 
+builder.Services.AddScoped<IInformationRepository, InformationRepository>();
+builder.Services.AddScoped<IInformationService, InformationService>();
+builder.Services.AddScoped<InformationValidation>();
+
 builder.Services.AddScoped<AuthController>();
 
 
