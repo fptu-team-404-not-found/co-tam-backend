@@ -16,12 +16,14 @@ namespace Services
         private readonly IHouseRepository _houseRepository;
         private readonly HouseValidation _houseValidation;
         private readonly CustomerValidation _customerValidation;
+        private readonly ICustomerRepository _customerRepository;
 
-        public HouseService(IHouseRepository houseRepository, HouseValidation houseValidation, CustomerValidation customerValidation)
+        public HouseService(IHouseRepository houseRepository, HouseValidation houseValidation, CustomerValidation customerValidation, ICustomerRepository customerRepository)
         {
             _houseRepository = houseRepository;
             _houseValidation = houseValidation;
             _customerValidation = customerValidation;
+            _customerRepository = customerRepository;
         }
 
         public async Task<Response<House>> AddHouseForCustomer(House house)
@@ -45,9 +47,41 @@ namespace Services
             };
         }
 
-        public Task<Response<int>> CountHousesByCustomerId(int customerId)
+        public async Task<Response<int>> CountHousesByCustomerId(int customerId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var customerExist = _customerRepository.GetCustomerById(customerId);
+                if (customerExist == null)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Id customer không tồn tại",
+                        Success = false,
+                        StatusCode = 404
+                    };
+                }
+                var count = _houseRepository.CountHouse(customerId);
+                if (count == 0)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Số lượng house của customer không tồn tại",
+                        Success = false
+                    };
+                }
+                return new Response<int>
+                {
+                    Data = count,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public Task<Response<House>> DeleteHouseForCustomer(House house)

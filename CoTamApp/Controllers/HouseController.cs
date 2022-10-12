@@ -145,10 +145,23 @@ namespace CoTamApp.Controllers
             return Ok();
         }
 
-        [HttpGet("{house.customerId}/houses/count")]
-        public async Task<ActionResult<Response<House>>> CountHouseForCustomer(House house)
+        [HttpGet("{customerId}/houses/count")]
+        public async Task<ActionResult<Response<House>>> CountHouseForCustomer(int customerId)
         {
-            return Ok();
+            try
+            {
+                var res = await _houseService.CountHousesByCustomerId(customerId);
+                if (!res.Success)
+                {
+                    return BadRequest(res);
+                }
+
+                return Ok(res);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
