@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class InformationService : IInformationService
+    public class BuildingService : IBuildingService
     {
-        private readonly IInformationRepository _informationRepository;
-        private readonly InformationValidation _informationValidation;
+        private readonly IBuildingRepository _buildingRepository;
+        private readonly BuildingValidation _buildingValidation;
 
-        public InformationService(IInformationRepository informationRepository, InformationValidation informationValidation)
+        public BuildingService(IBuildingRepository buildingRepository, BuildingValidation buildingValidation)
         {
-            _informationRepository = informationRepository;
-            _informationValidation = informationValidation;
+            _buildingRepository = buildingRepository;
+            _buildingValidation = buildingValidation;
         }
-        public async Task<Response<string>> CountInformation()
+        public async Task<Response<string>> CountBuilding()
         {
             try
             {
-                var count = _informationRepository.CountInformation();
+                var count = _buildingRepository.CountBuilding();
                 if (count == 0)
                 {
                     return new Response<string>
                     {
-                        Message = "Số lượng information không tồn tại",
+                        Message = "Số lượng building không tồn tại",
                         Success = false
                     };
                 }
@@ -47,24 +47,25 @@ namespace Services
             }
         }
 
-        public async Task<Response<string>> CreateNewInformation(Information infor)
+        public async Task<Response<string>> CreateNewBuilding(Building building)
         {
             try
             {
-                var validate = _informationValidation.CheckInformationValidation(infor);
+                var validate = _buildingValidation.CheckCreateNewBuildingWithValidation(building);
                 if (validate != "ok")
                 {
-                    return new Response<string> {
+                    return new Response<string>
+                    {
                         Message = validate,
                         Success = false,
                         StatusCode = 400
                     };
                 }
-                infor.Active = true;
-                _informationRepository.CreateNewInformation(infor);
+                building.Active = true;
+                _buildingRepository.CreateNewBuilding(building);
                 return new Response<string>
                 {
-                    Data = infor.Id.ToString(),
+                    Data = building.Id.ToString(),
                     Message = "Thành Công",
                     Success = true,
                     StatusCode = 201
@@ -76,16 +77,26 @@ namespace Services
             }
         }
 
-        public async Task<Response<string>> DisableOrEnableInformation(int inforId)
+        public async Task<Response<string>> DisableOrEnableBuilding(int id)
         {
             try
             {
-                var result = _informationRepository.DisableOrEnableInformation(inforId);
+                var checkExist = _buildingRepository.GetBuildingById(id);
+                if (checkExist == null)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Không tìm thấy Building có id là " + id,
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var result = _buildingRepository.DisableOrEnableBuilding(id);
                 if (result)
                 {
                     return new Response<string>
                     {
-                        Message = "Đã Thực Hiện Thành Công Thao Tác Disable/Enable Information",
+                        Message = "Đã Thực Hiện Thành Công Thao Tác Disable/Enable Building",
                         Success = true,
                         StatusCode = 200
                     };
@@ -94,7 +105,7 @@ namespace Services
                 {
                     return new Response<string>
                     {
-                        Message = "Disable/Enable Information Thất Bại",
+                        Message = "Disable/Enable Building Thất Bại",
                         Success = false,
                         StatusCode = 405
                     };
@@ -106,7 +117,7 @@ namespace Services
             }
         }
 
-        public async Task<Response<List<Information>>> GetAllInformationWithPagination(int page, int pageSize)
+        public async Task<Response<List<Building>>> GetAllBuildingWithPagination(int page, int pageSize)
         {
             try
             {
@@ -114,8 +125,8 @@ namespace Services
                 {
                     page = 1;
                 }
-                var lst = _informationRepository.GetAllInformationWithPagination(page, pageSize);
-                return new Response<List<Information>>
+                var lst = _buildingRepository.GetAllBuildingWithPagination(page, pageSize);
+                return new Response<List<Building>>
                 {
                     Data = lst,
                     Message = "Thành Công",
@@ -130,16 +141,16 @@ namespace Services
             }
         }
 
-        public async Task<Response<Information>> GetInformationById(int id)
+        public async Task<Response<Building>> GetBuildingById(int id)
         {
             try
             {
-                var infor = _informationRepository.GetInformationById(id);
-                if (infor != null)
+                var building = _buildingRepository.GetBuildingById(id);
+                if (building != null)
                 {
-                    return new Response<Information>
+                    return new Response<Building>
                     {
-                        Data = infor,
+                        Data = building,
                         Message = "Thành Công",
                         Success = true,
                         StatusCode = 200
@@ -147,10 +158,10 @@ namespace Services
                 }
                 else
                 {
-                    return new Response<Information>
+                    return new Response<Building>
                     {
-                        Message = "Không tìm thấy Information có id là " + id,
-                        Success = false,
+                        Message = "Không tìm thấy Building có id là " + id,
+                        Success = false, 
                         StatusCode = 400
                     };
                 }
@@ -161,23 +172,14 @@ namespace Services
             }
         }
 
-        public async Task<Response<Information>> UpdateInformation(Information information)
+        public async Task<Response<string>> UpdateBuilding(Building building)
         {
             try
             {
-                if (information.Id < 0)
-                {
-                    return new Response<Information>
-                    {
-                        Message = "Id không khả dụng",
-                        Success = false,
-                        StatusCode = 400
-                    };
-                }
-                var validate = _informationValidation.CheckInformationValidation(information);
+                var validate = _buildingValidation.CheckCreateNewBuildingWithValidation(building);
                 if (validate != "ok")
                 {
-                    return new Response<Information>
+                    return new Response<string>
                     {
                         Message = validate,
                         Success = false,
@@ -185,23 +187,23 @@ namespace Services
                     };
                 }
 
-                var inforExist = _informationRepository.GetInformationById(information.Id);
-                if (inforExist == null)
+                var buildingExist = _buildingRepository.GetBuildingById(building.Id);
+                if (buildingExist == null)
                 {
-                    return new Response<Information>
+                    return new Response<string>
                     {
-                        Message = "Information không tồn tại!",
+                        Message = "Building không tồn tại!",
                         Success = false,
                         StatusCode = 404,
                     };
                 }
-                inforExist.Name = information.Name;
-                inforExist.Discription = information.Discription;
-                _informationRepository.UpdateInformation(inforExist);
 
-                return new Response<Information>
+                buildingExist.Name = building.Name;
+                buildingExist.AreaId = building.AreaId;
+                _buildingRepository.UpdateBuilding(buildingExist);
+
+                return new Response<string>
                 {
-                    Data = inforExist,
                     Message = "Thành công",
                     Success = true,
                     StatusCode = 200
