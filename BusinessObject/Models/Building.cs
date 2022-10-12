@@ -15,7 +15,7 @@ namespace BusinessObject.Models
         public bool? Active { get; set; }
         public int AreaId { get; set; }
 
-        public virtual Area Area { get; set; } = null!;
+        public virtual Area? Area { get; set; } = null!;
         public virtual ICollection<House> Houses { get; set; }
     }
 }

@@ -25,6 +25,8 @@ builder.Services.AddDbContext<cotamContext>(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
@@ -140,6 +142,10 @@ builder.Services.AddScoped<HouseWorkerValidation>();
 builder.Services.AddScoped<IInformationRepository, InformationRepository>();
 builder.Services.AddScoped<IInformationService, InformationService>();
 builder.Services.AddScoped<InformationValidation>();
+
+builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
+builder.Services.AddScoped<BuildingValidation>();
 
 builder.Services.AddScoped<AuthController>();
 
