@@ -151,6 +151,10 @@ builder.Services.AddScoped<IPackageRepository, PackageRepository>();
 builder.Services.AddScoped<IPackageService, PackageService>();
 builder.Services.AddScoped<PackageValidation>();
 
+builder.Services.AddScoped<ICustomerPromotionRepository, CustomerPromotionRepository>();
+builder.Services.AddScoped<ICustomerPromotionService, CustomerPromotionService>();
+builder.Services.AddScoped<CustomerPromotionValidation>();
+
 builder.Services.AddScoped<AuthController>();
 
 
