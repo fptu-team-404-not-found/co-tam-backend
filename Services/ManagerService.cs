@@ -82,6 +82,15 @@ namespace Services
         {
             try
             {
+                var checkExist = _managerRepository.GetManager(managerId);
+                if (checkExist == null)
+                {
+                    return new Response<string> { 
+                        Message = "Không tìm thấy manager",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
                 var result = _managerRepository.DisableOrEnableManager(managerId);
                 if (result)
                 {

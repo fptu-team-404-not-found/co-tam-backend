@@ -30,7 +30,8 @@ namespace Services
                     return new Response<string>
                     {
                         Message = "Số lượng information không tồn tại",
-                        Success = false
+                        Success = false,
+                        StatusCode = 400
                     };
                 }
                 return new Response<string>
@@ -80,6 +81,15 @@ namespace Services
         {
             try
             {
+                var checkExist = _informationRepository.GetInformationById(inforId);
+                if (checkExist == null)
+                {
+                    return new Response<string> { 
+                        Message = "Không tìm thấy information",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
                 var result = _informationRepository.DisableOrEnableInformation(inforId);
                 if (result)
                 {
