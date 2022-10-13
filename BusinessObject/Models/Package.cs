@@ -16,7 +16,7 @@ namespace BusinessObject.Models
         public int Active { get; set; }
         public int ServiceId { get; set; }
 
-        public virtual Service Service { get; set; } = null!;
+        public virtual Service? Service { get; set; } = null!;
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

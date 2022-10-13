@@ -147,6 +147,10 @@ builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IBuildingService, BuildingService>();
 builder.Services.AddScoped<BuildingValidation>();
 
+builder.Services.AddScoped<IPackageRepository, PackageRepository>();
+builder.Services.AddScoped<IPackageService, PackageService>();
+builder.Services.AddScoped<PackageValidation>();
+
 builder.Services.AddScoped<AuthController>();
 
 
