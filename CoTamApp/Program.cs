@@ -155,6 +155,9 @@ builder.Services.AddScoped<ICustomerPromotionRepository, CustomerPromotionReposi
 builder.Services.AddScoped<ICustomerPromotionService, CustomerPromotionService>();
 builder.Services.AddScoped<CustomerPromotionValidation>();
 
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
 builder.Services.AddScoped<AuthController>();
 
 
