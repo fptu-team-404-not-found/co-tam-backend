@@ -18,6 +18,52 @@ namespace Repositories
             _cotamContext = cotamContext;
         }
 
+        public void ChangePromotionStatus(Promotion promotion)
+        {
+            try
+            {
+                if (promotion.Active == false)
+                {
+                    promotion.Active = true;
+                }
+                else
+                {
+                    promotion.Active = false;
+                }
+                _cotamContext.Promotions.Update(promotion);
+                _cotamContext.SaveChanges(true);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public int CountPromotions()
+        {
+            try
+            {
+                return _cotamContext.Promotions.Count();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void CreatePromotion(Promotion promotion)
+        {
+            try
+            {
+                _cotamContext.Promotions.Add(promotion);
+                _cotamContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public Promotion GetPromotionById(int id)
         {
             Promotion promotion = null;
@@ -31,6 +77,14 @@ namespace Repositories
             }
 
             return promotion;
+        }
+
+        public List<Promotion> GetPromotionList(int pageIndex, int pageSize)
+        {
+            var list = _cotamContext.Promotions
+                        .Skip((pageIndex - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+            return list;
         }
 
         public void UpdatePromotion(Promotion promotion)

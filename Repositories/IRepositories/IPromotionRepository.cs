@@ -10,6 +10,10 @@ namespace Repositories.IRepositories
     public interface IPromotionRepository
     {
         Promotion GetPromotionById(int id);
+        List<Promotion> GetPromotionList(int pageIndex, int pageSize);
+        void CreatePromotion(Promotion promotion);
         void UpdatePromotion(Promotion promotion);
+        void ChangePromotionStatus(Promotion promotion);
+        int CountPromotions();
     }
 }
