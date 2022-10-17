@@ -106,5 +106,149 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Get a list of promotions.
+        /// </summary>
+        /// 
+        /// <returns>A list of promotions.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return a list of promotion.
+        /// - Sample request: GET /api/promotions
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="404">List of promotion not found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(Response<List<Promotion>>), 200)]
+        [Produces("application/json")]
+        [HttpGet]
+        public async Task<ActionResult<Response<List<Promotion>>>> GetListPromotions([FromBody] Pagination pagination)
+        {
+            try
+            {
+                var response = await _promotionService.GetReponsePromotions(pagination.PageIndex, pagination.PageSize);
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Create an new promotion.
+        /// </summary>
+        /// 
+        /// <param name="promotion">
+        /// Pomotion object that needs to be create.
+        /// </param>
+        /// 
+        /// <returns>A new promotion.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return a new promotion.
+        /// - Sample request: POST /api/promotions
+        ///     
+        ///       {
+        ///           "code": "string",
+        ///           "description": "string",
+        ///           "value": 0,
+        ///           "discount": 0,
+        ///           "amount": 0,
+        ///           "startDate": "2022-10-05 10:00:30",
+        ///           "endDate": "2022-10-05 10:00:30",
+        ///       }
+        ///     
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="500">Internal server error</response>
+        [Consumes("application/json")]
+        [ProducesResponseType(typeof(Response<Promotion>), 201)]
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<ActionResult<Response<Promotion>>> CreateAPromotion([Required][FromBody] Promotion promotion)
+        {
+            try
+            {
+                var response = await _promotionService.GetResponseCreateAPromotion(promotion);
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Change status of a specific promotion.
+        /// </summary>
+        /// 
+        /// <param name="id">
+        /// Promotion Id which is needed for deleting a promotion.
+        /// </param>
+        /// 
+        /// <returns>Status change action status.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return change Status action status.
+        /// - Sample request: DELETE /api/promotions/1
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="400">If Invalid Id supplied</response>
+        /// <response code="404">Promotion not found</response>
+        /// <response code="500">Internal server error</response>
+        [Produces("application/json")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response<Promotion>>> ChangeStatusPromotion(string id)
+        {
+            try
+            {
+                var response = await _promotionService.GetReponseChangeStatusPromotion(id);
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get the amount of promotions.
+        /// </summary>
+        /// 
+        /// <returns>A number of promotions.</returns>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - Return a number of promotions.
+        /// - Sample request: GET /api/promotions/count
+        /// </remarks>
+        /// 
+        /// <response code="200">Successfully</response>
+        /// <response code="404">List of promotions not found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(Response<int>), 200)]
+        [Produces("application/json")]
+        [HttpGet("count")]
+        public async Task<ActionResult<Response<int>>> CountPromotions()
+        {
+            try
+            {
+                var response = await _promotionService.GetResponsePromotionNumber();
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

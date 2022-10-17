@@ -16,6 +16,47 @@ namespace Services
             _promotionValidation = promotionValidation;
         }
 
+        public async Task<Response<Promotion>> GetReponseChangeStatusPromotion(string id)
+        {
+            try
+            {
+                int _id = _promotionValidation.ValidateId(id);
+                if (_id < 0)
+                {
+                    return new Response<Promotion>
+                    {
+                        Message = "Id không khả dụng",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+
+                Promotion promotion = _promotionRepository.GetPromotionById(_id);
+                if (promotion == null)
+                {
+                    return new Response<Promotion>
+                    {
+                        Message = "Khách hàng không tồn tại!",
+                        Success = false,
+                        StatusCode = 404
+                    };
+                }
+
+                _promotionRepository.ChangePromotionStatus(promotion);
+
+                return new Response<Promotion>
+                {
+                    Message = "Thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<Promotion>> GetReponsePromotionById(string id)
         {
             try
@@ -46,6 +87,36 @@ namespace Services
                 return new Response<Promotion>
                 {
                     Data = promotion,
+                    Message = "Thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<List<Promotion>>> GetReponsePromotions(int pageIndex, int pageSize)
+        {
+            try
+            {
+                List<Promotion> promotions = _promotionRepository.GetPromotionList(pageIndex, pageSize);
+
+                if (promotions == null)
+                {
+                    return new Response<List<Promotion>>
+                    {
+                        Message = "Danh sách khuyến mãi không tồn tại!",
+                        Success = false,
+                        StatusCode = 404
+                    };
+                }
+
+                return new Response<List<Promotion>>
+                {
+                    Data = promotions,
                     Message = "Thành công",
                     Success = true,
                     StatusCode = 200
@@ -94,6 +165,53 @@ namespace Services
                     Message = "Thành công",
                     Success = true,
                     StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<Promotion>> GetResponseCreateAPromotion(Promotion promotion)
+        {
+            try
+            {
+                if (promotion.Id != 0)
+                {
+                    return new Response<Promotion>
+                    {
+                        Message = "Không cần thêm Id khi tạo 1 khuyến mãi mới",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+
+                _promotionRepository.CreatePromotion(promotion);
+                return new Response<Promotion>
+                {
+                    Data = promotion,
+                    Message = "Thành công",
+                    Success = true,
+                    StatusCode = 201
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<int>> GetResponsePromotionNumber()
+        {
+            try
+            {
+                int promotionNumber = _promotionRepository.CountPromotions();
+                return new Response<int>
+                {
+                    Data = promotionNumber,
+                    Message = "Thành công",
+                    StatusCode = 200,
                 };
             }
             catch (Exception ex)
