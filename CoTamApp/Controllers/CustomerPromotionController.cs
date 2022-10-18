@@ -32,11 +32,11 @@ namespace CoTamApp.Controllers
 
         }
         [HttpGet("customers/{cusId}")]
-        public async Task<ActionResult<Response<List<CustomerPromotion>>>> GetListInformationWithPagination(int cusId, [FromBody] Pagination pagination)
+        public async Task<ActionResult<Response<List<CustomerPromotion>>>> GetListCustomerPromotionWithPagination(int cusId, [FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
             try
             {
-                var res = await _customerPromotionService.GetAllCustomerPromotionWithPagination(cusId, pagination.PageIndex, pagination.PageSize);
+                var res = await _customerPromotionService.GetAllCustomerPromotionWithPagination(cusId, PageIndex, PageSize);
                 return StatusCode((int)res.StatusCode, res);
             }
             catch (Exception ex)

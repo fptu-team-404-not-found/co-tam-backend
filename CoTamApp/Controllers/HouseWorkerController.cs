@@ -20,9 +20,9 @@ namespace CoTamApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<List<HouseWorker>>>> GetListHouseWorkerWithPagination([FromBody] Pagination pagination)
+        public async Task<ActionResult<Response<List<HouseWorker>>>> GetListHouseWorkerWithPagination([FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
-            var res = await _houseWorkerService.GetAllHouseWorkerWithPagination(pagination.PageIndex, pagination.PageSize);
+            var res = await _houseWorkerService.GetAllHouseWorkerWithPagination(PageIndex, PageSize);
             if (!res.Success)
                 return BadRequest(res);
             return Ok(res);

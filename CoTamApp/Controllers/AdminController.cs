@@ -27,9 +27,9 @@ namespace CoTamApp.Controllers
             return Ok(res);
         }
         [HttpGet]
-        public async Task<ActionResult<Response<List<AdminManager>>>> GetListAdminWithPagination([FromBody]Pagination pagination)
+        public async Task<ActionResult<Response<List<AdminManager>>>> GetListAdminWithPagination([FromQuery]int PageIndex, [FromQuery] int PageSize)
         {
-            var res = await _adminService.GetAllAdminWithPagination(pagination.PageIndex, pagination.PageSize);
+            var res = await _adminService.GetAllAdminWithPagination(PageIndex, PageSize);
             if (!res.Success)
                 return BadRequest(res);
             return Ok(res);

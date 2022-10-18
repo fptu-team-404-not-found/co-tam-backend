@@ -30,11 +30,11 @@ namespace CoTamApp.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult<Response<List<Order>>>> GetListOrderWithPagination([FromBody] Pagination pagination)
+        public async Task<ActionResult<Response<List<Order>>>> GetListOrderWithPagination([FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
             try
             {
-                var res = await _orderService.GetAllOrderWithPagination(pagination.PageIndex, pagination.PageSize);
+                var res = await _orderService.GetAllOrderWithPagination(PageIndex, PageSize);
                 return StatusCode((int)res.StatusCode, res);
             }
             catch (Exception ex)

@@ -25,9 +25,9 @@ namespace CoTamApp.Controllers
             return Ok(res);
         }
         [HttpGet]
-        public async Task<ActionResult<Response<List<Information>>>> GetListInformationWithPagination([FromBody] Pagination pagination)
+        public async Task<ActionResult<Response<List<Information>>>> GetListInformationWithPagination([FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
-            var res = await _informationService.GetAllInformationWithPagination(pagination.PageIndex, pagination.PageSize);
+            var res = await _informationService.GetAllInformationWithPagination(PageIndex, PageSize);
             if (!res.Success)
                 return BadRequest(res);
             return Ok(res);
