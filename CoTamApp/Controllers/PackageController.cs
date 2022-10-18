@@ -25,9 +25,9 @@ namespace CoTamApp.Controllers
             return Ok(res);
         }
         [HttpGet("service/{serviceId}")]
-        public async Task<ActionResult<Response<List<Package>>>> GetAllPackageByEachServiceWithPagination(int serviceId, [FromBody] Pagination pagination)
+        public async Task<ActionResult<Response<List<Package>>>> GetAllPackageByEachServiceWithPagination(int serviceId, [FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
-            var res = await _packageService.GetAllPackageByEachServiceWithPagination(serviceId, pagination.PageIndex, pagination.PageSize);
+            var res = await _packageService.GetAllPackageByEachServiceWithPagination(serviceId, PageIndex, PageSize);
             if (!res.Success)
                 return BadRequest(res);
             return Ok(res);
