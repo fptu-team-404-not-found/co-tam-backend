@@ -125,11 +125,11 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Response<List<Promotion>>), 200)]
         [Produces("application/json")]
         [HttpGet]
-        public async Task<ActionResult<Response<List<Promotion>>>> GetListPromotions([FromBody] Pagination pagination)
+        public async Task<ActionResult<Response<List<Promotion>>>> GetListPromotions([FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
             try
             {
-                var response = await _promotionService.GetReponsePromotions(pagination.PageIndex, pagination.PageSize);
+                var response = await _promotionService.GetReponsePromotions(PageIndex, PageSize);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)

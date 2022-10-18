@@ -105,11 +105,15 @@ namespace Services
             }
         }
 
-        public async Task<Response<List<Service>>> GetReponseServices()
+        public async Task<Response<List<Service>>> GetReponseServices(int page, int pageSize)
         {
             try
             {
-                List<Service> services = _serviceRepository.GetAll();
+                if (page <= 1)
+                {
+                    page = 1;
+                }
+                List<Service> services = _serviceRepository.GetAll(page, pageSize);
 
                 if (services == null)
                 {

@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using Repositories.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -43,13 +44,17 @@ namespace Repositories
             }
         }
 
-        public List<ExtraService> GetAll()
+        public List<ExtraService> GetAll(int serId, int page, int pageSize)
         {
             List<ExtraService> extraServices = new List<ExtraService>();
             try
             {
-                extraServices = _cotamContext.ExtraServices.Where(x => x.Active == 1).ToList();
-                return extraServices;
+                /*extraServices = _cotamContext.ExtraServices.Where(x => x.Active == 1).ToList();
+                return extraServices;*/
+                var list = _cotamContext.ExtraServices.Include(x => x.Service).Where(x => x.ServiceId == serId && x.Active == 1)
+                       .Skip((page - 1) * (int)pageSize)
+                       .Take((int)pageSize).ToList();
+                return list;
             }
             catch (Exception ex)
             {

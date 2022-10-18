@@ -10,7 +10,7 @@ namespace Services.IServices
     public interface IServiceService
     {
         Task<Response<Service>> GetReponseServiceById(string id);
-        Task<Response<List<Service>>> GetReponseServices();
+        Task<Response<List<Service>>> GetReponseServices(int page, int pageSize);
         Task<Response<Service>> GetResponseCreateAService(Service service);
         Task<Response<Service>> GetReponseUpdateService(string id, Service service);
         Task<Response<Service>> GetReponseDeleteService(string id);

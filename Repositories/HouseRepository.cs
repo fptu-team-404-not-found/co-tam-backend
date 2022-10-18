@@ -80,13 +80,16 @@ namespace Repositories
             }
         }
 
-        public List<House> GetListByCustomerId(int customerId)
+        public List<House> GetListByCustomerId(int customerId, int page, int pageSize)
         {
             List<House> houses = new List<House> ();
             try
             {
-                houses = _cotamContext.Houses.Where(h => h.CustomerId == customerId).ToList();
-                return houses;
+                /*houses = _cotamContext.Houses.Where(h => h.CustomerId == customerId).ToList();*/
+                var list = _cotamContext.Houses.Where(h => h.CustomerId == customerId).Skip((page - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                return list;
+                /*return houses;*/
             }
             catch (Exception ex)
             {

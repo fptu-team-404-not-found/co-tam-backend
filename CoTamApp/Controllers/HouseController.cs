@@ -77,11 +77,11 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(House), 200)]
         [Produces("application/json")]
         [HttpGet("{customerId}/houses")]
-        public async Task<ActionResult<Response<List<House>>>> GetHouseListByCustomerId(string customerId)
+        public async Task<ActionResult<Response<List<House>>>> GetHouseListByCustomerId(string customerId, [FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
             try
             {
-                var res = await _houseService.GetHouseListByCustomerId(customerId);
+                var res = await _houseService.GetHouseListByCustomerId(customerId, PageIndex, PageSize);
                 if (!res.Success)
                 {
                     return BadRequest(res);

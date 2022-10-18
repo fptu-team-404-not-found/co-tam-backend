@@ -121,8 +121,12 @@ namespace Services
             };
         }
 
-        public async Task<Response<List<House>>> GetHouseListByCustomerId(string customerId)
+        public async Task<Response<List<House>>> GetHouseListByCustomerId(string customerId, int page, int pageSize)
         {
+            if (page <= 1)
+            {
+                page = 1;
+            }
             int _customerId = _customerValidation.ValidationId(customerId);
             if (_customerId == -1)
             {
@@ -142,7 +146,7 @@ namespace Services
                 };
             }
 
-            List<House> houses = _houseRepository.GetListByCustomerId(_customerId);
+            List<House> houses = _houseRepository.GetListByCustomerId(_customerId, page, pageSize);
             return new Response<List<House>>
             {
                 Data = houses,

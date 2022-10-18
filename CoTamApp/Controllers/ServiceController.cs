@@ -38,11 +38,11 @@ namespace CoTamApp.Controllers
         [ProducesResponseType(typeof(Response<List<Service>>), 200)]
         [Produces("application/json")]
         [HttpGet]
-        public async Task<ActionResult<Response<List<Service>>>> GetListServices()
+        public async Task<ActionResult<Response<List<Service>>>> GetListServices([FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
             try
             {
-                var response = await _serviceService.GetReponseServices();
+                var response = await _serviceService.GetReponseServices(PageIndex, PageSize);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)

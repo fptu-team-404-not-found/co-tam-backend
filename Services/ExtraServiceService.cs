@@ -24,11 +24,25 @@ namespace Services
             _serviceRepository = serviceRepository;
         }
 
-        public async Task<Response<List<ExtraService>>> GetReponseExtraServices()
+        public async Task<Response<List<ExtraService>>> GetReponseExtraServices(int serId, int page, int pageSize)
         {
             try
             {
-                List<ExtraService> extraServices = _extraServiceRepository.GetAll();
+                if (page <= 1)
+                {
+                    page = 1;
+                }
+                var checkExist = _serviceRepository.GetServiceById(serId);
+                if (checkExist == null)
+                {
+                    return new Response<List<ExtraService>>
+                    {
+                        Message = "Không tìm thấy service",
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                List<ExtraService> extraServices = _extraServiceRepository.GetAll(serId, page, pageSize);
 
                 if (extraServices == null)
                 {

@@ -44,13 +44,15 @@ namespace Repositories
             }
         }
 
-        public List<Service> GetAll()
+        public List<Service> GetAll(int page, int pageSize)
         {
             List<Service> services = new List<Service>();
             try
             {
-                services = _cotamContext.Services.Where(x => x.Active == 1).ToList();
-                return services;
+                var list = _cotamContext.Services.Where(x => x.Active == 1)
+                        .Skip((page - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                return list;
             }
             catch (Exception ex)
             {

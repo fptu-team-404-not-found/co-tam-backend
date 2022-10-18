@@ -9,7 +9,7 @@ namespace Services.IServices
 {
     public interface IExtraServiceService
     {
-        Task<Response<List<ExtraService>>> GetReponseExtraServices();
+        Task<Response<List<ExtraService>>> GetReponseExtraServices(int serId, int page, int pageSize);
         Task<Response<ExtraService>> GetReponseExtraServiceById(string id);
         Task<Response<ExtraService>> GetResponseCreateAExtraService(ExtraService extraService);
         Task<Response<ExtraService>> GetReponseDeleteExtraService(string id);

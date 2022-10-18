@@ -37,12 +37,12 @@ namespace CoTamApp.Controllers
         /// <response code="500">Internal server error</response>
         [ProducesResponseType(typeof(Response<List<ExtraService>>), 200)]
         [Produces("application/json")]
-        [HttpGet]
-        public async Task<ActionResult<Response<List<ExtraService>>>> GetListExtraServices()
+        [HttpGet("services/{serviceId}")]
+        public async Task<ActionResult<Response<List<ExtraService>>>> GetListExtraServices(int serviceId, [FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
             try
             {
-                var response = await _extraServiceService.GetReponseExtraServices();
+                var response = await _extraServiceService.GetReponseExtraServices(serviceId, PageIndex, PageSize);
                 return StatusCode((int)response.StatusCode, response);
             }
             catch (Exception ex)
