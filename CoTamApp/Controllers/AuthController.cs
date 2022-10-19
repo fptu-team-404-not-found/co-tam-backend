@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceResponse;
 using Services.IServices;
 using System.Security.Claims;
+using System.Web.Http.Cors;
 
 namespace CoTamApp.Controllers
 {
+    [EnableCors(origins: "http://cotam.azurewebsites.net/", headers: "*", methods: "*")]
     [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase

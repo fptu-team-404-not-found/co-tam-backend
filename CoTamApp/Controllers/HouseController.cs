@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Services.IServices;
+using System.Web.Http.Cors;
 
 namespace CoTamApp.Controllers
 {
+    [EnableCors(origins: "http://cotam.azurewebsites.net/", headers: "*", methods: "*")]
     [Route("api/customers")]
     [ApiController]
     public class HouseController : ControllerBase
