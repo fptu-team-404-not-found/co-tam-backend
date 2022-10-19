@@ -13,7 +13,7 @@ namespace Services.IServices
         Task<Response<string>> CountHouseWorker();
         Task<Response<HouseWorker>> GetHouseWorkerById(int id);
         Task<Response<string>> DisableOrEnableHouseWorkerAccount(int id);
-        Task<Response<string>> CreateNewHouseWorker(HouseWorker houseWorker, int managerId);
+        Task<Response<string>> CreateNewHouseWorker(HouseWorker houseWorker);
         Task<Response<string>> UpdateHouseWorker(HouseWorker houseWorker);
     }
 }

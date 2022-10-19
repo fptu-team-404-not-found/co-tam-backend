@@ -47,7 +47,7 @@ namespace Services
             }
         }
 
-        public async Task<Response<string>> CreateNewHouseWorker(HouseWorker houseWorker, int managerId)
+        public async Task<Response<string>> CreateNewHouseWorker(HouseWorker houseWorker)
         {
             var validate = _houseWorkerValidation.CheckCreateNewHouseWorker(houseWorker);
             if (validate != "ok")
@@ -59,7 +59,7 @@ namespace Services
                     StatusCode = 400
                 };
             }
-            _houseWorkerRepository.CreateNewHouseWorker(houseWorker, managerId);
+            _houseWorkerRepository.CreateNewHouseWorker(houseWorker);
             return new Response<string>
             {
                 Data = houseWorker.Id.ToString(),
