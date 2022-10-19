@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Services.IServices;
+using System.Web.Http.Cors;
 
 namespace CoTamApp.Controllers
 {
     /*[Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]*/
+    [EnableCors(origins: "http://cotam.azurewebsites.net/", headers: "*", methods: "*")]
     [Route("api/admins")]
     [ApiController]
     public class AdminController : ControllerBase

@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Services;
 using Services.IServices;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Http.Cors;
 
 namespace CoTamApp.Controllers
 {
+    [EnableCors(origins: "http://cotam.azurewebsites.net/", headers: "*", methods: "*")]
     [Route("api/promotions")]
     [ApiController]
     public class PromotionController : ControllerBase
