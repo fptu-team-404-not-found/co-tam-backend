@@ -97,11 +97,11 @@ namespace Repositories
             }
         }
 
-        public void CreateNewHouseWorker(HouseWorker houseWorker, int managerId)
+        public void CreateNewHouseWorker(HouseWorker houseWorker)
         {
             try
             {
-                houseWorker.ManagerId = managerId;
+                houseWorker.ManagerId = 1;
                 _dbContext.HouseWorkers.Add(houseWorker);
                 _dbContext.SaveChanges();
             }

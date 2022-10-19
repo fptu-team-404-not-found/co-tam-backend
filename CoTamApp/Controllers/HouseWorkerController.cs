@@ -57,13 +57,12 @@ namespace CoTamApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Response<string>>> CreateNewHouseWorker(HouseWorker houseWorker)
         {
-            var managerId = int.Parse(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var res = await _houseWorkerService.CreateNewHouseWorker(houseWorker, managerId);
+            /*var managerId = int.Parse(this.User.FindFirstValue(ClaimTypes.NameIdentifier));*/
+            var res = await _houseWorkerService.CreateNewHouseWorker(houseWorker);
             if (!res.Success)
                 return BadRequest(res);
             return StatusCode((int)res.StatusCode, res);
-
-            
+  
         }
         /// <summary>
         /// Update Housworker Account with information include Name, Phone, DateOfBirth, Email, LinkFacebook, Avatar
