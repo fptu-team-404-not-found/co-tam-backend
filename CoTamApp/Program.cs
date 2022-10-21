@@ -160,6 +160,9 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddScoped<AuthController>();
 
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin()
+                                                               .AllowAnyMethod()
+                                                               .AllowAnyHeader()));
 
 var app = builder.Build();
 
@@ -178,7 +181,9 @@ app.UseSwaggerUI(c =>
 
 app.UseHttpsRedirection();
 
-app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+app.UseCors();
+
+/*app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());*/
 
 app.UseAuthentication();
 
