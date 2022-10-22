@@ -35,8 +35,17 @@ namespace Repositories
         {
             try
             {
-                _cotamContext.Update(service);
-                _cotamContext.SaveChanges(true);
+                if (service.Active == 1)
+                {
+                    service.Active = 0;
+                    _cotamContext.SaveChanges();
+                }
+                else if (service.Active == 0)
+                {
+                    service.Active = 1;
+                    _cotamContext.SaveChanges();
+                }
+                
             }
             catch (Exception ex)
             {
