@@ -48,7 +48,7 @@ namespace Services
                     };
                 }
 
-                service.Active = 0;
+                
                 _serviceRepository.DeleteAService(service);
                 
                 return new Response<Service>
