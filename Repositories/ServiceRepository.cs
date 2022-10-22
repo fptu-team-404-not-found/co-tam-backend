@@ -49,7 +49,7 @@ namespace Repositories
             List<Service> services = new List<Service>();
             try
             {
-                var list = _cotamContext.Services.Where(x => x.Active == 1)
+                var list = _cotamContext.Services
                         .Skip((page - 1) * (int)pageSize)
                         .Take((int)pageSize).ToList();
                 return list;
