@@ -74,7 +74,7 @@ namespace CoTamApp.Controllers
         /// Description: 
         /// - Name, AreaId are required when update
         /// </remarks>
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<ActionResult<Response<Customer>>> UpdateCustomer(Building building)
         {
             try
