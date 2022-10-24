@@ -225,7 +225,7 @@ namespace Services
                         StatusCode = 400
                     };
                 }
-                checkExist.NumberOfWorker = package.NumberOfWorker;
+                checkExist.Name = package.Name;
                 checkExist.Duration = package.Duration;
                 checkExist.ServiceId = package.ServiceId;
                 _packageRepository.UpdatePackage(checkExist);

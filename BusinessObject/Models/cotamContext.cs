@@ -293,6 +293,10 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.Active).HasDefaultValueSql("((1))");
 
+                entity.Property(e => e.Name).HasMaxLength(200);
+
+                entity.Property(e => e.Price).HasColumnType("money");
+
                 entity.HasOne(d => d.Service)
                     .WithMany(p => p.Packages)
                     .HasForeignKey(d => d.ServiceId)
@@ -368,8 +372,6 @@ namespace BusinessObject.Models
                 entity.Property(e => e.Description).HasColumnType("ntext");
 
                 entity.Property(e => e.Name).HasMaxLength(50);
-
-                entity.Property(e => e.Price).HasColumnType("money");
             });
 
             modelBuilder.Entity<WorkerInOrder>(entity =>
