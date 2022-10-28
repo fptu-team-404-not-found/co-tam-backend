@@ -27,8 +27,8 @@ namespace CoTamApp.Controllers
                 return StatusCode((int)res.StatusCode, res);
             }
             catch (Exception ex)
-            { 
-                return StatusCode(500, "Internal server error: "+ex.Message);
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
         [HttpGet]
@@ -51,6 +51,34 @@ namespace CoTamApp.Controllers
             try
             {
                 var res = await _orderService.GetOrderById(id);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+        [HttpDelete("change-order-status/{orderId}")]
+        public async Task<ActionResult<Response<string>>> ChangeOrderStatus(int orderId)
+        {
+            try
+            {
+                var res = await _orderService.ChangeTheOrderState(orderId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+        [HttpDelete("cancel-order-status/{orderId}")]
+        public async Task<ActionResult<Response<string>>> ChangeToCancleOrder(int orderId)
+        {
+            try
+            {
+                var res = await _orderService.ChangeTheOrderStateToCancle(orderId);
                 return StatusCode((int)res.StatusCode, res);
             }
             catch (Exception ex)

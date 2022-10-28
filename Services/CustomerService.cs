@@ -14,10 +14,102 @@ namespace Services
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly CustomerValidation _customerValidation;
-        public CustomerService(ICustomerRepository customerRepository, CustomerValidation customerValidation)
+        private readonly IOrderRepository _orderRepository;
+        private readonly IHouseRepository _houseRepository;
+        private readonly ICustomerPromotionRepository _customerPromotionRepository;
+
+        public CustomerService(ICustomerRepository customerRepository, CustomerValidation customerValidation, IOrderRepository orderRepository, IHouseRepository houseRepository, ICustomerPromotionRepository customerPromotionRepository)
         {
             _customerRepository = customerRepository;
             _customerValidation = customerValidation;
+            _orderRepository = orderRepository;
+            _houseRepository = houseRepository;
+            _customerPromotionRepository = customerPromotionRepository;
+        }
+
+        public async Task<Response<Order>> CustomerOrder(Order order)
+        {
+            try
+            {
+                if (order.Id != 0)
+                {
+                    return new Response<Order>
+                    {
+                        Message = "Không cần thêm Id khi tạo 1 order mới",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var house = _houseRepository.GetHouseById(order.HouseId);
+                var cusInPromotion = _customerPromotionRepository.CheckCustomerHasThisPromotion(house.CustomerId, order.PromotionId);
+                if (cusInPromotion)
+                {
+                    var res = _customerPromotionRepository.CheckUsedForThePromotion(house.CustomerId, order.PromotionId);
+                    if (res)
+                    {
+                        _customerRepository.CustomerOrder(order);
+                        return new Response<Order>
+                        {
+                            Message = "Tạo mới order thành công",
+                            Success = true,
+                            StatusCode = 200
+                        };
+                    }
+                    
+                }
+                _customerRepository.CustomerOrder(order);
+                return new Response<Order>
+                {
+                    Message = "Tạo mới order thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<OrderDetail>> CustomerOrderDetail(OrderDetail orderDetail, int orderId)
+        {
+            try
+            {
+                if (orderDetail.Id != 0)
+                {
+                    return new Response<OrderDetail>
+                    {
+                        Message = "Không cần thêm Id khi tạo 1 orderDetail mới",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExist = _orderRepository.GetOrderById(orderId);
+                if (checkExist == null)
+                {
+                    return new Response<OrderDetail>
+                    {
+                        Message = "Không tìm thấy order",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                _customerRepository.CustomerOrderDetail(orderDetail, orderId);
+                return new Response<OrderDetail>
+                {
+                    Message = "Tạo mới order detail thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<Response<Customer>> GetReponseChangeStatusCustomer(string id)

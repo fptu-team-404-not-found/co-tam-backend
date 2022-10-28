@@ -12,5 +12,7 @@ namespace Services.IServices
         Task<Response<List<Order>>> GetAllOrderWithPagination(int page, int pageSize);
         Task<Response<int>> CountOrder();
         Task<Response<Order>> GetOrderById(int id);
+        Task<Response<string>> ChangeTheOrderState(int orderId);
+        Task<Response<string>> ChangeTheOrderStateToCancle(int orderId);
     }
 }

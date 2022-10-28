@@ -17,6 +17,85 @@ namespace Services
         {
             _orderRepository = orderRepository;
         }
+
+        public async Task<Response<string>> ChangeTheOrderState(int orderId)
+        {
+            try
+            {
+                var checkExist = _orderRepository.GetOrderById(orderId);
+                if (checkExist == null)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Không tìm thấy Order",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                OrderStates cancel = OrderStates.DON_BI_HUY;
+                if (checkExist.OrderState == Array.IndexOf(Enum.GetValues(cancel.GetType()), cancel))
+                {
+                    return new Response<string>
+                    {
+                        Message = "Đơn đã bị hủy không thể đổi trạng thái",
+                        Success = true,
+                        StatusCode = 400
+                    };
+                }
+                _orderRepository.ChangeTheOrderState(orderId);
+                return new Response<string>
+                {
+                    Message = "Đã đổi trạng thái thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<string>> ChangeTheOrderStateToCancle(int orderId)
+        {
+            try
+            {
+                var checkExist = _orderRepository.GetOrderById(orderId);
+                if (checkExist == null)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Không tìm thấy Order",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                OrderStates cancel = OrderStates.DON_BI_HUY;
+                if (checkExist.OrderState == Array.IndexOf(Enum.GetValues(cancel.GetType()), cancel))
+                {
+                    return new Response<string>
+                    {
+                        Message = "Đơn đã bị hủy không thể đổi trạng thái",
+                        Success = true,
+                        StatusCode = 400
+                    };
+                }
+                _orderRepository.ChangeTheOrderStateToCancle(orderId);
+                return new Response<string>
+                {
+                    Message = "Đã hủy đơn thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<int>> CountOrder()
         {
             try

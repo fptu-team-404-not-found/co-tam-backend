@@ -65,18 +65,9 @@ namespace Services
                         StatusCode = 400
                     };
                 }
-                customerPromotion.IsUsed = true;
-                var checkHasPromotion = _customerPromotionRepository.GetCustomerPromotionById(customerPromotion.CustomerId);
-                if (checkHasPromotion == null)
-                {
-                    return new Response<string>
-                    {
-                        Message = "Không tìm thấy customer",
-                        Success = false,
-                        StatusCode = 400
-                    };
-                }
-                if (customerPromotion.PromotionId == checkHasPromotion.PromotionId)
+                customerPromotion.IsUsed = false;
+                var checkHasPromotion = _customerPromotionRepository.CheckCustomerHasThisPromotion(customerPromotion.CustomerId, customerPromotion.PromotionId);
+                if (checkHasPromotion == true)
                 {
                     return new Response<string>
                     {
@@ -98,6 +89,7 @@ namespace Services
                 throw new Exception(ex.Message);
             }
         }
+
 
         public async Task<Response<string>> DisableCustomerPromotions(int cusId)
         {

@@ -17,6 +17,81 @@ namespace Repositories
         {
             _dbContext = context;
         }
+        public void ChangeTheOrderStateToCancle(int orderId)
+        {
+            try
+            {
+                OrderStates datDonThanhCong = OrderStates.DAT_DON_THANH_CONG;
+                OrderStates donBiHuy = OrderStates.DON_BI_HUY;
+
+                var order = _dbContext.Orders.FirstOrDefault(x => x.Id == orderId);
+                if (order != null)
+                {
+                    if (order.OrderState == Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong))
+                    {
+                        order.OrderState = Array.IndexOf(Enum.GetValues(donBiHuy.GetType()), donBiHuy);
+                        _dbContext.SaveChanges();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public void ChangeTheOrderState(int orderId)
+        {
+            try
+            {
+                OrderStates chuaDat = OrderStates.CHUA_DAT;
+                OrderStates datDonThanhCong = OrderStates.DAT_DON_THANH_CONG;
+                OrderStates houseworkerDaNhanDon = OrderStates.HOUSEWORKER_DA_NHAN_DON;
+                OrderStates houseworkerDangDChuyen = OrderStates.HOUSEWORKER_DANG_DI_CHUYEN;
+                OrderStates houseworkerDangViec = OrderStates.HOUSEWORKER_DANG_LAM_VIEC;
+                OrderStates houseworkerHoanThanh = OrderStates.HOUSEWORKER_HOAN_THANH;
+                OrderStates customerXacNhanDonDaHoanThanh = OrderStates.CUSTOMER_XAC_NHAN_DON_DA_HOAN_THANH;
+
+                var order = _dbContext.Orders.FirstOrDefault(x => x.Id == orderId);
+                if (order != null)
+                {
+                    if (order.OrderState == Array.IndexOf(Enum.GetValues(chuaDat.GetType()), chuaDat))
+                    {
+
+                        order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
+                        _dbContext.SaveChanges();
+                    }
+                    else if (order.OrderState == Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong))
+                    {
+                        order.OrderState = Array.IndexOf(Enum.GetValues(houseworkerDangDChuyen.GetType()), houseworkerDangDChuyen);
+                        _dbContext.SaveChanges();
+                    }
+                    else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerDangDChuyen.GetType()), houseworkerDangDChuyen))
+                    {
+                        order.OrderState = Array.IndexOf(Enum.GetValues(houseworkerDangViec.GetType()), houseworkerDangViec);
+                        _dbContext.SaveChanges();
+                    }
+                    else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerDangViec.GetType()), houseworkerDangViec))
+                    {
+                        order.OrderState = Array.IndexOf(Enum.GetValues(houseworkerHoanThanh.GetType()), houseworkerHoanThanh);
+                        _dbContext.SaveChanges();
+                    }
+                    else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerHoanThanh.GetType()), houseworkerHoanThanh))
+                    {
+                        order.OrderState = Array.IndexOf(Enum.GetValues(customerXacNhanDonDaHoanThanh.GetType()), customerXacNhanDonDaHoanThanh);
+                        _dbContext.SaveChanges();
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public int CountOrder()
         {
             try

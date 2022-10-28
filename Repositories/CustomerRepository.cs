@@ -29,7 +29,42 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public void CustomerOrderDetail(OrderDetail orderDetail, int orderId)
+        {
+            try
+            {
+                var order = _cotamContext.Orders.FirstOrDefault(x => x.Id == orderId);
+                if (order != null)
+                {
+                    orderDetail.OrderId = orderId;
+                    _cotamContext.OrderDetails.Add(orderDetail);
+                    _cotamContext.SaveChanges();
+                }
+                
+            }
+            catch (Exception ex)
+            {
 
+                throw new Exception(ex.Message);
+            }
+        }
+        public void CustomerOrder(Order order)
+        {
+            try
+            {
+                OrderStates datDonThanhCong = OrderStates.DAT_DON_THANH_CONG;
+                order.DateTime = DateTime.Now;
+                order.PaymentMethodId = 1;
+                order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
+                _cotamContext.Orders.Add(order);
+                _cotamContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
         public void ChangeCustomerStatus(Customer customer)
         {
             try

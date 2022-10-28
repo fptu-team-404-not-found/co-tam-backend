@@ -247,5 +247,49 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        /// <summary>
+        /// Add New Customer Order Detail with information include OrderId, ExtraServiceId 
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - ExtraServiceId is required when create
+        /// </remarks>
+        [HttpPost("/order-detail/{orderId}")]
+        public async Task<ActionResult<Response<OrderDetail>>> CusCreateOrderDetail(int orderId, [Required][FromBody] OrderDetail orderDetail)
+        {
+            try
+            {
+                var res = await _customerService.CustomerOrderDetail(orderDetail, orderId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+        /// <summary>
+        /// Add New Customer Order with information include DateTime, Sub Total, Total, HouseId, PackageId, PromotionId, PaymentMethodId, OrderState 
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// Description: 
+        /// - HouseId, PackageId are required when create
+        /// </remarks>
+        [HttpPost("/orders")]
+        public async Task<ActionResult<Response<Order>>> CusCreateOrder(Order order)
+        {
+            try
+            {
+                var res = await _customerService.CustomerOrder(order);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

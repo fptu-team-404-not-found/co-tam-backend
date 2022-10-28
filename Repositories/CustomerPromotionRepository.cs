@@ -34,8 +34,15 @@ namespace Repositories
         {
             try
             {
-                _dbContext.CustomerPromotions.Add(customerPromotion);
-                _dbContext.SaveChanges();
+                var decreasePromotion = _dbContext.Promotions.FirstOrDefault(x => x.Id == customerPromotion.PromotionId);
+                if (decreasePromotion != null)
+                {
+                    decreasePromotion.Amount -= 1;
+                    _dbContext.SaveChanges();
+                    _dbContext.CustomerPromotions.Add(customerPromotion);
+                    _dbContext.SaveChanges();
+                }
+                
             }
             catch (Exception ex)
             {
@@ -50,22 +57,51 @@ namespace Repositories
                 var customerPromotions = _dbContext.CustomerPromotions.FirstOrDefault(x => x.CustomerId == cusId);
                 if (customerPromotions != null)
                 {
-                    if (customerPromotions.IsUsed == true)
+                    if (customerPromotions.IsUsed == false)
                     {
-                        customerPromotions.IsUsed = false;
+                        customerPromotions.IsUsed = true;
                         _dbContext.SaveChanges();
-                        var promotion = _dbContext.Promotions.FirstOrDefault(x => x.Id == customerPromotions.PromotionId);
+                        /*var promotion = _dbContext.Promotions.FirstOrDefault(x => x.Id == customerPromotions.PromotionId);
                         if (promotion != null)
                         {
                             promotion.Amount -= 1;
                             _dbContext.SaveChanges();
                             return true;
-                        }
+                        }*/
+                        return true;
                     }
                 }
                 return false;
             }
             catch (Exception ex) {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool CheckUsedForThePromotion(int cusId, int? proId)
+        {
+            try
+            {
+                var customerPromotions = _dbContext.CustomerPromotions.FirstOrDefault(x => x.CustomerId == cusId && x.PromotionId == proId);
+                if (customerPromotions != null)
+                {
+                    if (customerPromotions.IsUsed == false)
+                    {
+                        customerPromotions.IsUsed = true;
+                        _dbContext.SaveChanges();
+                        return true;
+                        /*var promotion = _dbContext.Promotions.FirstOrDefault(x => x.Id == customerPromotions.PromotionId);
+                        if (promotion != null)
+                        {
+                            promotion.Amount -= 1;
+                            _dbContext.SaveChanges();
+                            return true;
+                        }*/
+                    }
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
                 throw new Exception(ex.Message);
             }
         }
@@ -94,6 +130,23 @@ namespace Repositories
             }
             catch (Exception ex)
             {
+                throw new Exception(ex.Message);
+            }
+        }
+        public bool CheckCustomerHasThisPromotion(int cusId, int? proId)
+        {
+            try
+            {
+                var cip = _dbContext.CustomerPromotions.FirstOrDefault(x => x.CustomerId == cusId && x.PromotionId == proId);
+                if (cip != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+
                 throw new Exception(ex.Message);
             }
         }

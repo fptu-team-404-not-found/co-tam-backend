@@ -14,5 +14,7 @@ namespace Repositories.IRepositories
         bool DisableOrEnableCustomerPromotions(int cusId);
         void CreateNewCustomerPromotion(CustomerPromotion customerPromotion);
         CustomerPromotion GetCustomerPromotionById(int cusId);
+        bool CheckCustomerHasThisPromotion(int cusId, int? proId);
+        bool CheckUsedForThePromotion(int cusId, int? proId);
     }
 }
