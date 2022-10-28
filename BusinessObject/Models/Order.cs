@@ -21,9 +21,9 @@ namespace BusinessObject.Models
         public int PaymentMethodId { get; set; }
         public int OrderState { get; set; }
 
-        public virtual House House { get; set; } = null!;
-        public virtual Package Package { get; set; } = null!;
-        public virtual PaymentMethod PaymentMethod { get; set; } = null!;
+        public virtual House? House { get; set; } = null!;
+        public virtual Package? Package { get; set; } = null!;
+        public virtual PaymentMethod? PaymentMethod { get; set; } = null!;
         public virtual Promotion? Promotion { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<WorkerInOrder> WorkerInOrders { get; set; }

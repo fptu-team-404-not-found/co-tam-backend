@@ -12,5 +12,7 @@ namespace Repositories.IRepositories
         List<Order> GetAllOrderWithPagination(int page, int pageSize);
         int CountOrder();
         Order GetOrderById(int id);
+        void ChangeTheOrderState(int orderId);
+        void ChangeTheOrderStateToCancle(int orderId);
     }
 }
