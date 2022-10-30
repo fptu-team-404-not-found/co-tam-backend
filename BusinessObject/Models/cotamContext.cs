@@ -331,6 +331,8 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Image).HasColumnType("ntext");
+
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Value).HasColumnType("money");

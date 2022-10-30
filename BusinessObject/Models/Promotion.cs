@@ -20,6 +20,7 @@ namespace BusinessObject.Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool? Active { get; set; }
+        public string? Image { get; set; }
 
         public virtual ICollection<CustomerPromotion> CustomerPromotions { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
