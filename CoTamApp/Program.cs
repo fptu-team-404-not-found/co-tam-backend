@@ -158,6 +158,12 @@ builder.Services.AddScoped<CustomerPromotionValidation>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 
+builder.Services.AddScoped<IWorkerInOrderRepository, WorkerInOrderRepository>();
+builder.Services.AddScoped<IWorkerInOrderService, WorkerInOrderService>();
+
+builder.Services.AddScoped<IWorkerTagRepository, WorkerTagRepository>();
+builder.Services.AddScoped<IWorkerTagService, WorkerTagService>();
+
 builder.Services.AddScoped<AuthController>();
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin()

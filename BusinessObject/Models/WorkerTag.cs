@@ -9,6 +9,6 @@ namespace BusinessObject.Models
         public string Name { get; set; } = null!;
         public int HouseWorkerId { get; set; }
 
-        public virtual HouseWorker HouseWorker { get; set; } = null!;
+        public virtual HouseWorker? HouseWorker { get; set; } = null!;
     }
 }
