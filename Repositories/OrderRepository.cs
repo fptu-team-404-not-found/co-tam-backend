@@ -58,7 +58,6 @@ namespace Repositories
                 {
                     if (order.OrderState == Array.IndexOf(Enum.GetValues(chuaDat.GetType()), chuaDat))
                     {
-
                         order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
                         _dbContext.SaveChanges();
                     }

@@ -115,5 +115,22 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public Package GetServiceFromPackegeId(int packageId)
+        {
+            try
+            {
+                var pack = _dbContext.Packages.Include(x => x.Service).FirstOrDefault(x => x.Id == packageId);
+                if (pack != null)
+                {
+                    return pack;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

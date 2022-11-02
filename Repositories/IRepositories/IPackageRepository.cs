@@ -15,5 +15,6 @@ namespace Repositories.IRepositories
         bool DisableOrEnablePackage(int packageId);
         void CreateNewPackage(Package package);
         void UpdatePackage(Package package);
+        Package GetServiceFromPackegeId(int packageId);
     }
 }
