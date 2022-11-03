@@ -21,6 +21,45 @@ namespace Services
             _orderRepository = orderRepository;
             _extraServiceRepository = extraServiceRepository;
         }
+
+        public async Task<Response<OrderDetail>> GetOrderDetailById(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    return new Response<OrderDetail>
+                    {
+                        Message = "Hãy Nhập id Có Giá Trị Lớn Hơn 0",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var res = _orderDetailRepository.GetOrderDetailById(id);
+                if (res == null)
+                {
+                    return new Response<OrderDetail>
+                    {
+                        Message = "Không tìm thấy order detail với id " + id,
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<OrderDetail> 
+                {
+                    Data = res,
+                    Message = "Thành Công",
+                    StatusCode = 200,
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<List<OrderDetail>>> GetOrderDetailsByOrderId(int orderId)
         {
             try

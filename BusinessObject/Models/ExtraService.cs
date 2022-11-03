@@ -5,6 +5,11 @@ namespace BusinessObject.Models
 {
     public partial class ExtraService
     {
+        public ExtraService()
+        {
+            OrderDetails = new HashSet<OrderDetail>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
@@ -13,5 +18,6 @@ namespace BusinessObject.Models
         public int ServiceId { get; set; }
 
         public virtual Service Service { get; set; } = null!;
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

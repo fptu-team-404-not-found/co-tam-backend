@@ -280,6 +280,11 @@ namespace BusinessObject.Models
             {
                 entity.ToTable("OrderDetail");
 
+                entity.HasOne(d => d.ExtraService)
+                    .WithMany(p => p.OrderDetails)
+                    .HasForeignKey(d => d.ExtraServiceId)
+                    .HasConstraintName("FK__OrderDeta__Extra__5CA1C101");
+
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
