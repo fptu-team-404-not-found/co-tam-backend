@@ -79,5 +79,33 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response<string>>> RemoveWorkInOrders(int id)
+        {
+            try
+            {
+                var res = await _workerInOrderService.RemoveWorkInOrder(id);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+        [HttpPut("{id}/{rating}")]
+        public async Task<ActionResult<Response<string>>> UpdateRating(int id, int rating)
+        {
+            try
+            {
+                var res = await _workerInOrderService.UpdateRating(id, rating);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

@@ -95,5 +95,39 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public void RemoveWorkInOrder(int id)
+        {
+            try
+            {
+                var wio = _dbContext.WorkerInOrders.FirstOrDefault(x => x.Id == id);
+                if (wio != null)
+                {
+                    _dbContext.WorkerInOrders.Remove(wio);
+                    _dbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public void UpdateRating(int id, int rating)
+        {
+            try
+            {
+                var wio = _dbContext.WorkerInOrders.FirstOrDefault(x => x.Id == id);
+                if (wio != null)
+                {
+                    wio.Rating = rating;
+                    _dbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

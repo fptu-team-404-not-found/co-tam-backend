@@ -12,6 +12,8 @@ namespace Repositories.IRepositories
         List<WorkerInOrder> GetAllWorkInOrderWithPagination(int pageIndex, int pageSize);
         int CountWorkInOrder();
         void CreateNewWorkInOrder(WorkerInOrder workInOrder);
+        void RemoveWorkInOrder(int id);
+        void UpdateRating(int id, int rating);
         WorkerInOrder GetWorkerInOrderById(int id);
     }
 }
