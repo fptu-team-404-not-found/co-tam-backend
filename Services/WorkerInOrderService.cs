@@ -150,5 +150,89 @@ namespace Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Response<string>> RemoveWorkInOrder(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    return new Response<string> {
+                        Message = "Hãy Nhập Id Với Giá Trị Lớn Hơn 0",
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                var checkExist = _workerInOrderRepository.GetWorkerInOrderById(id);
+                if (checkExist == null)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Không tìm thấy work in order",
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                _workerInOrderRepository.RemoveWorkInOrder(id);
+                return new Response<string>
+                {
+                    Message = "Thành Công",
+                    StatusCode = 200,
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<string>> UpdateRating(int id, int rating)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Hãy Nhập Id Với Giá Trị Lớn Hơn 0",
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                if (rating < 0 || rating > 5)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Hãy Nhập rating có giá trị từ 0 đến 5 sao",
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                var checkExist = _workerInOrderRepository.GetWorkerInOrderById(id);
+                if (checkExist == null)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Không tìm thấy work in order",
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                _workerInOrderRepository.UpdateRating(id, rating);
+                return new Response<string>
+                {
+                    Message = "Thành Công",
+                    StatusCode = 201,
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

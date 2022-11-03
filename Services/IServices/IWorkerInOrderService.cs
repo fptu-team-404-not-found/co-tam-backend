@@ -13,5 +13,7 @@ namespace Services.IServices
         Task<Response<int>> CountWorkerInOrder();
         Task<Response<int>> CreateNewWorkInOder(int orderId, int houseworkerId, WorkerInOrder workerInOrder);
         Task<Response<WorkerInOrder>> GetWorkerInOrderById(int id);
+        Task<Response<string>> RemoveWorkInOrder(int id);
+        Task<Response<string>> UpdateRating(int id, int rating);
     }
 }

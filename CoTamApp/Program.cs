@@ -164,6 +164,9 @@ builder.Services.AddScoped<IWorkerInOrderService, WorkerInOrderService>();
 builder.Services.AddScoped<IWorkerTagRepository, WorkerTagRepository>();
 builder.Services.AddScoped<IWorkerTagService, WorkerTagService>();
 
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
+
 builder.Services.AddScoped<AuthController>();
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.AllowAnyOrigin()

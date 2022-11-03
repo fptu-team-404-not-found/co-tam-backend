@@ -17,14 +17,16 @@ namespace Services
         private readonly IOrderRepository _orderRepository;
         private readonly IHouseRepository _houseRepository;
         private readonly ICustomerPromotionRepository _customerPromotionRepository;
+        private readonly IExtraServiceRepository _extraServiceRepository;
 
-        public CustomerService(ICustomerRepository customerRepository, CustomerValidation customerValidation, IOrderRepository orderRepository, IHouseRepository houseRepository, ICustomerPromotionRepository customerPromotionRepository)
+        public CustomerService(ICustomerRepository customerRepository, CustomerValidation customerValidation, IOrderRepository orderRepository, IHouseRepository houseRepository, ICustomerPromotionRepository customerPromotionRepository, IExtraServiceRepository extraServiceRepository)
         {
             _customerRepository = customerRepository;
             _customerValidation = customerValidation;
             _orderRepository = orderRepository;
             _houseRepository = houseRepository;
             _customerPromotionRepository = customerPromotionRepository;
+            _extraServiceRepository = extraServiceRepository;
         }
 
         public async Task<Response<Order>> CustomerOrder(Order order)
@@ -92,6 +94,16 @@ namespace Services
                     return new Response<OrderDetail>
                     {
                         Message = "Không tìm thấy order",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExistExtraService = _extraServiceRepository.GetExtraServiceById((int)orderDetail.ExtraServiceId);
+                if(checkExistExtraService == null)
+                {
+                    return new Response<OrderDetail>
+                    {
+                        Message = "Không tìm thấy extra service",
                         Success = false,
                         StatusCode = 400
                     };
