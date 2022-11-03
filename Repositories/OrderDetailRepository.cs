@@ -17,6 +17,25 @@ namespace Repositories
         {
             _dbContext = dbContext;
         }
+
+        public OrderDetail GetOrderDetailById(int id)
+        {
+            try
+            {
+                var od = _dbContext.OrderDetails.Include(x => x.Order).FirstOrDefault(x => x.Id == id);
+                if (od != null)
+                {
+                    return od;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public List<OrderDetail> GetOrderDetailsByOrderId(int orderId)
         {
             try

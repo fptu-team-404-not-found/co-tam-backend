@@ -10,5 +10,6 @@ namespace Services.IServices
     public interface IOrderDetailService
     {
         Task<Response<List<OrderDetail>>> GetOrderDetailsByOrderId(int orderId);
+        Task<Response<OrderDetail>> GetOrderDetailById(int id);
     }
 }
