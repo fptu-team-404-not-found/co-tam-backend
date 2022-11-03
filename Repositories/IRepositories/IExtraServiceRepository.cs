@@ -13,5 +13,6 @@ namespace Repositories.IRepositories
         ExtraService GetExtraServiceById(int id);
         void CreateAExtraService(ExtraService extraService);
         void DeleteAExtraService(ExtraService extraService);
+        int CountExtraServiceByServiceId(int serviceId);
     }
 }

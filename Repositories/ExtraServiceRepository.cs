@@ -75,5 +75,18 @@ namespace Repositories
 
             return extraService;
         }
+        public int CountExtraServiceByServiceId(int serviceId)
+        {
+            try
+            {
+                var count = _cotamContext.ExtraServices.Where(x => x.ServiceId == serviceId).Count();
+
+                return count;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
