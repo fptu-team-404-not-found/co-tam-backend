@@ -22,7 +22,7 @@ namespace Repositories
         {
             try
             {
-                var od = _dbContext.OrderDetails.Include(x => x.Order).FirstOrDefault(x => x.Id == id);
+                var od = _dbContext.OrderDetails.Include(x => x.Order).Include(x => x.ExtraService).FirstOrDefault(x => x.Id == id);
                 if (od != null)
                 {
                     return od;
@@ -42,6 +42,7 @@ namespace Repositories
             {
                 var ods = _dbContext.OrderDetails
                     .Include(x => x.Order)
+                    .Include(x => x.ExtraService)
                     .Where(x => x.OrderId == orderId)
                     .ToList();
                 if (ods != null)

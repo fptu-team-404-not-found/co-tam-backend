@@ -46,7 +46,6 @@ namespace Repositories
 
         public List<ExtraService> GetAll(int serId, int page, int pageSize)
         {
-            List<ExtraService> extraServices = new List<ExtraService>();
             try
             {
                 /*extraServices = _cotamContext.ExtraServices.Where(x => x.Active == 1).ToList();
