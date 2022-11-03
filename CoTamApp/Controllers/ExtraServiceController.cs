@@ -176,5 +176,19 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        [HttpGet("count/{serviceId}")]
+        public async Task<ActionResult<Response<int>>> GetExtraServiceByServiceId(int serviceId)
+        {
+            try
+            {
+                var res = await _extraServiceService.CountExtraServiceByServiceId(serviceId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

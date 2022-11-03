@@ -13,11 +13,13 @@ namespace Services
     {
         private readonly IWorkerInOrderRepository _workerInOrderRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IHouseWorkerRepository _houseWorkerRepository;
 
-        public WorkerInOrderService(IWorkerInOrderRepository workerInOrderRepository, IOrderRepository orderRepository)
+        public WorkerInOrderService(IWorkerInOrderRepository workerInOrderRepository, IOrderRepository orderRepository, IHouseWorkerRepository houseWorkerRepository)
         {
             _workerInOrderRepository = workerInOrderRepository;
             _orderRepository = orderRepository;
+            _houseWorkerRepository = houseWorkerRepository;
         }
 
         public async Task<Response<int>> CountWorkerInOrder()
@@ -142,6 +144,54 @@ namespace Services
                     Message = "Thành Công",
                     StatusCode = 200,
                     Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<List<WorkerInOrder>>> GetWorkerInOrdersByHouseworkerId(int houseworkerId)
+        {
+            try
+            {
+                if (houseworkerId <= 0)
+                {
+                    return new Response<List<WorkerInOrder>>
+                    { 
+                        Message = "Hãy Nhập HouseworkerId có giá trị lớn hơn 0",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExist = _houseWorkerRepository.GetHouseWorkerById(houseworkerId);
+                if (checkExist == null)
+                {
+                    return new Response<List<WorkerInOrder>>
+                    {
+                        Message = "Không tìm thấy houseworke với id "+ houseworkerId,
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var res = _workerInOrderRepository.GetWorkerInOrdersByHouseworkerId(houseworkerId);
+                if (res == null)
+                {
+                    return new Response<List<WorkerInOrder>>
+                    {
+                        Message = "Không tìm thấy work in order nào",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<List<WorkerInOrder>>
+                {
+                    Data = res,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
                 };
             }
             catch (Exception ex)

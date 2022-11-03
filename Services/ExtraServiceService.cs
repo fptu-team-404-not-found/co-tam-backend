@@ -190,5 +190,44 @@ namespace Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Response<int>> CountExtraServiceByServiceId(int serviceId)
+        {
+            try
+            {
+                if (serviceId <= 0)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Hãy Nhập ServiceId Có Giá Trị Lớn Hơn 0",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExist = _serviceRepository.GetServiceById(serviceId);
+                if (checkExist == null)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Không tìm thấy service với id " + serviceId,
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var count = _extraServiceRepository.CountExtraServiceByServiceId(serviceId);
+                return new Response<int>
+                {
+                    Data = count,
+                    Message = "Thành Công",
+                    StatusCode = 200,
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

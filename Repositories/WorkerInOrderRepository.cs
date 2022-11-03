@@ -129,5 +129,26 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public List<WorkerInOrder> GetWorkerInOrdersByHouseworkerId(int houseworkerId)
+        {
+            try
+            {
+                var wio = _dbContext.WorkerInOrders
+                    .Include(x => x.Order)
+                    .Include(x => x.HouseWorker)
+                    .Where(x => x.HouseWorkerId == houseworkerId)
+                    .ToList();
+                if (wio != null)
+                {
+                    return wio;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

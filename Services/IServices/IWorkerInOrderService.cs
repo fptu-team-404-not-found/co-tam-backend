@@ -15,5 +15,6 @@ namespace Services.IServices
         Task<Response<WorkerInOrder>> GetWorkerInOrderById(int id);
         Task<Response<string>> RemoveWorkInOrder(int id);
         Task<Response<string>> UpdateRating(int id, int rating);
+        Task<Response<List<WorkerInOrder>>> GetWorkerInOrdersByHouseworkerId(int houseworkerId);
     }
 }

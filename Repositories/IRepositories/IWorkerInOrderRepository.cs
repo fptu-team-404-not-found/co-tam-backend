@@ -15,5 +15,6 @@ namespace Repositories.IRepositories
         void RemoveWorkInOrder(int id);
         void UpdateRating(int id, int rating);
         WorkerInOrder GetWorkerInOrderById(int id);
+        List<WorkerInOrder> GetWorkerInOrdersByHouseworkerId(int houseworkerId);
     }
 }
