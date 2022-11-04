@@ -52,10 +52,10 @@ namespace Repositories
         {
             try
             {
-                OrderStates chuaDat = OrderStates.CHUA_DAT;
+                OrderStates datDonThanhCong = OrderStates.DAT_DON_THANH_CONG;
                 order.DateTime = DateTime.Now;
                 order.PaymentMethodId = 1;
-                order.OrderState = Array.IndexOf(Enum.GetValues(chuaDat.GetType()), chuaDat);
+                order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
                 _cotamContext.Orders.Add(order);
                 _cotamContext.SaveChanges();
             }

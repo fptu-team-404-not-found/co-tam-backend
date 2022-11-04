@@ -150,5 +150,31 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public List<WorkerInOrder> GetListWorkInOrderWithoutRatingWithCustomer(int orderId,int pageIndex, int pageSize)
+        {
+            try
+            {
+                var order = _dbContext.Orders.FirstOrDefault(x => x.Id == orderId);
+                if (order != null)
+                { 
+                    var wio = _dbContext.WorkerInOrders
+                        .Include(x => x.Order)
+                        .Include(x => x.HouseWorker)
+                        .Where(x => x.OrderId == orderId && x.Rating == null).Skip((pageIndex - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                    if (wio.Count != 0)
+                    {
+                        return wio;
+                    }
+                    return null;
+                }   
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

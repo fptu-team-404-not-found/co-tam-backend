@@ -63,6 +63,11 @@ namespace Repositories
                     }
                     else if (order.OrderState == Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong))
                     {
+                        order.OrderState = Array.IndexOf(Enum.GetValues(houseworkerDaNhanDon.GetType()), houseworkerDaNhanDon);
+                        _dbContext.SaveChanges();
+                    }
+                    else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerDaNhanDon.GetType()), houseworkerDaNhanDon))
+                    {
                         order.OrderState = Array.IndexOf(Enum.GetValues(houseworkerDangDChuyen.GetType()), houseworkerDangDChuyen);
                         _dbContext.SaveChanges();
                     }
@@ -145,6 +150,22 @@ namespace Repositories
                 .Include(x => x.PaymentMethod)
                 .Where(x => x.HouseId == houseId).ToList();
             if (orders != null)
+            {
+                return orders;
+            }
+            return null;
+        }
+        public List<Order> GetOrdersHasStateDangDatByCusId(int houseId)
+        {
+
+            var orders = _dbContext.Orders
+                .Include(x => x.House)
+                .Include(x => x.Package)
+                .Include(x => x.Promotion)
+                .Include(x => x.PaymentMethod)
+                .Where(x => x.HouseId == houseId && x.OrderState > 1 && x.OrderState < 7)
+                .ToList();
+            if (orders.Count > 0)
             {
                 return orders;
             }
