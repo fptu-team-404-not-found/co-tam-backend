@@ -47,6 +47,11 @@ namespace Repositories
                         _dbContext.SaveChanges();
                         _dbContext.CustomerPromotions.Add(customerPromotion);
                         _dbContext.SaveChanges();
+                        if (decreasePromotion.Amount == 0)
+                        {
+                            decreasePromotion.Active = false;
+                            _dbContext.SaveChanges();
+                        }
                         return "ok";
                     }
                     
