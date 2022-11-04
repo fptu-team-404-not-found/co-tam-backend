@@ -11,6 +11,7 @@ namespace Repositories.IRepositories
     {
         Promotion GetPromotionById(int id);
         List<Promotion> GetPromotionList(int pageIndex, int pageSize);
+        List<Promotion> GetPromotionListVerMobile(int pageIndex, int pageSize);
         void CreatePromotion(Promotion promotion);
         void UpdatePromotion(Promotion promotion);
         void ChangePromotionStatus(Promotion promotion);

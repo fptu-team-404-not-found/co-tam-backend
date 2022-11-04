@@ -127,5 +127,26 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public List<House> GetHouseByCusId(int cusId)
+        {
+            try
+            {
+                var house = _cotamContext.Houses
+                    .Include(x => x.Customer)
+                    .Include(x => x.Building)
+                    .Where(x => x.CustomerId == cusId)
+                    .ToList();
+                if (house != null)
+                {
+                    return house;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -76,7 +76,16 @@ namespace Services
                         StatusCode = 400
                     };
                 }
-                _customerPromotionRepository.CreateNewCustomerPromotion(customerPromotion);
+                var res = _customerPromotionRepository.CreateNewCustomerPromotion(customerPromotion);
+                if (res != "ok")
+                {
+                    return new Response<string>
+                    {
+                        Message = res,
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
                 return new Response<string>
                 {
                     Message = "Thành Công",
