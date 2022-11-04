@@ -19,6 +19,8 @@ namespace Services
         }
         public Task<ServiceResponse<string>> LoginWithCustomer(string email, string name) => _authCustomerRepository.LoginWithCustomer(email, name);
 
+        public Task<ServiceResponse<string>> LoginWithCustomerVer2(string email, string name) => _authCustomerRepository.LoginWithCustomerVer2(email, name);
+
         public Task<ServiceResponse<string>> Logout(int userId) => _authCustomerRepository.Logout(userId);
     }
 }

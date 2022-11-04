@@ -40,8 +40,8 @@ namespace CoTamApp.Controllers
         /// <response code="500">Internal server error</response>
         [ProducesResponseType(typeof(House), 200)]
         [Produces("application/json")]
-        [HttpGet("{customerId}/houses/{id}")]
-        public async Task<ActionResult<Response<House>>> GetHouseById(string id, string customerId)
+        [HttpGet("houses/{id}")]
+        public async Task<ActionResult<Response<House>>> GetHouseById(string id)
         {
             try
             {
@@ -141,10 +141,18 @@ namespace CoTamApp.Controllers
             return Ok();
         }
 
-        [HttpDelete("{house.customerId}/houses/{house.Id}")]
-        public async Task<ActionResult<Response<House>>> DeleteHouseForCustomer(House house)
+        [HttpDelete("houses/{houseId}")]
+        public async Task<ActionResult<Response<House>>> DeleteHouseForCustomer(int houseId)
         {
-            return Ok();
+            try
+            {
+                var res = await _houseService.DeleteHouseForCustomer(houseId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("{customerId}/houses/count")]

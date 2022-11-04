@@ -11,5 +11,6 @@ namespace Services.IServices
     {
         Task<ServiceResponse<string>> LoginWithCustomer(string email, string name);
         Task<ServiceResponse<string>> Logout(int userId);
+        Task<ServiceResponse<string>> LoginWithCustomerVer2(string email, string name);
     }
 }

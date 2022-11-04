@@ -46,5 +46,13 @@ namespace CoTamApp.Controllers
 
             return Ok(result);
         }
+        [HttpGet("houseworkers/login-ver")]
+        public async Task<ActionResult<ServiceResponse<string>>> LoginWithHouseworkerVer2([FromQuery] string email)
+        {
+            var res = await _authHouseworkerService.LoginWithHouseworkerVer2(email);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }

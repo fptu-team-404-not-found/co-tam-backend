@@ -19,6 +19,8 @@ namespace Services
         }
         public Task<ServiceResponse<string>> LoginWithHouseworker(string email, string name) => _authHouseworkerRepository.LoginWithHouseworker(email, name);
 
+        public Task<ServiceResponse<string>> LoginWithHouseworkerVer2(string email) => _authHouseworkerRepository.LoginWithHouseworkerVer2(email);
+
         public Task<ServiceResponse<string>> Logout(int userId) => _authHouseworkerRepository.Logout(userId);
     }
 }

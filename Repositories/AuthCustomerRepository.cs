@@ -131,5 +131,40 @@ namespace Repositories
                 Message = "Failed"
             };
         }
+        public async Task<ServiceResponse<string>> LoginWithCustomerVer2(string email, string name)
+        {
+            var customer = await _dbContext.Customers.FirstOrDefaultAsync(x => x.Email == email);
+            if (customer != null)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = CreateTokenWithCustomer(customer),
+                    Message = "Login with customer account successfully",
+                    Success = true
+                };
+            }
+            else 
+            {
+                if (string.IsNullOrEmpty(name))
+                {
+                    return new ServiceResponse<string>
+                    {
+                        Message ="Tài khoản của bạn không tồn tại, Bạn Hãy nhập name để tài khoản được tạo tự động tạo mới",
+                        Success = false
+                    };
+                }
+                var newCus = new Customer();
+                newCus.Email = email;
+                newCus.Name = name;
+                _dbContext.Customers.Add(newCus);
+                await _dbContext.SaveChangesAsync();
+                return new ServiceResponse<string>
+                {
+                    Data = CreateTokenWithCustomer(newCus),
+                    Message = "Create acount successfully and now login successfully",
+                    Success = true
+                };
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Repositories.IRepositories
         List<House> GetListByCustomerId(int customerId, int page, int pageSize);
         bool CreateHouse(House house);
         void UpdateHouse(House house);
-        void DeleteHouse(House house);
+        void DeleteHouse(int houseId);
         int CountHouse(int customerId);
     }
 }

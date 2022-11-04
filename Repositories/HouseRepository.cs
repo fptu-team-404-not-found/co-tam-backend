@@ -54,11 +54,24 @@ namespace Repositories
             }
         }
 
-        public void DeleteHouse(House house)
+        public void DeleteHouse(int houseId)
         {
             try
             {
-                _cotamContext.Houses.Update(house);
+                var house = _cotamContext.Houses.FirstOrDefault(x => x.Id == houseId);
+                if (house != null)
+                {
+                    if (house.Active == true)
+                    {
+                        house.Active = false;
+                        _cotamContext.SaveChanges();
+                    }
+                    else if (house.Active == false)
+                    {
+                        house.Active = true;
+                        _cotamContext.SaveChanges();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -68,11 +81,17 @@ namespace Repositories
 
         public House GetHouseById(int id)
         {
-            House house = null;
             try
             {
-                house = _cotamContext.Houses.FirstOrDefault(house => house.Id == id);
-                return house;
+                var house = _cotamContext.Houses
+                    .Include(x => x.Building)
+                    .Include(x => x.Customer)
+                    .FirstOrDefault(house => house.Id == id);
+                if (house != null)
+                {
+                    return house;
+                }
+                return null;
             }
             catch (Exception ex)
             {
@@ -86,7 +105,7 @@ namespace Repositories
             try
             {
                 /*houses = _cotamContext.Houses.Where(h => h.CustomerId == customerId).ToList();*/
-                var list = _cotamContext.Houses.Where(h => h.CustomerId == customerId).Skip((page - 1) * (int)pageSize)
+                var list = _cotamContext.Houses.Include(x => x.Building).Include(x => x.Customer).Where(h => h.CustomerId == customerId).Skip((page - 1) * (int)pageSize)
                         .Take((int)pageSize).ToList();
                 return list;
                 /*return houses;*/
@@ -101,7 +120,7 @@ namespace Repositories
         {
             try
             {
-                _cotamContext.Houses.Update(house);
+                _cotamContext.SaveChanges();
             }
             catch (Exception ex)
             {

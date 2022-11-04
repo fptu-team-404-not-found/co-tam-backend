@@ -84,9 +84,42 @@ namespace Services
             }
         }
 
-        public Task<Response<House>> DeleteHouseForCustomer(House house)
+        public async Task<Response<string>> DeleteHouseForCustomer(int houseId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (houseId <= 0)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Hãy nhập houseId có giá trị lớn hơn 0",
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                var checkExist = _houseRepository.GetHouseById(houseId);
+                if (checkExist == null)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Không tìm thấy house với id "+houseId,
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                _houseRepository.DeleteHouse(houseId);
+                return new Response<string>
+                {
+                    Message = "Disable/Enable Thành Công",
+                    StatusCode = 200,
+                    Success = true
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<Response<House>> GetHouseById(string id)
@@ -155,9 +188,22 @@ namespace Services
             };
         }
 
-        public Task<Response<House>> UpdateHouseForCustomer(House house)
+        public async Task<Response<House>> UpdateHouseForCustomer(House house)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return new Response<House>
+                { 
+                    Message = "Thành Công"
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
+
+        
     }
 }

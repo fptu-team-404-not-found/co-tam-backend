@@ -16,8 +16,8 @@ namespace BusinessObject.Models
         public int CustomerId { get; set; }
         public int BuildingId { get; set; }
 
-        public virtual Building Building { get; set; } = null!;
-        public virtual Customer Customer { get; set; } = null!;
+        public virtual Building? Building { get; set; } = null!;
+        public virtual Customer? Customer { get; set; } = null!;
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

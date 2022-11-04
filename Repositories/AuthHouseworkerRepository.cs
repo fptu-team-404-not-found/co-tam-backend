@@ -125,5 +125,28 @@ namespace Repositories
                 Message = "Failed"
             };
         }
+
+        public async Task<ServiceResponse<string>> LoginWithHouseworkerVer2(string email)
+        {
+            var houseworker = await _dbContext.HouseWorkers.FirstOrDefaultAsync(x => x.Email == email);
+            if (houseworker != null)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = CreateTokenWithHouseworker(houseworker),
+                    Message = "Login with houseworker account successfully",
+                    Success = true
+                };
+            }
+            else
+            {
+                return new ServiceResponse<string>
+                {
+                    Message = "Login Failed! You don't have permission for this app",
+                    Success = false
+                };
+
+            }
+        }
     }
 }
