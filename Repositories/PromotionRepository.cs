@@ -88,7 +88,7 @@ namespace Repositories
         }
         public List<Promotion> GetPromotionListVerMobile(int pageIndex, int pageSize)
         {
-            var list = _cotamContext.Promotions.Where(x => x.Active == true && x.Amount > 0)
+            var list = _cotamContext.Promotions.Where(x => x.Active == true)
                         .Skip((pageIndex - 1) * (int)pageSize)
                         .Take((int)pageSize).ToList();
             return list;
