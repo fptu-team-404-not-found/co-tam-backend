@@ -11,5 +11,6 @@ namespace Repositories.IRepositories
     {
         Task<ServiceResponse<string>> LoginWithHouseworker(string email, string name);
         Task<ServiceResponse<string>> Logout(int userId);
+        Task<ServiceResponse<string>> LoginWithHouseworkerVer2(string email);
     }
 }

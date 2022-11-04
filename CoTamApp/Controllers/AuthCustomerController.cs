@@ -46,5 +46,18 @@ namespace CoTamApp.Controllers
 
             return Ok(result);
         }
+        /// <remarks>
+        /// Description: 
+        /// - Email is required when login
+        /// - Name field is needed when your email is not exist and you want to auto register your account
+        /// </remarks>
+        [HttpGet("customers/login-ver")]
+        public async Task<ActionResult<ServiceResponse<string>>> LoginWithCustomerVer2([FromQuery]string email, [FromQuery]string? name)
+        {
+            var res = await _authCustomerService.LoginWithCustomerVer2(email, name);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }
