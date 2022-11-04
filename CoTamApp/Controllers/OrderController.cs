@@ -101,5 +101,19 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        [HttpGet("order-pending/{cusId}")]
+        public async Task<ActionResult<Response<List<Order>>>> GetOrdersHasStateDangDatByCusId(int cusId)
+        {
+            try
+            {
+                var res = await _orderService.GetOrdersHasStateDangDatByCusId(cusId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }
