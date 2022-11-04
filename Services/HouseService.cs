@@ -192,9 +192,26 @@ namespace Services
         {
             try
             {
+                var checkHouseExist = _houseRepository.GetHouseById(house.Id);
+                if (checkHouseExist == null)
+                {
+                    return new Response<House>
+                    {
+                        Message = "Không tồn tại house với id" + house.Id,
+                        StatusCode = 400,
+                        Success = false
+                    };
+                }
+                checkHouseExist.Number = house.Number;
+                checkHouseExist.Active = house.Active;
+                checkHouseExist.CustomerId = house.CustomerId;
+                checkHouseExist.BuildingId = house.BuildingId;
+                _houseRepository.UpdateHouse(checkHouseExist);
                 return new Response<House>
-                { 
-                    Message = "Thành Công"
+                {
+                    Message = "Thành Công",
+                    StatusCode = 201,
+                    Success = true
                 };
             }
             catch (Exception ex)

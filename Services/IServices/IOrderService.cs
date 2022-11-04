@@ -14,5 +14,6 @@ namespace Services.IServices
         Task<Response<Order>> GetOrderById(int id);
         Task<Response<string>> ChangeTheOrderState(int orderId);
         Task<Response<string>> ChangeTheOrderStateToCancle(int orderId);
+        Task<Response<List<Order>>> GetOrdersHistoryByCusId(int cusId);
     }
 }

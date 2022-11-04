@@ -30,19 +30,28 @@ namespace Repositories
             }
         }
 
-        public void CreateNewCustomerPromotion(CustomerPromotion customerPromotion)
+        public string CreateNewCustomerPromotion(CustomerPromotion customerPromotion)
         {
             try
             {
                 var decreasePromotion = _dbContext.Promotions.FirstOrDefault(x => x.Id == customerPromotion.PromotionId);
                 if (decreasePromotion != null)
                 {
-                    decreasePromotion.Amount -= 1;
-                    _dbContext.SaveChanges();
-                    _dbContext.CustomerPromotions.Add(customerPromotion);
-                    _dbContext.SaveChanges();
+                    if (decreasePromotion.Amount < 1)
+                    {
+                        return "Số lượng voucher đã hết";
+                    }
+                    else 
+                    {
+                        decreasePromotion.Amount -= 1;
+                        _dbContext.SaveChanges();
+                        _dbContext.CustomerPromotions.Add(customerPromotion);
+                        _dbContext.SaveChanges();
+                        return "ok";
+                    }
+                    
                 }
-                
+                return "ok";
             }
             catch (Exception ex)
             {

@@ -16,5 +16,6 @@ namespace Repositories.IRepositories
         void UpdateHouse(House house);
         void DeleteHouse(int houseId);
         int CountHouse(int customerId);
+        List<House> GetHouseByCusId(int cusId);
     }
 }

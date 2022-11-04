@@ -12,7 +12,7 @@ namespace Repositories.IRepositories
         List<CustomerPromotion> GetAllCustomerPromotionWithPagination(int cusId, int page, int pageSize);
         int CountCustomerPromotion(int cusId);
         bool DisableOrEnableCustomerPromotions(int cusId);
-        void CreateNewCustomerPromotion(CustomerPromotion customerPromotion);
+        string CreateNewCustomerPromotion(CustomerPromotion customerPromotion);
         CustomerPromotion GetCustomerPromotionById(int cusId);
         bool CheckCustomerHasThisPromotion(int cusId, int? proId);
         bool CheckUsedForThePromotion(int cusId, int? proId);

@@ -128,6 +128,36 @@ namespace Services
             }
         }
 
+        public async Task<Response<List<Promotion>>> GetReponsePromotionsVerMobile(int pageIndex, int pageSize)
+        {
+            try
+            {
+                List<Promotion> promotions = _promotionRepository.GetPromotionListVerMobile(pageIndex, pageSize);
+
+                if (promotions == null)
+                {
+                    return new Response<List<Promotion>>
+                    {
+                        Message = "Danh sách khuyến mãi không tồn tại!",
+                        Success = false,
+                        StatusCode = 404
+                    };
+                }
+
+                return new Response<List<Promotion>>
+                {
+                    Data = promotions,
+                    Message = "Thành công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<Promotion>> GetReponseUpdatedPromotion(string id, Promotion promotion)
         {
             try

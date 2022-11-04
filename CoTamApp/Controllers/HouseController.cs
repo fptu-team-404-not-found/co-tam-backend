@@ -53,9 +53,9 @@ namespace CoTamApp.Controllers
 
                 return Ok(res);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error " + ex.Message);
             }
         }
 
@@ -91,9 +91,9 @@ namespace CoTamApp.Controllers
 
                 return Ok(res);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error " + ex.Message);
             }
         }
 
@@ -129,16 +129,25 @@ namespace CoTamApp.Controllers
 
                 return Ok(res);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error " + ex.Message);
             }
         }
 
-        [HttpPut("{house.customerId}/houses/{house.Id}")]
+        [HttpPut("houses")]
         public async Task<ActionResult<Response<House>>> UpdateHouseForCustomer(House house)
         {
-            return Ok();
+            try
+            {
+                var res = await _houseService.UpdateHouseForCustomer(house);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error " +ex.Message);
+
+            }
         }
 
         [HttpDelete("houses/{houseId}")]
@@ -151,7 +160,7 @@ namespace CoTamApp.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error " + ex.Message);
             }
         }
 
@@ -168,9 +177,9 @@ namespace CoTamApp.Controllers
 
                 return Ok(res);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error " + ex.Message);
             }
         }
     }

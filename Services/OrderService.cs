@@ -12,10 +12,14 @@ namespace Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IHouseRepository _houseRepository;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, ICustomerRepository customerRepository, IHouseRepository houseRepository)
         {
             _orderRepository = orderRepository;
+            _customerRepository = customerRepository;
+            _houseRepository = houseRepository;
         }
 
         public async Task<Response<string>> ChangeTheOrderState(int orderId)
@@ -175,6 +179,67 @@ namespace Services
             }
             catch (Exception ex)
             {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<List<Order>>> GetOrdersHistoryByCusId(int cusId)
+        {
+            try
+            {
+                if (cusId <= 0)
+                {
+                    return new Response<List<Order>>
+                    { 
+                        Message = "Hãy Nhập CusId có giá trị lớn hơn 0",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExist = _customerRepository.GetCustomerById(cusId);
+                if (checkExist == null)
+                {
+                    return new Response<List<Order>>
+                    {
+                        Message = "Không tìm thấy customer với id "+cusId,
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var house = _houseRepository.GetHouseByCusId(cusId);
+                List<Order> res = new List<Order>();
+                foreach (var item in house)
+                {
+                    res = _orderRepository.GetOrdersHistoryByCusId(item.Id);
+                    if (res == null)
+                    {
+                        return new Response<List<Order>>
+                        {
+                            Message = "Không tìm thấy order history",
+                            Success = false,
+                            StatusCode = 400
+                        };
+                    }
+                    return new Response<List<Order>>
+                    {
+                        Data = res,
+                        Message = "Thành Công",
+                        Success = true,
+                        StatusCode = 200
+                    };
+                }
+                return new Response<List<Order>>
+                {
+                    Data = res,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+
+            }
+            catch (Exception ex)
+            {
+
                 throw new Exception(ex.Message);
             }
         }
