@@ -76,6 +76,7 @@ namespace Services
                 workerInOrder.OrderId = checkExist.Id;
                 workerInOrder.HouseWorkerId = houseworkerId;
                 _workerInOrderRepository.CreateNewWorkInOrder(workerInOrder);
+                _orderRepository.ChangeTheOrderState(orderId);
                 return new Response<int>
                 {
                     Message = "Thành Công",
