@@ -16,6 +16,6 @@ namespace Repositories.IRepositories
         void UpdateRating(int id, int rating);
         WorkerInOrder GetWorkerInOrderById(int id);
         List<WorkerInOrder> GetWorkerInOrdersByHouseworkerId(int houseworkerId);
-        List<WorkerInOrder> GetListWorkInOrderWithoutRatingWithCustomer(int orderId, int pageIndex, int pageSize);
+        List<WorkerInOrder> GetListWorkInOrderWithoutRatingWithCustomer(int orderId);
     }
 }

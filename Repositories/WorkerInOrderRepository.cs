@@ -150,7 +150,7 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
-        public List<WorkerInOrder> GetListWorkInOrderWithoutRatingWithCustomer(int orderId,int pageIndex, int pageSize)
+        public List<WorkerInOrder> GetListWorkInOrderWithoutRatingWithCustomer(int orderId)
         {
             try
             {
@@ -160,8 +160,7 @@ namespace Repositories
                     var wio = _dbContext.WorkerInOrders
                         .Include(x => x.Order)
                         .Include(x => x.HouseWorker)
-                        .Where(x => x.OrderId == orderId && x.Rating == null).Skip((pageIndex - 1) * (int)pageSize)
-                        .Take((int)pageSize).ToList();
+                        .Where(x => x.OrderId == orderId && x.Rating == null).ToList();
                     if (wio.Count != 0)
                     {
                         return wio;
