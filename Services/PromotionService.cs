@@ -16,6 +16,24 @@ namespace Services
             _promotionValidation = promotionValidation;
         }
 
+        public async Task<Response<int>> CountPromotionsVerMobile()
+        {
+            try
+            {
+                int promotionNumber = _promotionRepository.CountPromotionsVerMobile();
+                return new Response<int>
+                {
+                    Data = promotionNumber,
+                    Message = "Thành công",
+                    StatusCode = 200,
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<Promotion>> GetReponseChangeStatusPromotion(string id)
         {
             try

@@ -154,6 +154,21 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        [ProducesResponseType(typeof(Response<int>), 200)]
+        [Produces("application/json")]
+        [HttpGet("ver-mobile/count")]
+        public async Task<ActionResult<Response<int>>> CountPromotionsVerMobile()
+        {
+            try
+            {
+                var response = await _promotionService.CountPromotionsVerMobile();
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
         /// <summary>
         /// Create an new promotion.
         /// </summary>
