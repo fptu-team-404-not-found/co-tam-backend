@@ -112,6 +112,31 @@ namespace Repositories
         {
             try
             {
+                Customer oldCustomer = _cotamContext.Customers.FirstOrDefault(c => c.Id == customer.Id);
+                if (customer.LinkFacebook == null && oldCustomer.LinkFacebook != null)
+                {
+                    customer.LinkFacebook = oldCustomer.LinkFacebook;
+                }
+                if (customer.Avatar == null && oldCustomer.Avatar != null)
+                {
+                    customer.Avatar = oldCustomer.Avatar;
+                }
+                if (customer.EWallet == null && oldCustomer.EWallet != null)
+                {
+                    customer.EWallet = oldCustomer.EWallet;
+                }
+                if (customer.Active == null && oldCustomer.Active != null)
+                {
+                    customer.Active = oldCustomer.Active;
+                }
+                if (customer.CustomerPromotions == null && oldCustomer.CustomerPromotions != null)
+                {
+                    customer.CustomerPromotions = oldCustomer.CustomerPromotions;
+                }
+                if (customer.Houses == null && oldCustomer.Houses != null)
+                {
+                    customer.Houses = oldCustomer.Houses;
+                }
                 _cotamContext.ChangeTracker.Clear();
                 _cotamContext.Entry(customer).State = EntityState.Modified;
                 _cotamContext.SaveChanges(true);
