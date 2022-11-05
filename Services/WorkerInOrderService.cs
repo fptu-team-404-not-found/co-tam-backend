@@ -120,14 +120,10 @@ namespace Services
             }
         }
 
-        public async Task<Response<List<WorkerInOrder>>> GetListWorkInOrderWithoutRatingWithCustomerId(int cusId, int pageIndex, int pageSize)
+        public async Task<Response<List<WorkerInOrder>>> GetListWorkInOrderWithoutRatingWithCustomerId(int cusId)
         {
             try
             {
-                if (pageIndex <= 1)
-                {
-                    pageIndex = 1;
-                }
                 if (cusId <= 0)
                 {
                     return new Response<List<WorkerInOrder>>
@@ -165,7 +161,7 @@ namespace Services
                     }
                     foreach (var item2 in res)
                     {
-                        resWio = _workerInOrderRepository.GetListWorkInOrderWithoutRatingWithCustomer(item2.Id, pageIndex, pageSize);
+                        resWio = _workerInOrderRepository.GetListWorkInOrderWithoutRatingWithCustomer(item2.Id);
                         if (resWio != null)
                         {
                             foreach (var item3 in resWio)

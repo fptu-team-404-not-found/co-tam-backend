@@ -122,11 +122,11 @@ namespace CoTamApp.Controllers
             }
         }
         [HttpGet("customers/without-rating/{cusId}")]
-        public async Task<ActionResult<Response<List<WorkerInOrder>>>> GetListWorkInOrderWithoutRatingWithCustomerId(int cusId, [FromQuery] int PageIndex, [FromQuery] int PageSize)
+        public async Task<ActionResult<Response<List<WorkerInOrder>>>> GetListWorkInOrderWithoutRatingWithCustomerId(int cusId)
         {
             try
             {
-                var res = await _workerInOrderService.GetListWorkInOrderWithoutRatingWithCustomerId(cusId, PageIndex, PageSize);
+                var res = await _workerInOrderService.GetListWorkInOrderWithoutRatingWithCustomerId(cusId);
                 return StatusCode((int)res.StatusCode, res);
             }
             catch (Exception ex)
