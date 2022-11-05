@@ -50,7 +50,17 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
-
+        public int CountPromotionsVerMobile()
+        {
+            try
+            {
+                return _cotamContext.Promotions.Count(x => x.Active == true);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public void CreatePromotion(Promotion promotion)
         {
             try

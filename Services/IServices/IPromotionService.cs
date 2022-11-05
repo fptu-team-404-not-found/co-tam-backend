@@ -16,6 +16,6 @@ namespace Services.IServices
         Task<Response<Promotion>> GetReponseUpdatedPromotion(string id, Promotion promotion);
         Task<Response<Promotion>> GetReponseChangeStatusPromotion(string id);
         Task<Response<int>> GetResponsePromotionNumber();
-        
+        Task<Response<int>> CountPromotionsVerMobile();
     }
 }

@@ -16,5 +16,6 @@ namespace Repositories.IRepositories
         void UpdatePromotion(Promotion promotion);
         void ChangePromotionStatus(Promotion promotion);
         int CountPromotions();
+        int CountPromotionsVerMobile();
     }
 }
