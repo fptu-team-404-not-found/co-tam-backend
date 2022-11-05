@@ -121,7 +121,7 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
-        /*[HttpGet("customers/without-rating/{cusId}")]
+        [HttpGet("customers/without-rating/{cusId}")]
         public async Task<ActionResult<Response<List<WorkerInOrder>>>> GetListWorkInOrderWithoutRatingWithCustomerId(int cusId, [FromQuery] int PageIndex, [FromQuery] int PageSize)
         {
             try
@@ -134,6 +134,6 @@ namespace CoTamApp.Controllers
 
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
-        }*/
+        }
     }
 }
