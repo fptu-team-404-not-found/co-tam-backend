@@ -163,7 +163,7 @@ namespace Repositories
                 .Include(x => x.Package)
                 .Include(x => x.Promotion)
                 .Include(x => x.PaymentMethod)
-                .Where(x => x.HouseId == houseId && x.OrderState > 1 && x.OrderState < 7)
+                .Where(x => x.HouseId == houseId && x.OrderState > 0 && x.OrderState < 6)
                 .ToList();
             if (orders.Count > 0)
             {
