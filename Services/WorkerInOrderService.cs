@@ -120,7 +120,7 @@ namespace Services
             }
         }
 
-        /*public async Task<Response<List<WorkerInOrder>>> GetListWorkInOrderWithoutRatingWithCustomerId(int cusId,int pageIndex, int pageSize)
+        public async Task<Response<List<WorkerInOrder>>> GetListWorkInOrderWithoutRatingWithCustomerId(int cusId, int pageIndex, int pageSize)
         {
             try
             {
@@ -150,6 +150,7 @@ namespace Services
                 var house = _houseRepository.GetHouseByCusId(cusId);
                 List<Order> res = new List<Order>();
                 List<WorkerInOrder> resWio = new List<WorkerInOrder>();
+                List<WorkerInOrder> resWio2 = new List<WorkerInOrder>();
                 foreach (var item in house)
                 {
                     res = _orderRepository.GetOrdersHistoryByCusId(item.Id);
@@ -165,28 +166,36 @@ namespace Services
                     foreach (var item2 in res)
                     {
                         resWio = _workerInOrderRepository.GetListWorkInOrderWithoutRatingWithCustomer(item2.Id, pageIndex, pageSize);
-                        if (resWio == null)
+                        if (resWio != null)
                         {
-                            return new Response<List<WorkerInOrder>>
+                            foreach (var item3 in resWio)
                             {
-                                Message = "Không tìm thấy work in order",
-                                Success = false,
-                                StatusCode = 400
-                            };
+                                resWio2.Add(item3);
+                            }
                         }
+                        
+                    }
+                    if (resWio == null)
+                    {
                         return new Response<List<WorkerInOrder>>
                         {
-                            Data = resWio,
-                            Message = "Thành Công",
-                            Success = true,
-                            StatusCode = 200
+                            Message = "Không tìm thấy work in order",
+                            Success = false,
+                            StatusCode = 400
                         };
                     }
+                    return new Response<List<WorkerInOrder>>
+                    {
+                        Data = resWio2,
+                        Message = "Thành Công",
+                        Success = true,
+                        StatusCode = 200
+                    };
                 }
-                
+
                 return new Response<List<WorkerInOrder>>
                 {
-                    Data = resWio,
+                    Data = resWio2,
                     Message = "Thành Công",
                     Success = true,
                     StatusCode = 200
@@ -197,7 +206,7 @@ namespace Services
 
                 throw new Exception(ex.Message);
             }
-        }*/
+        }
 
         public async Task<Response<WorkerInOrder>> GetWorkerInOrderById(int id)
         {
