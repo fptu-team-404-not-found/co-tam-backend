@@ -248,6 +248,8 @@ namespace BusinessObject.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
                 entity.Property(e => e.SubTotal).HasColumnType("money");
 
                 entity.Property(e => e.Total).HasColumnType("money");
