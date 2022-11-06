@@ -83,6 +83,7 @@ namespace Repositories
                     }
                     else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerHoanThanh.GetType()), houseworkerHoanThanh))
                     {
+                        order.EndTime = DateTime.Now;
                         order.OrderState = Array.IndexOf(Enum.GetValues(customerXacNhanDonDaHoanThanh.GetType()), customerXacNhanDonDaHoanThanh);
                         _dbContext.SaveChanges();
                     }
