@@ -8,7 +8,7 @@ using System.Web.Http.Cors;
 
 namespace CoTamApp.Controllers
 {
-    /*[Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]*/
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
     [EnableCors(origins: "http://cotam.azurewebsites.net/", headers: "*", methods: "*")]
     [Route("api/admins")]
     [ApiController]

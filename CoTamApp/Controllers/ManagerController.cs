@@ -9,7 +9,7 @@ using System.Web.Http.Cors;
 namespace CoTamApp.Controllers
 {
     [EnableCors(origins: "http://cotam.azurewebsites.net/", headers: "*", methods: "*")]
-    /*[Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin,Manager")]*/
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin,Manager")]
     [Route("api/managers")]
     [ApiController]
     public class ManagerController : ControllerBase
@@ -28,7 +28,7 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
-        /*[Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]*/
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<string>>> DisableOrEnableManagerAccount(int id)
         {
