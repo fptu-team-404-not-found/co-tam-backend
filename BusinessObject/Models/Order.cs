@@ -12,6 +12,7 @@ namespace BusinessObject.Models
         }
 
         public int Id { get; set; }
+        public DateTime? EndTime { get; set; }
         public DateTime DateTime { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Total { get; set; }
