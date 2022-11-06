@@ -53,7 +53,7 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
-        /*[Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin,Manager")]*/
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin,Manager")]
         [HttpPost]
         public async Task<ActionResult<Response<string>>> CreateNewHouseWorker(HouseWorker houseWorker)
         {
@@ -72,6 +72,7 @@ namespace CoTamApp.Controllers
         /// Description: 
         /// - Id, Name, Email of Admin are required when update
         /// </remarks>
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin,Manager")]
         [HttpPut]
         public async Task<ActionResult<Response<string>>> UpdateHouseWorker(HouseWorker houseWorker)
         {
