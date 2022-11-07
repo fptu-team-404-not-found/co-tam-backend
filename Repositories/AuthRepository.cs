@@ -196,18 +196,20 @@ namespace Repositories
             var accountAdminManager = await _dbContext.AdminManagers.FirstOrDefaultAsync(x => x.Email == email);
             if (accountAdminManager != null && accountAdminManager.RoleId == 1)
             {
+                var res = CreateTokenWithAdmin(accountAdminManager);
                 return new ServiceResponse<string>
                 {
-                    Data = CreateTokenWithAdmin(accountAdminManager),
+                    Data = res.AccessToken,
                     Success = true,
                     Message = "Login successfully with admin account"
                 };
             }
             else if (accountAdminManager != null && accountAdminManager.RoleId == 2)
             {
+                var res = CreateTokenWithAdmin(accountAdminManager);
                 return new ServiceResponse<string>
                 {
-                    Data = CreateTokenWithAdmin(accountAdminManager),
+                    Data = res.AccessToken,
                     Success = true,
                     Message = "Login successfully with manager account"
                 };
@@ -218,7 +220,6 @@ namespace Repositories
                 Message = "Login failed"
             };
         }
-        
         public async Task<ServiceResponse<string>> Logout(int userId)
         {
             var refresh = await _dbContext.RefreshTokens.FirstOrDefaultAsync(p => p.UserId == userId);

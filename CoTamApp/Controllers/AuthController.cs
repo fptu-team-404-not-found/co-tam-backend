@@ -30,11 +30,18 @@ namespace CoTamApp.Controllers
             string email = this.User.FindFirstValue(ClaimTypes.Email);
             string name = this.User.FindFirstValue(ClaimTypes.Name);
             var res = await _authService.LoginWithAdminManager(email, name);
-            if(!res.Success)
+            HttpContext.Session.SetString("AccessToken", res.Data.ToString());
+            if (!res.Success)
                 return BadRequest(res);
             return Ok(res);
         }
-
+        [Authorize]
+        [HttpGet("admin-manager/get-access-token")]
+        public async Task<ActionResult<ServiceResponse<string>>> GetAccessToken()
+        {
+            var res = HttpContext.Session.GetString("AccessToken");
+            return Ok(res);
+        }
         /*[Authorize]
         [HttpPost("Renew")]
         public async Task<ActionResult<ServiceResponse<string>>> RenewToken(TokenModel model)
