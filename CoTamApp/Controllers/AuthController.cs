@@ -12,7 +12,7 @@ using System.Web.Http.Cors;
 
 namespace CoTamApp.Controllers
 {
-    [EnableCors(origins: "http://cotam.azurewebsites.net/", headers: "*", methods: "*")]
+    /*[EnableCors(origins: "http://cotam.azurewebsites.net/", headers: "*", methods: "*")]*/
     [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -31,6 +31,15 @@ namespace CoTamApp.Controllers
             string name = this.User.FindFirstValue(ClaimTypes.Name);
             var res = await _authService.LoginWithAdminManager(email, name);
             HttpContext.Session.SetString("AccessToken", res.Data.ToString());
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
+        
+        [HttpGet("admin-manager/login-ver")]
+        public async Task<ActionResult<ServiceResponse<string>>> LoginWithAdminManagerVer2([FromQuery] string email)
+        {
+            var res = await _authService.LoginWithAdminManagerVer2(email);
             if (!res.Success)
                 return BadRequest(res);
             return Ok(res);
