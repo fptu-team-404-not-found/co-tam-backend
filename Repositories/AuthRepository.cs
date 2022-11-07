@@ -239,6 +239,27 @@ namespace Repositories
                 Message = "Failed"
             };
         }
+        public async Task<ServiceResponse<string>> LoginWithAdminManagerVer2(string email)
+        {
+            var adminManager = await _dbContext.AdminManagers.FirstOrDefaultAsync(x => x.Email == email);
+            if (adminManager != null)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = CreateTokenWithAdmin(adminManager),
+                    Message = "Login with admin/manager account successfully",
+                    Success = true
+                };
+            }
+            else
+            {
+                return new ServiceResponse<string>
+                {
+                    Message = "Login Failed! You don't have permission for this app",
+                    Success = false
+                };
 
+            }
+        }
     }
 }

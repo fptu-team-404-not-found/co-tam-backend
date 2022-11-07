@@ -8,5 +8,6 @@ namespace Services.IServices
         Task<ServiceResponse<string>> LoginWithAdminManager(string email, string name);
         Task<ServiceResponse<string>> RenewToken(TokenModel model);
         Task<ServiceResponse<string>> Logout(int userId);
+        Task<ServiceResponse<string>> LoginWithAdminManagerVer2(string email);
     }
 }
