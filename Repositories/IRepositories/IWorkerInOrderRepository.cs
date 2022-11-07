@@ -17,5 +17,6 @@ namespace Repositories.IRepositories
         WorkerInOrder GetWorkerInOrderById(int id);
         List<WorkerInOrder> GetWorkerInOrdersByHouseworkerId(int houseworkerId);
         List<WorkerInOrder> GetListWorkInOrderWithoutRatingWithCustomer(int orderId);
+        WorkerInOrder GetWorkerInOrderByOrderId(int orderId);
     }
 }

@@ -175,5 +175,26 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public WorkerInOrder GetWorkerInOrderByOrderId(int orderId)
+        {
+            try
+            {
+                var wio = _dbContext.WorkerInOrders
+                    .Include(x => x.HouseWorker)
+                    .Include(x => x.Order)
+                    .Include(x => x.Order.OrderDetails)
+                    .FirstOrDefault(x => x.OrderId == orderId);
+                if (wio != null)
+                {
+                    return wio;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
