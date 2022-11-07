@@ -87,6 +87,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     };
                 });
 
+builder.Services.AddSession();
+
 //for DI
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
@@ -187,6 +189,8 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("v1/swagger.json", "Cô Tấm API V1");
 });
+
+app.UseSession();
 
 app.UseHttpsRedirection();
 
