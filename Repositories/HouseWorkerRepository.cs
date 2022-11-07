@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using Repositories.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Repositories
         {
             try
             {
-                var list = _dbContext.HouseWorkers
+                var list = _dbContext.HouseWorkers.Include(x => x.WorkerTags)
                         .Skip((page - 1) * (int)pageSize)
                         .Take((int)pageSize).ToList();
                 return list;
