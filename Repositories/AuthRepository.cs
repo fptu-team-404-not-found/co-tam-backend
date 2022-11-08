@@ -137,7 +137,7 @@ namespace Repositories
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, adminManager.Id.ToString()),
-                new Claim("_id", adminManager.Id.ToString()),
+                new Claim("id", adminManager.Id.ToString()),
                 new Claim(ClaimTypes.Email, adminManager.Email),
                 new Claim(ClaimTypes.Name, adminManager.Name),
                 new Claim(ClaimTypes.Role, role.Name.Trim()),
