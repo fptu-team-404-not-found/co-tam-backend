@@ -51,7 +51,7 @@ namespace Repositories
         {
             try
             {
-                var houseWorker = _dbContext.HouseWorkers.FirstOrDefault(x => x.Id == id);
+                var houseWorker = _dbContext.HouseWorkers.Include(x => x.WorkerInOrders).Include(x => x.WorkerTags).FirstOrDefault(x => x.Id == id);
                 if (houseWorker != null)
                 {
                     return houseWorker;
