@@ -105,8 +105,14 @@ namespace Repositories
             try
             {
                 /*houses = _cotamContext.Houses.Where(h => h.CustomerId == customerId).ToList();*/
-                var list = _cotamContext.Houses.Include(x => x.Building).Include(x => x.Customer).Where(h => h.CustomerId == customerId).Skip((page - 1) * (int)pageSize)
-                        .Take((int)pageSize).ToList();
+                var list = _cotamContext.Houses
+                    .Include(x => x.Orders)
+                    .Include(x => x.Building)
+                    .Include(x => x.Customer)
+                    .Include(x => x.Building.Area)
+                    .Where(h => h.CustomerId == customerId)
+                    .Skip((page - 1) * (int)pageSize)
+                    .Take((int)pageSize).ToList();
                 return list;
                 /*return houses;*/
             }
