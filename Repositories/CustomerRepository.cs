@@ -48,7 +48,7 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
-        public void CustomerOrder(Order order)
+        public bool CustomerOrder(Order order)
         {
             try
             {
@@ -63,19 +63,23 @@ namespace Repositories
                     {
                         customer.EWallet -= order.Total;
                         _cotamContext.Customers.Update(customer);
+                        order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
+                        _cotamContext.Orders.Add(order);
+                        _cotamContext.SaveChanges();
+                        return true;
                     } else
                     {
-                        throw new Exception("Số tiền trong ví không còn đủ để thực hiện giao dịch!");
+                        return false;
                     }
                 }
-                order.PaymentMethodId = 1;
+
                 order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
                 _cotamContext.Orders.Add(order);
                 _cotamContext.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
         }

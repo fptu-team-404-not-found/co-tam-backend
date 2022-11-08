@@ -16,7 +16,7 @@ namespace Repositories.IRepositories
         void UpdateCustomer(Customer customer);
         void ChangeCustomerStatus(Customer customer);
         int CountCustomers();
-        void CustomerOrder(Order order);
+        bool CustomerOrder(Order order);
         void CustomerOrderDetail(OrderDetail orderDetail, int orderId);
     }
 }

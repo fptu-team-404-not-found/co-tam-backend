@@ -49,9 +49,19 @@ namespace Services
                     var res = _customerPromotionRepository.CheckUsedForThePromotion(house.CustomerId, order.PromotionId);
                     if (res)
                     {
-                        _customerRepository.CustomerOrder(order);
+                        if (!_customerRepository.CustomerOrder(order))
+                        {
+                            return new Response<int>
+                            {
+                                Message = "Không đủ số dư trong ví!",
+                                Success = false,
+                                StatusCode = 200
+                            };
+                        }
+                        
                         return new Response<int>
                         {
+                            Data = order.Id,
                             Message = "Tạo mới order thành công",
                             Success = true,
                             StatusCode = 200
@@ -59,7 +69,16 @@ namespace Services
                     }
                     
                 }
-                _customerRepository.CustomerOrder(order);
+
+                if (!_customerRepository.CustomerOrder(order))
+                {
+                    return new Response<int>
+                    {
+                        Message = "Không đủ số dư trong ví!",
+                        Success = false,
+                        StatusCode = 200
+                    };
+                }
                 return new Response<int>
                 {
                     Data = order.Id,
