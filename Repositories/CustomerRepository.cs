@@ -54,6 +54,20 @@ namespace Repositories
             {
                 OrderStates datDonThanhCong = OrderStates.DAT_DON_THANH_CONG;
                 order.DateTime = DateTime.Now;
+                if (order.PaymentMethodId == 2)
+                {
+                    House house = _cotamContext.Houses.FirstOrDefault(h => h.Id == order.HouseId);
+                    Customer customer = _cotamContext.Customers.FirstOrDefault(c => c.Id == house.CustomerId);
+
+                    if (order.Total <= customer.EWallet)
+                    {
+                        customer.EWallet -= order.Total;
+                        _cotamContext.Customers.Update(customer);
+                    } else
+                    {
+                        throw new Exception("Số tiền trong ví không còn đủ để thực hiện giao dịch!");
+                    }
+                }
                 order.PaymentMethodId = 1;
                 order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
                 _cotamContext.Orders.Add(order);
