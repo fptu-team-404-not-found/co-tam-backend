@@ -15,7 +15,7 @@ namespace Services.IServices
         Task<Response<Customer>> GetReponseUpdateCustomer(string id, Customer customer);
         Task<Response<Customer>> GetReponseChangeStatusCustomer(string id);
         Task<Response<int>> GetResponseCustomerNumber();
-        Task<Response<Order>> CustomerOrder(Order order);
+        Task<Response<int>> CustomerOrder(Order order);
         Task<Response<OrderDetail>> CustomerOrderDetail(OrderDetail orderDetail, int orderId);
     }
 }
