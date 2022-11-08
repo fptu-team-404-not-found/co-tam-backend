@@ -30,7 +30,7 @@ namespace Repositories
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, houseWorker.Id.ToString()),
-                new Claim("_id", houseWorker.Id.ToString()),
+                new Claim("id", houseWorker.Id.ToString()),
                 new Claim(ClaimTypes.Email, houseWorker.Email),
                 new Claim(ClaimTypes.Name, houseWorker.Name.ToString()),
                 new Claim(ClaimTypes.Role, "Houseworker"),
