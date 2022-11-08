@@ -29,13 +29,13 @@ namespace Services
             _extraServiceRepository = extraServiceRepository;
         }
 
-        public async Task<Response<Order>> CustomerOrder(Order order)
+        public async Task<Response<int>> CustomerOrder(Order order)
         {
             try
             {
                 if (order.Id != 0)
                 {
-                    return new Response<Order>
+                    return new Response<int>
                     {
                         Message = "Không cần thêm Id khi tạo 1 order mới",
                         Success = false,
@@ -50,7 +50,7 @@ namespace Services
                     if (res)
                     {
                         _customerRepository.CustomerOrder(order);
-                        return new Response<Order>
+                        return new Response<int>
                         {
                             Message = "Tạo mới order thành công",
                             Success = true,
@@ -60,8 +60,9 @@ namespace Services
                     
                 }
                 _customerRepository.CustomerOrder(order);
-                return new Response<Order>
+                return new Response<int>
                 {
+                    Data = order.Id,
                     Message = "Tạo mới order thành công",
                     Success = true,
                     StatusCode = 200
