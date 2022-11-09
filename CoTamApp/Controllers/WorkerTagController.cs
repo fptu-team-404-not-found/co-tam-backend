@@ -130,5 +130,19 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        [HttpGet("add")]
+        public async Task<ActionResult<Response<List<WorkerTag>>>> GetWorkerTagWhenAdd()
+        {
+            try
+            {
+                var response = await _workerTagService.GetWorkerTag();
+                return StatusCode((int)response.StatusCode, response);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }
