@@ -170,16 +170,6 @@ namespace Services
 
         public async Task<Response<string>> UpdateHouseWorker(HouseWorker houseWorker)
         {
-            var validate = _houseWorkerValidation.CheckCreateNewHouseWorker(houseWorker);
-            if (validate != "ok")
-            {
-                return new Response<string>
-                {
-                    Message = validate,
-                    Success = false,
-                    StatusCode = 400
-                };
-            }
             var updateAdd = _houseWorkerRepository.GetHouseWorkerById(houseWorker.Id);
             if (updateAdd == null)
             {
@@ -190,12 +180,30 @@ namespace Services
                     StatusCode = 400
                 };
             }
-            updateAdd.Name = houseWorker.Name;
-            updateAdd.Phone = houseWorker.Phone;
-            updateAdd.DateOfBirth = houseWorker.DateOfBirth;
-            updateAdd.Email = houseWorker.Email;
-            updateAdd.LinkFacebook = houseWorker.LinkFacebook;
-            updateAdd.Avatar = houseWorker.Avatar;
+            if (houseWorker.Name != null)
+            {
+                updateAdd.Name = houseWorker.Name;
+            }
+            if (houseWorker.Phone != null)
+            {
+                updateAdd.Phone = houseWorker.Phone;
+            }
+            if (houseWorker.DateOfBirth != null)
+            {
+                updateAdd.DateOfBirth = houseWorker.DateOfBirth;
+            }
+            if (houseWorker.Email != null)
+            {
+                updateAdd.Email = houseWorker.Email;
+            }
+            if (houseWorker.LinkFacebook != null)
+            {
+                updateAdd.LinkFacebook = houseWorker.LinkFacebook;
+            }
+            if (houseWorker.Avatar != null)
+            {
+                updateAdd.Avatar = houseWorker.Avatar;
+            }
             _houseWorkerRepository.UpdateHouseWorker(updateAdd);
             return new Response<string>
             {
