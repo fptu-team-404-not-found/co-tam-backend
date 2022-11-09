@@ -16,5 +16,6 @@ namespace Repositories.IRepositories
         CustomerPromotion GetCustomerPromotionById(int cusId);
         bool CheckCustomerHasThisPromotion(int cusId, int? proId);
         bool CheckUsedForThePromotion(int cusId, int? proId);
+        List<CustomerPromotion> GetCustomerPromotionsNotUseByCusId(int cusId);
     }
 }

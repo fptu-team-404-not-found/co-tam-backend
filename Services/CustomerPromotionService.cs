@@ -196,5 +196,53 @@ namespace Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Response<List<CustomerPromotion>>> GetCustomerPromotionsNotUseByCusId(int cusId)
+        {
+            try
+            {
+                if (cusId <= 0)
+                {
+                    return new Response<List<CustomerPromotion>>
+                    {
+                        Message = "Hãy nhập giá trị customer Id lớn hơn 0",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExist = _customerRepository.GetCustomerById(cusId);
+                if (checkExist == null)
+                {
+                    return new Response<List<CustomerPromotion>>
+                    {
+                        Message = "Không tìm thấy customer",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var lst = _customerPromotionRepository.GetCustomerPromotionsNotUseByCusId(cusId);
+                if (lst == null)
+                {
+                    return new Response<List<CustomerPromotion>>
+                    {
+                        Message = "Không tìm thấy voucher nào",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<List<CustomerPromotion>>
+                {
+                    Data = lst,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

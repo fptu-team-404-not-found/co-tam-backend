@@ -93,5 +93,19 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        [HttpGet("customers/not-used/{cusId}")]
+        public async Task<ActionResult<Response<List<CustomerPromotion>>>> GetCustomerPromotionNotUsedByCusId(int cusId)
+        {
+            try
+            {
+                var res = await _customerPromotionService.GetCustomerPromotionsNotUseByCusId(cusId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

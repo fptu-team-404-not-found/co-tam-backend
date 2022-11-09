@@ -164,5 +164,26 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public List<CustomerPromotion> GetCustomerPromotionsNotUseByCusId(int cusId)
+        {
+            try
+            {
+                var cusPro = _dbContext.CustomerPromotions
+                    .Include(x => x.Customer)
+                    .Include(x => x.Promotion)
+                    .Where(x => x.CustomerId == cusId && x.IsUsed == false)
+                    .ToList();
+                if (cusPro != null)
+                {
+                    return cusPro;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace Services.IServices
         Task<Response<string>> DisableCustomerPromotions(int cusId);
         Task<Response<string>> CreateNewCustomerPromotion(CustomerPromotion customerPromotion);
         Task<Response<CustomerPromotion>> GetCustomerPromotionById(int cusId);
+        Task<Response<List<CustomerPromotion>>> GetCustomerPromotionsNotUseByCusId(int cusId);
     }
 }
