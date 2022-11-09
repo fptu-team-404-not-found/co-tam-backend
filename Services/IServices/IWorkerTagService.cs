@@ -16,5 +16,6 @@ namespace Services.IServices
         Task<Response<WorkerTag>> UpdateWorkerTag(WorkerTag workerTag);
         Task<Response<string>> RemoveWorkerTag(int id);
         Task<Response<List<WorkerTag>>> GetWorkerTagsByHouseworkerId(int houseworkerId);
+        Task<Response<List<WorkerTag>>> GetWorkerTag();
     }
 }

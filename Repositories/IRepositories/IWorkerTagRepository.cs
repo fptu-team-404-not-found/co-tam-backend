@@ -17,5 +17,6 @@ namespace Repositories.IRepositories
         void RemoveWorkerTag(int id);
         List<WorkerTag> GetWorkerTagsByHouseworkerId(int houseworkerId);
         WorkerTag CheckWorkerTagHasExist(int houseworkerId, string tagName);
+        List<WorkerTag> GetWorkerTag();
     }
 }

@@ -46,6 +46,25 @@ namespace Repositories
             }
 
         }
+        public List<WorkerTag> GetWorkerTag()
+        {
+            try
+            {
+                var list = _dbContext.WorkerTags.Include(x => x.HouseWorker)
+                        .Take(4).ToList();
+                if(list != null)
+                {
+                    return list;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+
+        }
         public WorkerTag GetWorkerTagById(int id)
         {
             try

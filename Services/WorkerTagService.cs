@@ -109,6 +109,36 @@ namespace Services
             }
         }
 
+        public async Task<Response<List<WorkerTag>>> GetWorkerTag()
+        {
+            try
+            {
+                var lst = _workerTagRepository.GetWorkerTag();
+                if (lst == null)
+                {
+                    return new Response<List<WorkerTag>>
+                    {
+                        Message = "Không tìm thấy worker tag",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<List<WorkerTag>>
+                {
+                    Data = lst,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<WorkerTag>> GetWorkerTagById(int id)
         {
             try
