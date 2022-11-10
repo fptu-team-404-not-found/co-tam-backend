@@ -149,13 +149,15 @@ namespace Repositories
                 .Include(x => x.Package)
                 .Include(x => x.Promotion)
                 .Include(x => x.PaymentMethod)
-                .Where(x => x.HouseId == houseId).ToList();
+                .Include(x => x.WorkerInOrders)
+                .Where(x => x.HouseId == houseId && x.OrderState == 6).ToList();
             if (orders != null)
             {
                 return orders;
             }
             return null;
         }
+
         public List<Order> GetOrdersHasStateDangDatByCusId(int houseId)
         {
 

@@ -161,7 +161,7 @@ namespace Repositories
                     var wio = _dbContext.WorkerInOrders
                         .Include(x => x.Order)
                         .Include(x => x.HouseWorker)
-                        .Where(x => x.OrderId == orderId && x.Rating == null).ToList();
+                        .Where(x => x.OrderId == orderId && x.Rating == null && x.Order.OrderState == 6).ToList();
                     if (wio.Count != 0)
                     {
                         return wio;

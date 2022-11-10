@@ -269,29 +269,31 @@ namespace Services
                 }
                 var house = _houseRepository.GetHouseByCusId(cusId);
                 List<Order> res = new List<Order>();
+                List<Order> realRes = new List<Order>();
                 foreach (var item in house)
                 {
                     res = _orderRepository.GetOrdersHistoryByCusId(item.Id);
-                    if (res == null)
+                    if (res != null)
                     {
-                        return new Response<List<Order>>
+                        foreach (var item2 in res)
                         {
-                            Message = "Không tìm thấy order history",
-                            Success = false,
-                            StatusCode = 400
-                        };
+                            realRes.Add(item2);
+                        }
                     }
+                }
+
+                if (realRes.Count == 0)
+                {
                     return new Response<List<Order>>
                     {
-                        Data = res,
-                        Message = "Thành Công",
+                        Message = "Không có order history",
                         Success = true,
                         StatusCode = 200
                     };
                 }
                 return new Response<List<Order>>
                 {
-                    Data = res,
+                    Data = realRes,
                     Message = "Thành Công",
                     Success = true,
                     StatusCode = 200
