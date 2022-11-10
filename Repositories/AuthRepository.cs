@@ -241,7 +241,7 @@ namespace Repositories
         }
         public async Task<ServiceResponse<string>> LoginWithAdminManagerVer2(string email)
         {
-            var adminManager = await _dbContext.AdminManagers.FirstOrDefaultAsync(x => x.Email == email);
+            var adminManager = await _dbContext.AdminManagers.FirstOrDefaultAsync(x => x.Email == email && x.Active != false);
             if (adminManager != null)
             {
                 return new ServiceResponse<string>
