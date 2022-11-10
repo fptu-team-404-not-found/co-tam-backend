@@ -65,6 +65,7 @@ namespace Repositories
         {
             try
             {
+                promotion.Image = "https://luatvietphong.vn/wp-content/uploads/2021/08/4899545.jpg";
                 _cotamContext.Promotions.Add(promotion);
                 _cotamContext.SaveChanges();
             }
