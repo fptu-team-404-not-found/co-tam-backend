@@ -80,5 +80,21 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
+        [HttpGet("search/{searchString}")]
+        public async Task<ActionResult<Response<List<HouseWorker>>>> GetHouseworkerWhenSearching(string searchString, [FromQuery] int PageIndex, [FromQuery] int PageSize)
+        {
+            var res = await _houseWorkerService.SearchAccountHouseworker(searchString, PageIndex, PageSize);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
+        [HttpGet("search/count/{searchString}")]
+        public async Task<ActionResult<Response<int>>> CountHouseworkerWhenSearching(string searchString)
+        {
+            var res = await _houseWorkerService.CountHouseworkerWhenSearch(searchString);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }

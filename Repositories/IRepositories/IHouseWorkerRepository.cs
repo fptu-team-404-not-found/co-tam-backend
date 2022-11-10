@@ -15,5 +15,7 @@ namespace Repositories.IRepositories
         bool DisableOrEnableHouseWorkerAccount(int id);
         void CreateNewHouseWorker(HouseWorker houseWorker);
         void UpdateHouseWorker(HouseWorker houseWorker);
+        List<HouseWorker> SearchAccountHouseworker(string searchString, int page, int pageSize);
+        int CountHouseworkerWhenSearch(string searchString);
     }
 }
