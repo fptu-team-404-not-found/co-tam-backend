@@ -96,5 +96,19 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
+        [HttpGet("houseworkers/assign/{orderId}")]
+        public async Task<ActionResult<Response<List<HouseWorker>>>> GetListHouseworkerForManagerToAssign(int orderId)
+        {
+            try
+            {
+                var res = await _houseWorkerService.GetListHouseworkerForManagerToAssign(orderId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

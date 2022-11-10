@@ -129,7 +129,14 @@ namespace Repositories
         {
             try
             {
-                var order = _dbContext.Orders.Include(x => x.House).Include(x => x.Package).Include(x => x.Promotion).Include(x => x.PaymentMethod).FirstOrDefault(x => x.Id == id);
+                var order = _dbContext.Orders
+                    .Include(x => x.House)
+                    .Include(x => x.House.Building)
+                    .Include(x => x.House.Building.Area)
+                    .Include(x => x.Package)
+                    .Include(x => x.Package.Service)
+                    .Include(x => x.Promotion)
+                    .Include(x => x.PaymentMethod).FirstOrDefault(x => x.Id == id);
                 if (order != null)
                 { 
                     return order;

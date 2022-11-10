@@ -6,7 +6,7 @@ namespace BusinessObject.Models
     public partial class WorkerInOrder
     {
         public int Id { get; set; }
-        public int HouseWorkerId { get; set; }
+        public int? HouseWorkerId { get; set; }
         public int OrderId { get; set; }
         public int? Rating { get; set; }
 

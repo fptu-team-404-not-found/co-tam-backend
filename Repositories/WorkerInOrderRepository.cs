@@ -197,6 +197,37 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
-        
+        public void UpdateHouseworkerIdToWorkerInOrderById(WorkerInOrder wio)
+        {
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public WorkerInOrder GetWorkerInOrderByHouseworkerId(int houseworkerId)
+        {
+            try
+            {
+                var wio = _dbContext.WorkerInOrders
+                    .Include(x => x.Order)
+                    .Include(x => x.HouseWorker)
+                    .FirstOrDefault(x => x.HouseWorkerId == houseworkerId && x.Order.OrderState == 1);
+                if (wio != null)
+                {
+                    return wio;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

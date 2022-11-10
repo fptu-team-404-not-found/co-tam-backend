@@ -17,5 +17,6 @@ namespace Services.IServices
         Task<Response<string>> UpdateHouseWorker(HouseWorker houseWorker);
         Task<Response<List<HouseWorker>>> SearchAccountHouseworker(string searchString, int page, int pageSize);
         Task<Response<int>> CountHouseworkerWhenSearch(string searchString);
+        Task<Response<List<HouseWorker>>> GetListHouseworkerForManagerToAssign(int orderId);
     }
 }
