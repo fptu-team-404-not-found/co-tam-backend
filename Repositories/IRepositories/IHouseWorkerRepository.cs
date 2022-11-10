@@ -17,5 +17,6 @@ namespace Repositories.IRepositories
         void UpdateHouseWorker(HouseWorker houseWorker);
         List<HouseWorker> SearchAccountHouseworker(string searchString, int page, int pageSize);
         int CountHouseworkerWhenSearch(string searchString);
+        List<HouseWorker> GetListHouseworkerForManagerToAssign(string workerTagName, int areaId);
     }
 }

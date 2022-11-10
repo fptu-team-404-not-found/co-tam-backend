@@ -26,6 +26,57 @@ namespace Services
             _houseRepository = houseRepository;
         }
 
+        public async Task<Response<string>> AssignHouseworkerToOrder(int houseworkerId, int orderId)
+        {
+            try
+            {
+                if (houseworkerId <= 0)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Hãy nhập houseworkerId có giá trị lớn hơn 0",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExist = _orderRepository.GetOrderById(orderId);
+                if (checkExist == null)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Không tìm thấy order",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkHouseworkerExist = _houseWorkerRepository.GetHouseWorkerById(houseworkerId);
+                if (checkHouseworkerExist == null)
+                {
+                    return new Response<string>
+                    {
+                        Message = "houseworker không tồn tại",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var wio = new WorkerInOrder();
+                wio.OrderId = orderId;
+                wio.HouseWorkerId = houseworkerId;
+                _workerInOrderRepository.CreateNewWorkInOrder(wio);
+                return new Response<string>
+                {
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 201
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<int>> CountWorkerInOrder()
         {
             try
@@ -81,6 +132,38 @@ namespace Services
                 workerInOrder.HouseWorkerId = houseworkerId;
                 _workerInOrderRepository.CreateNewWorkInOrder(workerInOrder);
                 _orderRepository.ChangeTheOrderState(orderId);
+                return new Response<int>
+                {
+                    Message = "Thành Công",
+                    Data = workerInOrder.Id,
+                    Success = true,
+                    StatusCode = 201
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<Response<int>> CreateNewWorkInOderByManager(int orderId)
+        {
+            try
+            {
+                var checkExist = _orderRepository.GetOrderById(orderId);
+                if (checkExist == null)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Không tìm thấy order",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                WorkerInOrder workerInOrder = new WorkerInOrder();
+                workerInOrder.OrderId = orderId;
+                workerInOrder.HouseWorkerId = null;
+                _workerInOrderRepository.CreateNewWorkInOrder(workerInOrder);
                 return new Response<int>
                 {
                     Message = "Thành Công",
@@ -196,6 +279,55 @@ namespace Services
                     Success = true,
                     StatusCode = 200
                 };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<WorkerInOrder>> GetWorkerInOrderByHouseworkerId(int houseworkerId)
+        {
+            try
+            {
+                if (houseworkerId <= 0)
+                {
+                    return new Response<WorkerInOrder>
+                    {
+                        Message = "Hãy nhập giá trị houseworkerId lớn hơn 0",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExist = _houseWorkerRepository.GetHouseWorkerById(houseworkerId);
+                if (checkExist == null)
+                {
+                    return new Response<WorkerInOrder>
+                    {
+                        Message = "Không tìm thấy houseworker",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                };
+                var wio = _workerInOrderRepository.GetWorkerInOrderByHouseworkerId(houseworkerId);
+                if (wio == null)
+                {
+                    return new Response<WorkerInOrder>
+                    {
+                        Message = "Không tìm thấy workInOrder",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<WorkerInOrder>
+                {
+                    Data = wio,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+
             }
             catch (Exception ex)
             {

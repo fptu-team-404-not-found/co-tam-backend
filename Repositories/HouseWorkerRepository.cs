@@ -150,5 +150,38 @@ namespace Repositories
                         || x.Phone.Contains(searchString) || x.Email.Contains(searchString)).Count();
             return count;
         }
+        public List<HouseWorker> GetListHouseworkerForManagerToAssign(string workerTagName, int areaId)
+        {
+            try
+            {
+                var listwt = _dbContext.WorkerTags.Where(x => x.Name == workerTagName).ToList();
+                List<HouseWorker> result = new List<HouseWorker>();
+                if (listwt != null)
+                {
+                    
+
+                    foreach (var item in listwt)
+                    {
+                        var lst = _dbContext.HouseWorkers
+                        .Include(x => x.Manager)
+                        .Where(x => x.Active == 1 && x.Id == item.HouseWorkerId && x.AreaId == areaId)
+                        .ToList();
+                        foreach (var item2 in lst)
+                        {
+                            result.Add(item2);
+                        }
+                    }
+                    return result;
+                    
+                }
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

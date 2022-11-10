@@ -163,5 +163,47 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }*/
+        /*[HttpPost("assign/{orderId}")]
+        public async Task<ActionResult<Response<int>>> CreateNewWorkInOderByManager(int orderId)
+        {
+            try
+            {
+                var res = await _workerInOrderService.CreateNewWorkInOderByManager(orderId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }*/
+        [HttpPut("assign/{orderId}/{houseworkerId}")]
+        public async Task<ActionResult<Response<string>>> AssignHouseworkerToOrder(int orderId, int houseworkerId)
+        {
+            try
+            {
+                var res = await _workerInOrderService.AssignHouseworkerToOrder(houseworkerId, orderId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+        [HttpGet("wio/{houseworkerId}")]
+        public async Task<ActionResult<Response<WorkerInOrder>>> GetWorkerInOrderByHouseworkerIdToAssign(int houseworkerId)
+        {
+            try
+            {
+                var res = await _workerInOrderService.GetWorkerInOrderByHouseworkerId(houseworkerId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }
