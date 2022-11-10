@@ -16,5 +16,7 @@ namespace Services.IServices
         Task<Response<string>> ChangeTheOrderStateToCancle(int orderId);
         Task<Response<List<Order>>> GetOrdersHistoryByCusId(int cusId);
         Task<Response<List<Order>>> GetOrdersHasStateDangDatByCusId(int cusId);
+        Task<Response<List<Order>>> SearchOrder(string searchString, int page, int pageSize);
+        Task<Response<int>> CountOrdersWhenSearch(string searchString);
     }
 }

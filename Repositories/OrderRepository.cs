@@ -172,5 +172,30 @@ namespace Repositories
             }
             return null;
         }
+        public List<Order> SearchOrder(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                var list = _dbContext.Orders
+                        .Where(x => x.DateTime.ToString().Contains(searchString)).Skip((page - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                if (list != null)
+                {
+                    return list;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public int CountOrdersWhenSearch(string searchString)
+        {
+            var count = _dbContext.Orders
+                        .Where(x => x.DateTime.ToString().Contains(searchString)).Count();
+            return count;
+        }
     }
 }
