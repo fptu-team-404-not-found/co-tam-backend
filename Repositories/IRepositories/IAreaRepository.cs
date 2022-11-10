@@ -16,5 +16,7 @@ namespace Repositories.IRepositories
         void UpdateArea(Area area);
         void ChangeAreaStatus(Area area);
         int CountAreas();
+        List<Area> SearchArea(string searchString, int page, int pageSize);
+        int CountAreasWhenSearch(string searchString);
     }
 }

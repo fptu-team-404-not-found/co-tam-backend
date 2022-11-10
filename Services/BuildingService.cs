@@ -56,7 +56,7 @@ namespace Services
                 {
                     return new Response<int>
                     {
-                        Message = "Số lượng promotion không tồn tại",
+                        Message = "Số lượng building không tồn tại",
                         Success = false
                     };
                 }
