@@ -16,5 +16,7 @@ namespace Repositories.IRepositories
         void ChangeTheOrderStateToCancle(int orderId);
         List<Order> GetOrdersHistoryByCusId(int houseId);
         List<Order> GetOrdersHasStateDangDatByCusId(int houseId);
+        List<Order> SearchOrder(string searchString, int page, int pageSize);
+        int CountOrdersWhenSearch(string searchString);
     }
 }

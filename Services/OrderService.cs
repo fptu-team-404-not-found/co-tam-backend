@@ -128,6 +128,34 @@ namespace Services
             }
         }
 
+        public async Task<Response<int>> CountOrdersWhenSearch(string searchString)
+        {
+            try
+            {
+                var count = _orderRepository.CountOrdersWhenSearch(searchString);
+                if (count == 0)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Số lượng order không tồn tại",
+                        Success = false
+                    };
+                }
+                return new Response<int>
+                {
+                    Data = count,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<List<Order>>> GetAllOrderWithPagination(int page, int pageSize)
         {
             try
@@ -299,6 +327,48 @@ namespace Services
                     StatusCode = 200
                 };
 
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<List<Order>>> SearchOrder(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                if (page <= 1)
+                {
+                    page = 1;
+                }
+                if (string.IsNullOrEmpty(searchString))
+                {
+                    return new Response<List<Order>>
+                    {
+                        Message = "Hãy nhập gì đó để tìm kiếm",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var lst = _orderRepository.SearchOrder(searchString, page, pageSize);
+                if (lst == null)
+                {
+                    return new Response<List<Order>>
+                    {
+                        Message = "Không tìm thấy",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<List<Order>>
+                {
+                    Data = lst,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
             }
             catch (Exception ex)
             {
