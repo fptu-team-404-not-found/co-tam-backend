@@ -40,12 +40,11 @@ namespace CoTamApp.Controllers
         public async Task<ActionResult<ServiceResponse<string>>> LoginWithAdminManagerVer2([FromQuery] string email)
         {
             var res = await _authService.LoginWithAdminManagerVer2(email);
-            HttpContext.Session.SetString("AccessToken", res.Data.ToString());
             if (!res.Success)
                 return BadRequest(res);
             return Ok(res);
         }
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize]
         [HttpGet("admin-manager/get-access-token")]
         public async Task<ActionResult<ServiceResponse<string>>> GetAccessToken()
         {
