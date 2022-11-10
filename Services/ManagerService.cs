@@ -47,6 +47,34 @@ namespace Services
             }
         }
 
+        public async Task<Response<int>> CountManagerWhenSearch(string searchString)
+        {
+            try
+            {
+                var count = _managerRepository.CountManagerWhenSearch(searchString);
+                if (count == 0)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Số lượng manager không tồn tại",
+                        Success = false
+                    };
+                }
+                return new Response<int>
+                {
+                    Data = count,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<string>> CreateNewManager(AdminManager manager)
         {
             var validate = _managerValidation.CheckCreateNewManager(manager);
@@ -169,6 +197,48 @@ namespace Services
             }
             catch (Exception ex)
             {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<List<AdminManager>>> SearchAccount(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                if (page <= 1)
+                {
+                    page = 1;
+                }
+                if (string.IsNullOrEmpty(searchString))
+                {
+                    return new Response<List<AdminManager>>
+                    { 
+                        Message = "Hãy nhập gì đó để tìm kiếm",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var lst = _managerRepository.SearchAccount(searchString, page, pageSize);
+                if (lst == null)
+                {
+                    return new Response<List<AdminManager>>
+                    {
+                        Message = "Không tìm thấy",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<List<AdminManager>>
+                {
+                    Data = lst,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
                 throw new Exception(ex.Message);
             }
         }

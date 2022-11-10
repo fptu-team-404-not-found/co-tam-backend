@@ -15,5 +15,7 @@ namespace Services.IServices
         Task<Response<string>> CreateNewManager(AdminManager manager);
         Task<Response<string>> CountManager();
         Task<Response<string>> UpdateManager(AdminManager manager);
+        Task<Response<List<AdminManager>>> SearchAccount(string searchString, int page, int pageSize);
+        Task<Response<int>> CountManagerWhenSearch(string searchString);
     }
 }
