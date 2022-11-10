@@ -131,12 +131,13 @@ namespace Repositories
         }
         public List<WorkerInOrder> GetWorkerInOrdersByHouseworkerId(int houseworkerId)
         {
+            OrderStates hoanThanh = OrderStates.CUSTOMER_XAC_NHAN_DON_DA_HOAN_THANH;
             try
             {
                 var wio = _dbContext.WorkerInOrders
                     .Include(x => x.Order)
                     .Include(x => x.HouseWorker)
-                    .Where(x => x.HouseWorkerId == houseworkerId)
+                    .Where(x => x.HouseWorkerId == houseworkerId && x.Order.OrderState == Array.IndexOf(Enum.GetValues(hoanThanh.GetType()), hoanThanh))
                     .ToList();
                 if (wio != null)
                 {
@@ -196,5 +197,6 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        
     }
 }
