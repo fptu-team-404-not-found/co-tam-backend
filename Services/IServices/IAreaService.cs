@@ -15,5 +15,7 @@ namespace Services.IServices
         Task<Response<Area>> GetReponseUpdateArea(string id, Area area);
         Task<Response<Area>> GetReponseChangeStatusArea(string id);
         Task<Response<int>> GetResponseAreaNumber();
+        Task<Response<List<Area>>> SearchArea(string searchString, int page, int pageSize);
+        Task<Response<int>> CountAreasWhenSearch(string searchString);
     }
 }
