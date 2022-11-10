@@ -17,5 +17,7 @@ namespace Services.IServices
         Task<Response<int>> GetResponseCustomerNumber();
         Task<Response<int>> CustomerOrder(Order order);
         Task<Response<OrderDetail>> CustomerOrderDetail(OrderDetail orderDetail, int orderId);
+        Task<Response<List<Customer>>> SearchAccountCustomer(string searchString, int page, int pageSize);
+        Task<Response<int>> CountCustomerWhenSearch(string searchString);
     }
 }
