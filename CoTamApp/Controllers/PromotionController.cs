@@ -281,5 +281,21 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        [HttpGet("search/{searchString}")]
+        public async Task<ActionResult<Response<List<Promotion>>>> GetPromotionWhenSearching(string searchString, [FromQuery] int PageIndex, [FromQuery] int PageSize)
+        {
+            var res = await _promotionService.SearchPromotion(searchString, PageIndex, PageSize);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
+        [HttpGet("search/count/{searchString}")]
+        public async Task<ActionResult<Response<int>>> CountPromotionWhenSearching(string searchString)
+        {
+            var res = await _promotionService.CountPromotionWhenSearch(searchString);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }

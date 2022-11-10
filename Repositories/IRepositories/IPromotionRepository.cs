@@ -17,5 +17,7 @@ namespace Repositories.IRepositories
         void ChangePromotionStatus(Promotion promotion);
         int CountPromotions();
         int CountPromotionsVerMobile();
+        List<Promotion> SearchPromotion(string searchString, int page, int pageSize);
+        int CountPromotionWhenSearch(string searchString);
     }
 }
