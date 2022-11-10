@@ -244,12 +244,11 @@ namespace Repositories
             var adminManager = await _dbContext.AdminManagers.FirstOrDefaultAsync(x => x.Email == email);
             if (adminManager != null)
             {
-                var res = CreateTokenWithAdmin(adminManager);
                 return new ServiceResponse<string>
                 {
-                    Data = res.AccessToken,
-                    Success = true,
-                    Message = "Login successfully with Admin/Manager account"
+                    Data = CreateTokenWithAdmin(adminManager),
+                    Message = "Login with admin/manager account successfully",
+                    Success = true
                 };
             }
             else
