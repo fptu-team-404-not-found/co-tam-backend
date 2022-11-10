@@ -47,6 +47,34 @@ namespace Services
             }
         }
 
+        public async Task<Response<int>> CountHouseworkerWhenSearch(string searchString)
+        {
+            try
+            {
+                var count = _houseWorkerRepository.CountHouseworkerWhenSearch(searchString);
+                if (count == 0)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Số lượng houseworker không tồn tại",
+                        Success = false
+                    };
+                }
+                return new Response<int>
+                {
+                    Data = count,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<string>> CreateNewHouseWorker(HouseWorker houseWorker)
         {
             var validate = _houseWorkerValidation.CheckCreateNewHouseWorker(houseWorker);
@@ -166,6 +194,48 @@ namespace Services
                 Message = "Thành Công",
                 StatusCode = 200
             };
+        }
+
+        public async Task<Response<List<HouseWorker>>> SearchAccountHouseworker(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                if (page <= 1)
+                {
+                    page = 1;
+                }
+                if (string.IsNullOrEmpty(searchString))
+                {
+                    return new Response<List<HouseWorker>>
+                    {
+                        Message = "Hãy nhập gì đó để tìm kiếm",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var lst = _houseWorkerRepository.SearchAccountHouseworker(searchString, page, pageSize);
+                if (lst == null)
+                {
+                    return new Response<List<HouseWorker>>
+                    {
+                        Message = "Không tìm thấy",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<List<HouseWorker>>
+                {
+                    Data = lst,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<Response<string>> UpdateHouseWorker(HouseWorker houseWorker)

@@ -123,6 +123,32 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
-        
+        public List<HouseWorker> SearchAccountHouseworker(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                var list = _dbContext.HouseWorkers
+                        .Where(x => x.Name.Contains(searchString)
+                        || x.Phone.Contains(searchString) || x.Email.Contains(searchString)).Skip((page - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                if (list != null)
+                {
+                    return list;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public int CountHouseworkerWhenSearch(string searchString)
+        {
+            var count = _dbContext.HouseWorkers
+                        .Where(x => x.Name.Contains(searchString)
+                        || x.Phone.Contains(searchString) || x.Email.Contains(searchString)).Count();
+            return count;
+        }
     }
 }
