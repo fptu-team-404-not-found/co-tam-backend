@@ -18,5 +18,7 @@ namespace Repositories.IRepositories
         int CountCustomers();
         void CustomerOrder(Order order);
         void CustomerOrderDetail(OrderDetail orderDetail, int orderId);
+        List<Customer> SearchAccountCustomer(string searchString, int page, int pageSize);
+        int CountCustomerWhenSearch(string searchString);
     }
 }

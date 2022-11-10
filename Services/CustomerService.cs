@@ -29,6 +29,35 @@ namespace Services
             _extraServiceRepository = extraServiceRepository;
         }
 
+        public async Task<Response<int>> CountCustomerWhenSearch(string searchString)
+        {
+            try
+            {
+                var count = _customerRepository.CountCustomerWhenSearch(searchString);
+                if (count == 0)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Số lượng customer không tồn tại",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<int>
+                {
+                    Data = count,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<int>> CustomerOrder(Order order)
         {
             try
@@ -322,6 +351,48 @@ namespace Services
             }
             catch (Exception ex)
             {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<List<Customer>>> SearchAccountCustomer(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                if (page <= 1)
+                {
+                    page = 1;
+                }
+                if (string.IsNullOrEmpty(searchString))
+                {
+                    return new Response<List<Customer>>
+                    {
+                        Message = "Hãy nhập gì đó để tìm kiếm",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var lst = _customerRepository.SearchAccountCustomer(searchString, page, pageSize);
+                if (lst == null)
+                {
+                    return new Response<List<Customer>>
+                    {
+                        Message = "Không tìm thấy",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<List<Customer>>
+                {
+                    Data = lst,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
                 throw new Exception(ex.Message);
             }
         }

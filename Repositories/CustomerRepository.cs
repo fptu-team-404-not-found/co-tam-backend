@@ -133,5 +133,32 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public List<Customer> SearchAccountCustomer(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                var list = _cotamContext.Customers
+                        .Where(x => x.Name.Contains(searchString)
+                        || x.Phone.Contains(searchString) || x.Email.Contains(searchString)).Skip((page - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                if (list != null)
+                {
+                    return list;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public int CountCustomerWhenSearch(string searchString)
+        {
+            var count = _cotamContext.Customers
+                        .Where(x => x.Name.Contains(searchString)
+                        || x.Phone.Contains(searchString) || x.Email.Contains(searchString)).Count();
+            return count;
+        }
     }
 }
