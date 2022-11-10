@@ -116,5 +116,32 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public List<Promotion> SearchPromotion(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                var list = _cotamContext.Promotions
+                        .Where(x => x.Code.Contains(searchString)
+                        || x.Description.Contains(searchString)).Skip((page - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                if (list != null)
+                {
+                    return list;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public int CountPromotionWhenSearch(string searchString)
+        {
+            var count = _cotamContext.Promotions
+                        .Where(x => x.Code.Contains(searchString)
+                        || x.Description.Contains(searchString)).Count();
+            return count;
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace Repositories.IRepositories
         bool DisableOrEnableBuilding(int id);
         void CreateNewBuilding(Building building);
         void UpdateBuilding(Building building);
+        List<Building> SearchBuilding(string searchString, int page, int pageSize);
+        int CountBuildingsWhenSearch(string searchString);
     }
 }

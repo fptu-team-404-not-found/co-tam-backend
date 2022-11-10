@@ -34,6 +34,34 @@ namespace Services
             }
         }
 
+        public async Task<Response<int>> CountPromotionWhenSearch(string searchString)
+        {
+            try
+            {
+                var count = _promotionRepository.CountPromotionWhenSearch(searchString);
+                if (count == 0)
+                {
+                    return new Response<int>
+                    {
+                        Message = "Số lượng promotion không tồn tại",
+                        Success = false
+                    };
+                }
+                return new Response<int>
+                {
+                    Data = count,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<Promotion>> GetReponseChangeStatusPromotion(string id)
         {
             try
@@ -264,6 +292,48 @@ namespace Services
             }
             catch (Exception ex)
             {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Response<List<Promotion>>> SearchPromotion(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                if (page <= 1)
+                {
+                    page = 1;
+                }
+                if (string.IsNullOrEmpty(searchString))
+                {
+                    return new Response<List<Promotion>>
+                    {
+                        Message = "Hãy nhập gì đó để tìm kiếm",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var lst = _promotionRepository.SearchPromotion(searchString, page, pageSize);
+                if (lst == null)
+                {
+                    return new Response<List<Promotion>>
+                    {
+                        Message = "Không tìm thấy",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<List<Promotion>>
+                {
+                    Data = lst,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+
                 throw new Exception(ex.Message);
             }
         }

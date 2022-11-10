@@ -113,5 +113,32 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+        public List<Building> SearchBuilding(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                var list = _dbContext.Buildings.Include(x => x.Area)
+                        .Where(x => x.Name.Contains(searchString)
+                        || x.Area.Name.Contains(searchString) || x.Area.District.Contains(searchString)).Skip((page - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                if (list != null)
+                {
+                    return list;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public int CountBuildingsWhenSearch(string searchString)
+        {
+            var count = _dbContext.Buildings.Include(x => x.Area)
+                        .Where(x => x.Name.Contains(searchString)
+                        || x.Area.Name.Contains(searchString) || x.Area.District.Contains(searchString)).Count();
+            return count;
+        }
     }
 }

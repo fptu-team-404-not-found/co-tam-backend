@@ -15,5 +15,7 @@ namespace Services.IServices
         Task<Response<string>> DisableOrEnableBuilding(int id);
         Task<Response<string>> CreateNewBuilding(Building building);
         Task<Response<string>> UpdateBuilding(Building building);
+        Task<Response<List<Building>>> SearchBuilding(string searchString, int page, int pageSize);
+        Task<Response<int>> CountBuildingsWhenSearch(string searchString);
     }
 }
