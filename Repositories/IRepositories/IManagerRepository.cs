@@ -15,5 +15,7 @@ namespace Repositories.IRepositories
         void CreateNewManager(AdminManager manager);
         int CountManager();
         void UpdateManager(AdminManager manager);
+        List<AdminManager> SearchAccount(string searchString, int page, int pageSize);
+        int CountManagerWhenSearch(string searchString);
     }
 }

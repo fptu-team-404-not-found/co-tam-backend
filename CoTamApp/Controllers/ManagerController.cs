@@ -77,5 +77,21 @@ namespace CoTamApp.Controllers
                 return BadRequest(res);
             return Ok(res);
         }
+        [HttpGet("search/{searchString}")]
+        public async Task<ActionResult<Response<List<AdminManager>>>> GetManagerWhenSearching(string searchString, [FromQuery] int PageIndex, [FromQuery] int PageSize)
+        {
+            var res = await _managerService.SearchAccount(searchString, PageIndex, PageSize);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
+        [HttpGet("search/count/{searchString}")]
+        public async Task<ActionResult<Response<int>>> CountManagerWhenSearching(string searchString)
+        {
+            var res = await _managerService.CountManagerWhenSearch(searchString);
+            if (!res.Success)
+                return BadRequest(res);
+            return Ok(res);
+        }
     }
 }

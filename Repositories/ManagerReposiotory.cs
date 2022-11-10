@@ -69,5 +69,32 @@ namespace Repositories
         {
             _dbContext.SaveChanges();
         }
+        public List<AdminManager> SearchAccount(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                var list = _dbContext.AdminManagers
+                        .Where(x => x.RoleId == 2 && x.Name.Contains(searchString) 
+                        || x.RoleId == 2 && x.Phone.Contains(searchString) || x.RoleId == 2 && x.Email.Contains(searchString)).Skip((page - 1) * (int)pageSize)
+                        .Take((int)pageSize).ToList();
+                if (list != null)
+                {
+                    return list;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        public int CountManagerWhenSearch(string searchString)
+        {
+            var count = _dbContext.AdminManagers
+                        .Where(x => x.RoleId == 2 && x.Name.Contains(searchString)
+                        || x.RoleId == 2 && x.Phone.Contains(searchString) || x.RoleId == 2 && x.Email.Contains(searchString)).Count();
+            return count;
+        }
     }
 }
