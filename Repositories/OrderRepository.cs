@@ -12,10 +12,12 @@ namespace Repositories
     public class OrderRepository : IOrderRepository
     {
         private readonly cotamContext _dbContext;
+        private readonly IWorkerInOrderRepository _workerInOrderRepository;
 
-        public OrderRepository(cotamContext context)
+        public OrderRepository(cotamContext context, IWorkerInOrderRepository workerInOrderRepository)
         {
             _dbContext = context;
+            _workerInOrderRepository = workerInOrderRepository;
         }
         public void ChangeTheOrderStateToCancle(int orderId)
         {
@@ -86,6 +88,7 @@ namespace Repositories
                         order.EndTime = DateTime.Now;
                         order.OrderState = Array.IndexOf(Enum.GetValues(customerXacNhanDonDaHoanThanh.GetType()), customerXacNhanDonDaHoanThanh);
                         _dbContext.SaveChanges();
+                        _workerInOrderRepository.UpdateHouseworkerActiveAgain(orderId);
                     }
                 }
                 
