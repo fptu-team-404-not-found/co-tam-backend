@@ -59,10 +59,21 @@ namespace Services
                         StatusCode = 400
                     };
                 }
+                if (checkExist.OrderState == 7)
+                {
+                    return new Response<string>
+                    {
+                        Message = "Đơn đã hủy, không thể assign",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
                 var wio = new WorkerInOrder();
                 wio.OrderId = orderId;
                 wio.HouseWorkerId = houseworkerId;
                 _workerInOrderRepository.CreateNewWorkInOrder(wio);
+                _orderRepository.ChangeTheOrderState(checkExist.Id);
+                _houseWorkerRepository.DisableOrEnableHouseWorkerAccount((int)wio.HouseWorkerId);
                 return new Response<string>
                 {
                     Message = "Thành Công",
