@@ -48,20 +48,38 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
-        public void CustomerOrder(Order order)
+        public bool CustomerOrder(Order order)
         {
             try
             {
                 OrderStates datDonThanhCong = OrderStates.DAT_DON_THANH_CONG;
                 order.DateTime = DateTime.Now;
-                order.PaymentMethodId = 1;
+                if (order.PaymentMethodId == 2)
+                {
+                    House house = _cotamContext.Houses.FirstOrDefault(h => h.Id == order.HouseId);
+                    Customer customer = _cotamContext.Customers.FirstOrDefault(c => c.Id == house.CustomerId);
+
+                    if (order.Total <= customer.EWallet)
+                    {
+                        customer.EWallet -= order.Total;
+                        _cotamContext.Customers.Update(customer);
+                        order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
+                        _cotamContext.Orders.Add(order);
+                        _cotamContext.SaveChanges();
+                        return true;
+                    } else
+                    {
+                        return false;
+                    }
+                }
+
                 order.OrderState = Array.IndexOf(Enum.GetValues(datDonThanhCong.GetType()), datDonThanhCong);
                 _cotamContext.Orders.Add(order);
                 _cotamContext.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
         }
@@ -112,6 +130,31 @@ namespace Repositories
         {
             try
             {
+                Customer oldCustomer = _cotamContext.Customers.FirstOrDefault(c => c.Id == customer.Id);
+                if (customer.LinkFacebook == null && oldCustomer.LinkFacebook != null)
+                {
+                    customer.LinkFacebook = oldCustomer.LinkFacebook;
+                }
+                if (customer.Avatar == null && oldCustomer.Avatar != null)
+                {
+                    customer.Avatar = oldCustomer.Avatar;
+                }
+                if (customer.EWallet == null && oldCustomer.EWallet != null)
+                {
+                    customer.EWallet = oldCustomer.EWallet;
+                }
+                if (customer.Active == null && oldCustomer.Active != null)
+                {
+                    customer.Active = oldCustomer.Active;
+                }
+                if (customer.CustomerPromotions == null && oldCustomer.CustomerPromotions != null)
+                {
+                    customer.CustomerPromotions = oldCustomer.CustomerPromotions;
+                }
+                if (customer.Houses == null && oldCustomer.Houses != null)
+                {
+                    customer.Houses = oldCustomer.Houses;
+                }
                 _cotamContext.ChangeTracker.Clear();
                 _cotamContext.Entry(customer).State = EntityState.Modified;
                 _cotamContext.SaveChanges(true);

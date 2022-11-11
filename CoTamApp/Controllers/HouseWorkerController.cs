@@ -72,7 +72,6 @@ namespace CoTamApp.Controllers
         /// Description: 
         /// - Id, Name, Email of Admin are required when update
         /// </remarks>
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin,Manager")]
         [HttpPut]
         public async Task<ActionResult<Response<string>>> UpdateHouseWorker(HouseWorker houseWorker)
         {
