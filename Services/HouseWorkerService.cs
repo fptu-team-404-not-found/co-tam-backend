@@ -324,6 +324,10 @@ namespace Services
             {
                 updateAdd.Avatar = houseWorker.Avatar;
             }
+            if (houseWorker.AreaId != null)
+            {
+                updateAdd.AreaId = houseWorker.AreaId;
+            }
             _houseWorkerRepository.UpdateHouseWorker(updateAdd);
             return new Response<string>
             {
