@@ -20,6 +20,7 @@ namespace Repositories.IRepositories
         WorkerInOrder GetWorkerInOrderByOrderId(int orderId);
         void UpdateHouseworkerIdToWorkerInOrderById(WorkerInOrder wio);
         WorkerInOrder GetWorkerInOrderByHouseworkerId(int houseworkerId);
+        WorkerInOrder GetWorkerInOrderOnDoingByHouseworkerId(int houseworkerId);
         void UpdateHouseworkerActiveAgain(int orderId);
     }
 }

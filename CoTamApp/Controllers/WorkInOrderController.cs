@@ -205,5 +205,19 @@ namespace CoTamApp.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+
+        [HttpGet("wio-on-doing/{houseworkerId}")]
+        public async Task<ActionResult<Response<WorkerInOrder>>> GetWorkerInOrderOnDoingByHouseworkerId(int houseworkerId)
+        {
+            try
+            {
+                var res = await _workerInOrderService.GetWorkerInOrderOnDoingByHouseworkerId(houseworkerId);
+                return StatusCode((int)res.StatusCode, res);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

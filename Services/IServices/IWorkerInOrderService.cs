@@ -21,6 +21,7 @@ namespace Services.IServices
         Task<Response<int>> CreateNewWorkInOderByManager(int orderId);
         Task<Response<string>> AssignHouseworkerToOrder(int houseworkerId, int orderId);
         Task<Response<WorkerInOrder>> GetWorkerInOrderByHouseworkerId(int houseworkerId);
+        Task<Response<WorkerInOrder>> GetWorkerInOrderOnDoingByHouseworkerId(int houseworkerId);
 
     }
 }

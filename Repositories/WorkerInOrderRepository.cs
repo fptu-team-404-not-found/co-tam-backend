@@ -229,6 +229,29 @@ namespace Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public WorkerInOrder GetWorkerInOrderOnDoingByHouseworkerId(int houseworkerId)
+        {
+            try
+            {
+                var wio = _dbContext.WorkerInOrders
+                    .Include(x => x.Order)
+                    .Include(x => x.HouseWorker)
+                    .FirstOrDefault(x => x.HouseWorkerId == houseworkerId && (x.Order.OrderState == 3  || x.Order.OrderState == 4) && x.Rating == null);
+                if (wio != null)
+                {
+                    return wio;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+
         public void UpdateHouseworkerActiveAgain(int orderId)
         {
             try

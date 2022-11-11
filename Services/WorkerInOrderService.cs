@@ -347,6 +347,55 @@ namespace Services
             }
         }
 
+        public async Task<Response<WorkerInOrder>> GetWorkerInOrderOnDoingByHouseworkerId(int houseworkerId)
+        {
+            try
+            {
+                if (houseworkerId <= 0)
+                {
+                    return new Response<WorkerInOrder>
+                    {
+                        Message = "Hãy nhập giá trị houseworkerId lớn hơn 0",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                var checkExist = _houseWorkerRepository.GetHouseWorkerById(houseworkerId);
+                if (checkExist == null)
+                {
+                    return new Response<WorkerInOrder>
+                    {
+                        Message = "Không tìm thấy houseworker",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                };
+                var wio = _workerInOrderRepository.GetWorkerInOrderOnDoingByHouseworkerId(houseworkerId);
+                if (wio == null)
+                {
+                    return new Response<WorkerInOrder>
+                    {
+                        Message = "Không tìm thấy workInOrder",
+                        Success = false,
+                        StatusCode = 400
+                    };
+                }
+                return new Response<WorkerInOrder>
+                {
+                    Data = wio,
+                    Message = "Thành Công",
+                    Success = true,
+                    StatusCode = 200
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Response<WorkerInOrder>> GetWorkerInOrderById(int id)
         {
             try
