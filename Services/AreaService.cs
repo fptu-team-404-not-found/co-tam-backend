@@ -101,7 +101,7 @@ namespace Services
                     {
                         Message = "Danh sách khu vực không tồn tại!",
                         Success = false,
-                        StatusCode = 404
+                        StatusCode = 200
                     };
                 }
 
@@ -268,13 +268,13 @@ namespace Services
                     };
                 }
                 var lst = _areaRepository.SearchArea(searchString, page, pageSize);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<Area>>
                     {
                         Message = "Không tìm thấy",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<Area>>

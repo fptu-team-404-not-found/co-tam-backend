@@ -83,13 +83,13 @@ namespace Services
                     };
                 }
                 var lst = _orderDetailRepository.GetOrderDetailsByOrderId(orderId);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<OrderDetail>>
                     {
                         Message = "Không tìm thấy orderdetail của order này",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<OrderDetail>>

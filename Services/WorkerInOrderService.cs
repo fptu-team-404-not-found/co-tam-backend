@@ -254,13 +254,13 @@ namespace Services
                         }
                         
                     }
-                    if (resWio == null)
+                    if (resWio.Count() == 0)
                     {
                         return new Response<List<WorkerInOrder>>
                         {
-                            Message = "Không tìm thấy work in order",
+                            Message = "Danh sách work in order rỗng",
                             Success = false,
-                            StatusCode = 400
+                            StatusCode = 200
                         };
                     }
                     return new Response<List<WorkerInOrder>>
@@ -446,13 +446,13 @@ namespace Services
                     };
                 }
                 var res = _workerInOrderRepository.GetWorkerInOrdersByHouseworkerId(houseworkerId);
-                if (res == null)
+                if (res.Count() == 0)
                 {
                     return new Response<List<WorkerInOrder>>
                     {
-                        Message = "Không tìm thấy work in order nào",
+                        Message = "Danh sách work in order rỗng",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<WorkerInOrder>>

@@ -50,7 +50,7 @@ namespace Services
                     {
                         Message = "Danh sách dịch vụ đi kèm không tồn tại!",
                         Success = false,
-                        StatusCode = 404
+                        StatusCode = 200
                     };
                 }
 

@@ -221,13 +221,13 @@ namespace Services
                     };
                 }
                 var lst = _customerPromotionRepository.GetCustomerPromotionsNotUseByCusId(cusId);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<CustomerPromotion>>
                     {
-                        Message = "Không tìm thấy voucher nào",
+                        Message = "Danh sách voucher rỗng",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<CustomerPromotion>>

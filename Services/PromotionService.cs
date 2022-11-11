@@ -156,7 +156,7 @@ namespace Services
                     {
                         Message = "Danh sách khuyến mãi không tồn tại!",
                         Success = false,
-                        StatusCode = 404
+                        StatusCode = 200
                     };
                 }
 
@@ -186,7 +186,7 @@ namespace Services
                     {
                         Message = "Danh sách khuyến mãi không tồn tại!",
                         Success = false,
-                        StatusCode = 404
+                        StatusCode = 200
                     };
                 }
 
@@ -320,7 +320,7 @@ namespace Services
                     {
                         Message = "Không tìm thấy",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<Promotion>>

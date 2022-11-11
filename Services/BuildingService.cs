@@ -218,13 +218,13 @@ namespace Services
                     };
                 }
                 var lst = _buildingRepository.SearchBuilding(searchString, page, pageSize);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<Building>>
                     {
                         Message = "Không tìm thấy",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<Building>>
