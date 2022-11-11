@@ -114,13 +114,13 @@ namespace Services
             try
             {
                 var lst = _workerTagRepository.GetWorkerTag();
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<WorkerTag>>
                     {
-                        Message = "Không tìm thấy worker tag",
+                        Message = "Danh sách rỗng",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<WorkerTag>>
@@ -201,12 +201,12 @@ namespace Services
                     };
                 }
                 var lst = _workerTagRepository.GetWorkerTagsByHouseworkerId(houseworkerId);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<WorkerTag>>
                     {
                         Message = "Không tìm thấy danh sách workerTag của id này",
-                        StatusCode = 400,
+                        StatusCode = 200,
                         Success = false
                     };
                 }

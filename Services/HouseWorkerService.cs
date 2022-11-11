@@ -222,13 +222,13 @@ namespace Services
                     };
                 }
                 var lst = _houseWorkerRepository.GetListHouseworkerForManagerToAssign(checkOrderExist.Package.Service.Name, checkOrderExist.House.Building.AreaId);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<HouseWorker>>
                     {
                         Message = "Danh sách rỗng",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<HouseWorker>>
@@ -264,13 +264,13 @@ namespace Services
                     };
                 }
                 var lst = _houseWorkerRepository.SearchAccountHouseworker(searchString, page, pageSize);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<HouseWorker>>
                     {
                         Message = "Không tìm thấy",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<HouseWorker>>

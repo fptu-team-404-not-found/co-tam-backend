@@ -219,13 +219,13 @@ namespace Services
                     };
                 }
                 var lst = _managerRepository.SearchAccount(searchString, page, pageSize);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<AdminManager>>
                     {
                         Message = "Không tìm thấy",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<AdminManager>>

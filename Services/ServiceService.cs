@@ -121,7 +121,7 @@ namespace Services
                     {
                         Message = "Danh sách dịch vụ không tồn tại!",
                         Success = false,
-                        StatusCode = 404
+                        StatusCode = 200
                     };
                 }
 

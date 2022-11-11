@@ -245,7 +245,7 @@ namespace Services
                         {
                             Message = "Không tìm thấy order Dang Dat",
                             Success = false,
-                            StatusCode = 400
+                            StatusCode = 200
                         };
                     }
                     return new Response<List<Order>>
@@ -353,13 +353,13 @@ namespace Services
                     };
                 }
                 var lst = _orderRepository.SearchOrder(searchString, page, pageSize);
-                if (lst == null)
+                if (lst.Count() == 0)
                 {
                     return new Response<List<Order>>
                     {
                         Message = "Không tìm thấy",
                         Success = false,
-                        StatusCode = 400
+                        StatusCode = 200
                     };
                 }
                 return new Response<List<Order>>
