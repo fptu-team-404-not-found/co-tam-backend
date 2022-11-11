@@ -216,7 +216,7 @@ namespace Repositories
                 var wio = _dbContext.WorkerInOrders
                     .Include(x => x.Order)
                     .Include(x => x.HouseWorker)
-                    .FirstOrDefault(x => x.HouseWorkerId == houseworkerId && x.Order.OrderState == 1);
+                    .FirstOrDefault(x => x.HouseWorkerId == houseworkerId && x.Order.OrderState == 2);
                 if (wio != null)
                 {
                     return wio;
