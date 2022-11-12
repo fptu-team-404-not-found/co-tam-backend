@@ -324,7 +324,7 @@ namespace Services
             {
                 updateAdd.Avatar = houseWorker.Avatar;
             }
-            if (houseWorker.AreaId != null)
+            if (houseWorker.AreaId != 0)
             {
                 updateAdd.AreaId = houseWorker.AreaId;
             }
