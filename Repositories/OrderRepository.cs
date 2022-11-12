@@ -78,12 +78,14 @@ namespace Repositories
                         order.OrderState = Array.IndexOf(Enum.GetValues(houseworkerDangViec.GetType()), houseworkerDangViec);
                         _dbContext.SaveChanges();
                     }
-                    else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerDangViec.GetType()), houseworkerDangViec))
+                    /*else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerDangViec.GetType()), houseworkerDangViec))
                     {
+                        order.EndTime = DateTime.Now;
                         order.OrderState = Array.IndexOf(Enum.GetValues(houseworkerHoanThanh.GetType()), houseworkerHoanThanh);
                         _dbContext.SaveChanges();
-                    }
-                    else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerHoanThanh.GetType()), houseworkerHoanThanh))
+                        _workerInOrderRepository.UpdateHouseworkerActiveAgain(orderId);
+                    }*/
+                    else if (order.OrderState == Array.IndexOf(Enum.GetValues(houseworkerDangViec.GetType()), houseworkerDangViec))
                     {
                         order.EndTime = DateTime.Now;
                         order.OrderState = Array.IndexOf(Enum.GetValues(customerXacNhanDonDaHoanThanh.GetType()), customerXacNhanDonDaHoanThanh);
@@ -176,7 +178,7 @@ namespace Repositories
                 .Include(x => x.Package)
                 .Include(x => x.Promotion)
                 .Include(x => x.PaymentMethod)
-                .Where(x => x.HouseId == houseId && x.OrderState > 0 && x.OrderState < 6)
+                .Where(x => x.HouseId == houseId && x.OrderState > 0 && x.OrderState < 5)
                 .ToList();
             if (orders.Count > 0)
             {
