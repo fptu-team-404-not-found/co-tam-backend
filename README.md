@@ -16,7 +16,7 @@
 ## Description
 - Cô Tấm is a platform that provides hourly domestic help services through a technology application
 - This project contains a website for admin and manager, an android mobile application for customer, an android mobile application for houseworker
-- This project started from 05-09-2022 until now
+- This project started from 05-09-2022 to 12-11-2022
 
 ## Preview Screenshot
 
