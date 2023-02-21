@@ -52,7 +52,7 @@
 - RESTful API
 - Google Oauth2 for Authentication Login with Google
 - Firebase for push notification
-- Azure App Service for Continous Deployment
+- Azure App Service for Continuous Deployment
 - JSON Web Tokens for authentication
 - Material Design for design UI
 
